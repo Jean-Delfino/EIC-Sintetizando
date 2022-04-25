@@ -20,11 +20,18 @@ namespace PhasePart.RNA{
             RNASpawner RNAonwer = (RNASpawner)owner;
 
             int value = UnityEngine.Random.Range(0 , RNAonwer.GetValidationCount());
+            valueInput = false;
             Setup(RNAonwer.GetKeyByIndex(value)); //Inheritance from Letter
         }
 
         public void RandomStart(){
+            
             GenerateText();
+        }
+
+        public void RNASetup(string text){
+            valueInput = false;
+            Setup(text);
         }
 
         // Invoked when the value of the text field changes.
@@ -33,6 +40,7 @@ namespace PhasePart.RNA{
 
             if(GetValueInputText() == "") {
                 SetColor(RNAonwer.GetColorDef());
+                RNAonwer.ChangeQuantityToNextPhase(Convert.ToInt32(valueInput) * -1);
                 return;
             }
             

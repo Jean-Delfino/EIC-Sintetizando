@@ -268,6 +268,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 322e3a7c3bb5c084ab64718ba5026cb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalMessages: {fileID: 7143254446176151775}
+  actualMessage: {fileID: 7143254445032350303}
+  messageContent: {fileID: 7143254444094999516}
 --- !u!1 &7143254444874411614
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,8 +616,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7149960871516746724}
-        m_TargetAssemblyTypeName: InfoDisplay, Assembly-CSharp
-        m_MethodName: IncreaceMessageInfo
+        m_TargetAssemblyTypeName: GameUserInterface.Text.InfoDisplay, Assembly-CSharp
+        m_MethodName: IncreaceMessage
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1228,8 +1231,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7149960871516746724}
-        m_TargetAssemblyTypeName: InfoDisplay, Assembly-CSharp
-        m_MethodName: DecreaceMessageInfo
+        m_TargetAssemblyTypeName: GameUserInterface.Text.InfoDisplay, Assembly-CSharp
+        m_MethodName: DecreaceMessage
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

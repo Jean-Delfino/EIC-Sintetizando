@@ -55,7 +55,8 @@ namespace ProteinPart{
         
         public void OnClickSendVideo(){
             videoChoice.ChooseProtein(maxParent.GetSiblingIndex());
-            RNASpawner.SetDNAString(proteinValue);
+            //RNASpawner.SetDNAString(proteinValue);
+            CellNucleusManager.SetDNAString(proteinValue); //Sends the protein to the gameplay
 
             FindObjectOfType<PlayerInfo>().SetProteinName(synthesizedProteinName);
         }

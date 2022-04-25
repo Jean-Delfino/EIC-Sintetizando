@@ -14,7 +14,6 @@ using UnityEngine;
 */
 namespace PhasePart.Bow{
     public class BowAndArrowMinigame : PhaseManagerMono{
-
         [SerializeField] GameObject originalScene; //It will make the original scene active or inactive
 
         [SerializeField] GameObject bow = default; //Reference to the bow, so this object didn't need to be fixed on the bow

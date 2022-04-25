@@ -50,6 +50,17 @@ public static class Util{
         }
     }
 
+    public static string ConvertToString(string[] phrase){
+        string res = ""; 
+        int i;
+        
+        for(i = 0; i < phrase.Length ; i++){
+            res += phrase[i];
+        }
+
+        return res;
+    }
+
     public static bool FindOcorrence(string origin, string[] search, int lenghtOfSearch){
         int i, j;
         string hold;

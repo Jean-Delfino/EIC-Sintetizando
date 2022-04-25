@@ -63,7 +63,7 @@ namespace ProteinPart{
             if(!videoPlayer.isPlaying) return;
 
             videoTask.Wait();
-            videoPlayer.Stop();
+            videoPlayer.Pause();
         }
 
         public void PlayVideo(){

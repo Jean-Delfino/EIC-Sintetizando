@@ -17,19 +17,42 @@ namespace GameUserInterface.Input{
     public class InputSend : MonoBehaviour{
         [SerializeField] TMP_InputField thisInput;
         [SerializeField] UnityEvent m_MyEvent;
-        [SerializeField] UnityEvent dependence;
-        //void Start(){}
 
-        public void SendInputToObject(){
+        [SerializeField] UnityEvent submitDependence;
+        [SerializeField] UnityEvent changeValueDependence;
+        [SerializeField] UnityEvent noTextAnwser;
+
+        void Start(){
+
+            if(changeValueDependence != null){
+                thisInput.onValueChanged.AddListener(delegate {ValueChangeCheck(); });
+            }
+
+        }
+
+        public void SendSubmitToObject(){
             if(m_MyEvent == null) return;
-            if(thisInput.text.Length == 0) return;  
+            
+            if(thisInput.text.Length == 0){
+                noTextAnwser.Invoke();
+                return;
+            }  
 
             //print("texto = " + this.thisInput.text + " " + thisInput.text.Length);
 
             Util.UnityEventInvokeAllListenersTheSame
                 (m_MyEvent, new object[] {this.thisInput.text}, new Type [] {typeof(string)});
 
-            dependence.Invoke();
+            submitDependence.Invoke();
+        }
+
+        private void ValueChangeCheck(){
+            if(thisInput.text.Length == 0){
+                noTextAnwser.Invoke();
+                return;
+            }
+
+            changeValueDependence.Invoke();
         }
     }
 }

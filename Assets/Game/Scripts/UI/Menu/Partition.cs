@@ -7,11 +7,19 @@ using UnityEngine;
 namespace Menu{
     public class Partition : MonoBehaviour{
         protected int index;
+        protected SelectionManager selection;
+
         void Start(){
             index = transform.GetSiblingIndex();
+
+            selection = this.transform.parent.GetComponent<SelectionManager>();
+
+            if(selection == null){
+                Debug.LogWarning("SELECTION MANAGER NULL");
+            }
         }
         public void Resume(){
-            FindObjectOfType<SelectionManager>(true).ChangePartitionByIndex(index);
+            selection.ChangePartitionByIndex(index);
         }
         
     }

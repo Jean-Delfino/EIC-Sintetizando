@@ -6,7 +6,7 @@ using TMPro;
 /*Appear between phases of the Gameplay*/
 
 namespace PhasePart.Wait{
-    public class MissionDisplay : WaitManager{
+    public class MissionManager : WaitManager{
         [SerializeField] string mission;
         [SerializeField] TextMeshProUGUI missionName;
         [SerializeField] TextMeshProUGUI missionDescription;
@@ -25,7 +25,7 @@ namespace PhasePart.Wait{
         }
 
         public void OnClick(){
-            WaitCheck();
+            WaitCheck(); //Protected function
         }
     }
 }

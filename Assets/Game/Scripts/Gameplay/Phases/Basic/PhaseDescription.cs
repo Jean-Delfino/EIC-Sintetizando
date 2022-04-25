@@ -4,7 +4,7 @@ using UnityEngine;
 
 /*
     Basic information of the phase
-    See Wait->WaitManager or Wait->MissionDisplay
+    See Wait->WaitManager or Wait->MissionManager
 */
 
 namespace PhasePart{

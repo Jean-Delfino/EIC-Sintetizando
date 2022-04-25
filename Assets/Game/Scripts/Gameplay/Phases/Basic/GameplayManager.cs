@@ -20,8 +20,6 @@ using GameUserInterface.Text;
 
 
 public sealed class GameplayManager : MonoBehaviour{
-    private GameObject objRef = null;
-
     [SerializeField] List<Phase> gamePhases;
     
     [System.Serializable]
@@ -29,17 +27,16 @@ public sealed class GameplayManager : MonoBehaviour{
         public PhaseManagerMono manager;
         public GameObject instructions;
         public List<string> messages = default; //Used by InfoDisplay
-        public List<string> textInstructions = default; //Used in the Marking
     } 
     private int actualPhase = -1;
-    [SerializeField] Marking marking; //Denotates which is the current phase
-    [SerializeField] TextMeshProUGUI totalMessages; //Information in the display
-    [SerializeField] TextMeshProUGUI actualMessage;
-    [SerializeField] TextMeshProUGUI messageContent;
-    private int actualMessageIndex;
 
+    [SerializeField] Marking marking; //Denotates which is the current phase
+    [SerializeField] InfoDisplay info;
+    
     [SerializeField] GameObject waitManager; //Appear between phases, phaseInstruction basically
     private bool onAwait = false;
+
+    private GameObject objRef = null;
 
     private void Start(){
         //SetRandomCardPosition(); //Not used anymore
@@ -54,7 +51,7 @@ public sealed class GameplayManager : MonoBehaviour{
             print("Jogo acabou");
             return;
         }
-        //DestroyAllInstantiated(); //I make the null treatment already
+        //DestroyAllInstantiated(); //I made the null treatment already
         //In the beggining it have no instance
         PoolObject(objRef); //Just setting the object to true or false, not actually a entire poll
         
@@ -67,7 +64,7 @@ public sealed class GameplayManager : MonoBehaviour{
         PoolObject(objRef); //Set it to active
 
         PhaseDescription aux = gamePhases[actualPhase].manager.GetPhaseDescription();
-        objRef.GetComponent<MissionDisplay>().Setup(actualPhase, aux.GetName(), 
+        objRef.GetComponent<MissionManager>().Setup(actualPhase, aux.GetName(), 
             aux.GetDescription(), aux.GetAdditionalInfo());
     }
 
@@ -75,7 +72,7 @@ public sealed class GameplayManager : MonoBehaviour{
         int i;
 
         for(i = 0; i < gamePhases.Count; i++){
-            marking.SpawnGoal(gamePhases[i].textInstructions);
+            marking.SpawnGoal(gamePhases[i].manager.GetTextInstructions());
         }
     }
 
@@ -94,41 +91,18 @@ public sealed class GameplayManager : MonoBehaviour{
 
         return false;
     }
-    public void SetDescriptionPhase(){
-        PhaseDescription pdSetup = gamePhases[actualPhase].manager.GetPhaseDescription();
-        objRef.GetComponent<MissionDisplay>().Setup(actualPhase, 
-            pdSetup.GetName(), pdSetup.GetDescription(), pdSetup.GetAdditionalInfo());
-    }
-
-
     public void WaitFor(){
         onAwait = true;
     }
     private void RestartPhase(){
-        actualMessageIndex = 0;
-        totalMessages.text = (gamePhases[actualPhase].messages.Count).ToString();
-        ShowText();
-        
+        info.RestartPhase(gamePhases[actualPhase].messages);
     }
-    private void ShowText(){
-        messageContent.text = gamePhases[actualPhase].messages[actualMessageIndex];
-        actualMessage.text = (actualMessageIndex + 1).ToString();
-    }
-    public void IncreaceMessage(int increace){
-        if(actualMessageIndex == gamePhases[actualPhase].messages.Count - 1){
-            return;
-        }
 
-        actualMessageIndex += increace;
-        ShowText();
-    }
-    public void DecreaceMessage(int increace){
-        if(actualMessageIndex == 0){
-            return;
-        }
-
-        actualMessageIndex -= increace;
-        ShowText();
+    //All the information need for the MissionManager
+    public void SetDescriptionPhase(){
+        PhaseDescription pdSetup = gamePhases[actualPhase].manager.GetPhaseDescription(); //Used in the Mission Manager
+        objRef.GetComponent<MissionManager>().Setup(actualPhase, 
+            pdSetup.GetName(), pdSetup.GetDescription(), pdSetup.GetAdditionalInfo());
     }
 
     public void DestroyAllInstantiated(){

@@ -41,10 +41,13 @@ namespace PhasePart{
             }
         }
 
-        protected void SetInputArea(Transform inputArea){
-            this.inputArea = inputArea;
-            TextWithInput.SetOnwer(this); 
+        protected void SetInputOperation(){
             StartCoroutine(ChangeInputField());//Easier way to start the components
+        }
+
+        protected void SetInputData(Transform inputArea){
+            this.inputArea = inputArea;
+            TextWithInput.SetOnwer(this);
         }
     }
 }

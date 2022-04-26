@@ -14,7 +14,7 @@ using PhasePart.AMN;
 
 namespace PhasePart.RNA{
     public class RNASpawner : InputPhase{
-        [SerializeField] CellNucleusManager originalPlace; //Where the RNA starts
+        [SerializeField] CellNucleusManager originalPlace; //Where the RNA starts (the nucleus)
 
         private int quantity; //Needs to be multiple of 3, and it will because of the AMN
 
@@ -32,18 +32,11 @@ namespace PhasePart.RNA{
         }; //DNA to RNA Correspondence
 
         private string[] anwsers; //Save of the anwsers of the RNA given by the player
-
-        //Filters that make the gameEasier
-
-        //[SerializeField] string defaultFilter = default;
-        //[SerializeField] Transform filterSpawn = default;
-        //[SerializeField] GameObject letterPrefab = default;
-        //private string actualLetter;
-
         private int nextPhase = 0;
 
-        void OnEnable(){
-            SetInputArea(RNASpawn); //Protected function of all the InputPhase manager
+        private void Start(){
+            anwsers = new string[quantity];
+            SetInputOperation();
         }
 
         private void InstantiateAllRNABasedOnDNA(){
@@ -52,6 +45,7 @@ namespace PhasePart.RNA{
             RNA hold;
 
             //sub = DNAtranscriptionBeg + sub + DNAtranscriptionEnd[Random.Range(0 , DNAtranscriptionEnd.Length)];
+            SetInputData(RNASpawn); //Protected function of all the InputPhase manager
 
             for(i = 0 ; i < quantity ; i++){
                 hold = Instantiate<RNA>(prefab, RNASpawn);
@@ -64,6 +58,8 @@ namespace PhasePart.RNA{
             int i;
             RNA hold;
 
+            SetInputData(RNASpawn); //Protected function of all the InputPhase manager
+
             for(i = 0 ; i < quantity ; i++){
                 hold = Instantiate<RNA>(prefab, RNASpawn);
                 hold.SetPosition(i); //Puts its original position, so i can build the "replic" vector
@@ -74,6 +70,7 @@ namespace PhasePart.RNA{
         public void InstantiateAllRNARandom(){
             int i;
             RNA hold;
+            SetInputData(RNASpawn);      
 
             for(i = 0 ; i < quantity ; i++){
                 hold = Instantiate<RNA>(prefab, RNASpawn);
@@ -180,6 +177,7 @@ namespace PhasePart.RNA{
             int i = 0;
 
             ResetValuesInRNA();
+            originalPlace.ChangeDNAStructure(sub);
 
             foreach(Transform child in RNASpawn){
                 child.GetComponent<RNA>().RNASetup(sub[i].ToString());
@@ -191,6 +189,7 @@ namespace PhasePart.RNA{
         public void SetCorrespondentValidation(int index, string value){
             anwsers[index] = value; 
             //This change the CellNucleusManager
+            originalPlace.ChangeRNAinDNAStructure(index, value);
         }
 
         public void SetQuantity(int quantity){
@@ -271,3 +270,10 @@ namespace PhasePart.RNA{
 
             InstantiateAllRNARandom();
         }*/
+
+        //Filters that make the gameEasier
+
+        //[SerializeField] string defaultFilter = default;
+        //[SerializeField] Transform filterSpawn = default;
+        //[SerializeField] GameObject letterPrefab = default;
+        //private string actualLetter;

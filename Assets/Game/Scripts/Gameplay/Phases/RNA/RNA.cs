@@ -11,7 +11,6 @@ namespace PhasePart.RNA{
         private bool valueInput = false;
 
         void Start(){
-
             //Adds a listener to the main input field and invokes a method when the value changes.
             GetMainInputField().onValueChanged.AddListener(delegate {ValueChangeCheck(); });
         }

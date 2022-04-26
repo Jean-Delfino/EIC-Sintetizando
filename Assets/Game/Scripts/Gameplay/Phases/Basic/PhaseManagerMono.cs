@@ -9,8 +9,9 @@ using UnityEngine;
 
 namespace PhasePart{
     public class PhaseManagerMono : MonoBehaviour , PhaseManager{
-        [SerializeField] PhaseDescription pd;
+        [SerializeField] PhaseDescription pd; //Used in the mission
         [SerializeField] List<string> textInstructions = default; //Used in the Marking
+        [SerializeField] GameObject instructions; //More complex information, visual probably
 
         public void EndPhase(){
             FindObjectOfType<GameplayManager>(true).IncreacePhase();
@@ -22,6 +23,10 @@ namespace PhasePart{
 
         public List<string> GetTextInstructions(){
             return this.textInstructions;
+        }
+
+        public GameObject GetInstructions(){
+            return this.instructions;
         }
     }
 }

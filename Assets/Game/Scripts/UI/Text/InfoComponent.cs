@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameUserInterface.Text{
     public class InfoComponent : MonoBehaviour{
-        [SerializeField] Transform childRef = null;
+        [SerializeField] Transform childRef = null; //Where the information is
         private bool visibility = false;
 
         void Start(){

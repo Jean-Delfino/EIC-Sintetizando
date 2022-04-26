@@ -25,22 +25,20 @@ public sealed class GameplayManager : MonoBehaviour{
     [System.Serializable]
     private class Phase{
         public PhaseManagerMono manager;
-        public GameObject instructions;
         public List<string> messages = default; //Used by InfoDisplay
-    } 
+    }
     private int actualPhase = -1;
 
     [SerializeField] Marking marking; //Denotates which is the current phase
-    [SerializeField] InfoDisplay info;
+    [SerializeField] InfoDisplay info; //Show the messages in the gamePhases
     
     [SerializeField] GameObject waitManager; //Appear between phases, phaseInstruction basically
-    private bool onAwait = false;
+    private bool onAwait = false; //True when the waitManager is active
 
-    private GameObject objRef = null;
+    private GameObject objRef = null; //Ref to the waitManager OR PhaseManagerMono
 
     private void Start(){
-        //SetRandomCardPosition(); //Not used anymore
-        SpawnAllGoals();
+        SpawnAllGoals(); //Spawn the information in the PhaseManager
         IncreacePhase(); //actualPhase always just increace, so starting with -1 is correct
     }
 
@@ -53,6 +51,7 @@ public sealed class GameplayManager : MonoBehaviour{
         }
         //DestroyAllInstantiated(); //I made the null treatment already
         //In the beggining it have no instance
+
         PoolObject(objRef); //Just setting the object to true or false, not actually a entire poll
         
         ManagerWait(); //This will make something that wait for the player interaction
@@ -79,12 +78,15 @@ public sealed class GameplayManager : MonoBehaviour{
     public bool Check(int numberPhase){
         if(onAwait && numberPhase == actualPhase){
             PoolObject(objRef); //Make the wait manager to be inactive
-            //DestroyAllInstantiated();
-            //objRef = Instantiate<GameObject>(gamePhases[actualPhase].manager.gameObject , this.transform);
+
             objRef =  gamePhases[actualPhase].manager.gameObject;
             PoolObject(objRef); //Makes one of the PhaseManagers to be active
 
-            RestartPhase();
+            if(gamePhases[actualPhase].manager.GetInstructions() != null){
+                //Instantiate the instruction on the screen
+            }
+
+            RestartPhase(); //Change it back when there was no waitManager
             marking.ShowGoal(actualPhase); //Puts the actual phase as the goal of the gameplay
             return true;
         }   
@@ -96,6 +98,7 @@ public sealed class GameplayManager : MonoBehaviour{
     }
     private void RestartPhase(){
         info.RestartPhase(gamePhases[actualPhase].messages);
+        onAwait = false;
     }
 
     //All the information need for the MissionManager

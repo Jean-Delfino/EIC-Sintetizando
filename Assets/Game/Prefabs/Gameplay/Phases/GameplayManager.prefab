@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7295050311995268763}
   - component: {fileID: 7295050311995265380}
   m_Layer: 5
-  m_Name: Controller
+  m_Name: GameplayManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,7 +91,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gamePhases: []
   marking: {fileID: 0}
-  totalMessages: {fileID: 0}
-  actualMessage: {fileID: 0}
-  messageContent: {fileID: 0}
+  info: {fileID: 0}
   waitManager: {fileID: 0}

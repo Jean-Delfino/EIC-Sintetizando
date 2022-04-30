@@ -13,11 +13,17 @@ namespace GameUserInterface.Text{
             }
         }
 
-        public void OnMouseInfoVisibility(){ //this is also mouse exit
+        public void OnMouseInfoVisibility(){  //Mouse events normally
             visibility = !visibility;
+            
             foreach(Transform child in childRef){
-                child.gameObject.SetActive(!child.gameObject.activeSelf);
+                child.gameObject.SetActive(visibility);
             }
+        }
+
+        public void SingleObjectVisibility(){
+            visibility = !visibility;
+            childRef.gameObject.SetActive(visibility);
         }
     }
 }

@@ -10,7 +10,6 @@ using TMPro;
 namespace GameUserInterface.Text{
     public class InfoEditableComponent : InfoComponent{
         [SerializeField] List<TextMeshProUGUI> texts = default; //All the texts we need to start 
-
         public void Setup(List<string> texts, int start){
             int i;
 

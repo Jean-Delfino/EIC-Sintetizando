@@ -62,12 +62,32 @@ namespace PhasePart.RNA{
             string sub;
 
             do{
-                //Cuts a part of the DNA to make the substring
-                sub = Util.RandomSubString(DNAString, quantity, 0, (DNAString.Length - quantity));
-                print("sub : " + sub);
-            }while(Util.FindOcorrence(sub, DNAtranscriptionEnd, AMNManager.GetSizeAMN()));
+                do{
+                    //Cuts a part of the DNA to make the substring
+                    sub = Util.RandomSubString(DNAString, quantity, 0, (DNAString.Length - quantity));
+                    print("sub : " + sub);
+                }while(Util.FindOcorrence(sub, DNAtranscriptionEnd, AMNManager.GetSizeAMN()));
+            }while(!DNAWithAllBases(sub)); //Tests if it have at least one of all the bases (A,T,C,G)
 
             return sub;
+        }
+
+        private bool DNAWithAllBases(string cut){
+            int i;
+            List<char> bases = new List<char>();
+
+            for(i = 0; i < cut.Length; i++){
+                if(!bases.Contains(cut[i])){
+                    bases.Add(cut[i]);
+                }
+            }
+
+            if(bases.Count == rnaReference.GetDictionaryKeysCount()){
+                //print("AOBA");
+                return true;
+            }
+
+            return false;
         }
 
         public void SetRandom(bool state){

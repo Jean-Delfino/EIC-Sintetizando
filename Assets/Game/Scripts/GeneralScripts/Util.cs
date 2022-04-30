@@ -61,7 +61,7 @@ public static class Util{
         return res;
     }
 
-    public static bool FindOcorrence(string origin, string[] search, int lenghtOfSearch){
+    public static bool FindOcorrence(string origin, string[] search, int lenghtOfSearch){ //See above if needed
         int i, j;
         string hold;
 
@@ -78,6 +78,21 @@ public static class Util{
         }
 
         return false;
+    }
+
+    public static bool FindOcorrence(string origin, string[] search){ //Better version if you not the same size
+        int i;
+        bool index = false;
+
+        for(i = 0 ; i < search.Length; i++){
+            if(origin.IndexOf(search[i]) != -1){
+                index = true;
+                break;
+            }
+        }
+
+
+        return index;
     }
 
     public static string RandomSubString(string origin, int lenghtCUT, int min, int max){

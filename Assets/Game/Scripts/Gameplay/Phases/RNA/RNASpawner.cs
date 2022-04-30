@@ -214,6 +214,14 @@ namespace PhasePart.RNA{
             return validationDNARNA.Keys.ElementAt(index);
         }
 
+        public string[] GetDictionaryKeys(){
+            return validationDNARNA.Keys.ToArray();
+        }
+
+        public int GetDictionaryKeysCount(){
+            return validationDNARNA.Keys.Count;
+        }
+
     }
 }
 

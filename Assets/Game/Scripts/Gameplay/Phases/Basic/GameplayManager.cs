@@ -20,18 +20,21 @@ using GameUserInterface.Text;
 
 
 public sealed class GameplayManager : MonoBehaviour{
-    [SerializeField] List<Phase> gamePhases;
-    
     [System.Serializable]
     private class Phase{
         public PhaseManagerMono manager;
         public List<string> messages = default; //Used by InfoDisplay
     }
+
+    [SerializeField] List<Phase> gamePhases;
     private int actualPhase = -1;
 
     [SerializeField] Marking marking; //Denotates which is the current phase
     [SerializeField] InfoDisplay info; //Show the messages in the gamePhases
-    
+
+    //[SerializeField] Transform phaseInstructionSpawn; //Used in the beginning of the phase to spawn a mini tutorial
+    [SerializeField] GameObject instructionBlock; //Block the flow of the game while the instruction is on
+
     [SerializeField] GameObject waitManager; //Appear between phases, phaseInstruction basically
     private bool onAwait = false; //True when the waitManager is active
 
@@ -49,13 +52,12 @@ public sealed class GameplayManager : MonoBehaviour{
             print("Jogo acabou");
             return;
         }
-        //DestroyAllInstantiated(); //I made the null treatment already
         //In the beggining it have no instance
 
         PoolObject(objRef); //Just setting the object to true or false, not actually a entire poll
         
         ManagerWait(); //This will make something that wait for the player interaction
-        WaitFor();
+        WaitFor(); //Wait until 
     }
 
     private void ManagerWait(){
@@ -77,14 +79,18 @@ public sealed class GameplayManager : MonoBehaviour{
 
     public bool Check(int numberPhase){
         if(onAwait && numberPhase == actualPhase){
+            PhaseManagerMono hold = gamePhases[actualPhase].manager;
             PoolObject(objRef); //Make the wait manager to be inactive
 
-            objRef =  gamePhases[actualPhase].manager.gameObject;
-            PoolObject(objRef); //Makes one of the PhaseManagers to be active
+            objRef =  hold.gameObject;
 
-            if(gamePhases[actualPhase].manager.GetInstructions() != null){
+            if(hold.GetInstructions() != null){
                 //Instantiate the instruction on the screen
+                hold.SpawnInstructions(); //Set the instructions
+                instructionBlock.SetActive(true);
             }
+
+            PoolObject(objRef); //Makes one of the PhaseManagers to be active
 
             RestartPhase(); //Change it back when there was no waitManager
             marking.ShowGoal(actualPhase); //Puts the actual phase as the goal of the gameplay

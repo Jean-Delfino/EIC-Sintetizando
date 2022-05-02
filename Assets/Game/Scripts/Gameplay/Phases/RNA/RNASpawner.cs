@@ -97,8 +97,12 @@ namespace PhasePart.RNA{
         }
 
         public void ResetValuesInRNA(){
+            int i = 0;
+
             foreach(Transform child in RNASpawn){
                 child.GetComponent<RNA>().SetValue("", defColor);
+                SetCorrespondentValidation(i, "");
+                i++;
             }
         }
 
@@ -116,6 +120,20 @@ namespace PhasePart.RNA{
             }
 
             return;
+        }
+
+        public void StartNewWaveDNAString(){ //Here we don't have the problem of "destroying" the DNA
+            string sub = originalPlace.CutDNAString();
+            int i = 0;
+
+            ResetValuesInRNA();
+            //print("Next phase = " + nextPhase);
+            originalPlace.ChangeDNAStructure(sub);
+
+            foreach(Transform child in RNASpawn){
+                child.GetComponent<RNA>().RNASetup(sub[i].ToString());
+                i++;
+            }
         }
 
         public void ConfirmPhase(){ //Can be used, but don make much sense
@@ -172,20 +190,6 @@ namespace PhasePart.RNA{
             //FilterRNABasedOnLetter(actualLetter);
         } //Best performance
 
-        public void StartNewWaveDNAString(){ //Here we don't have the problem of "destroying" the DNA
-            string sub = originalPlace.CutDNAString();
-            int i = 0;
-
-            ResetValuesInRNA();
-            originalPlace.ChangeDNAStructure(sub);
-
-            foreach(Transform child in RNASpawn){
-                child.GetComponent<RNA>().RNASetup(sub[i].ToString());
-                i++;
-            }
-        }
-
-        
         public void SetCorrespondentValidation(int index, string value){
             anwsers[index] = value; 
             //This change the CellNucleusManager

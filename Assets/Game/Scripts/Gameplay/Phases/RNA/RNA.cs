@@ -40,6 +40,7 @@ namespace PhasePart.RNA{
             if(GetValueInputText() == "") {
                 SetColor(RNAonwer.GetColorDef());
                 RNAonwer.ChangeQuantityToNextPhase(Convert.ToInt32(valueInput) * -1);
+                valueInput = false;
                 return;
             }
             

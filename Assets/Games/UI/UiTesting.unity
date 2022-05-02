@@ -587,16 +587,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2056135607}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d175c990eab1804fa6d9b9fbc39cf14, type: 3}
+  m_Script: {fileID: 11500000, guid: 54df35a4a6983b740866b68acedd8770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisInput: {fileID: 0}
   textLis:
   - myEvent:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 239793138}
-          m_TargetAssemblyTypeName: GeneralGetter, Assembly-CSharp
+          m_TargetAssemblyTypeName: GameGeneralScripts.Reflection.GeneralGetter,
+            Assembly-CSharp
           m_MethodName: FieldName
           m_Mode: 5
           m_Arguments:
@@ -604,7 +604,7 @@ MonoBehaviour:
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: namePlayer
+            m_StringArgument: textTeste
             m_BoolArgument: 0
           m_CallState: 2
     textField: {fileID: 1643977574}

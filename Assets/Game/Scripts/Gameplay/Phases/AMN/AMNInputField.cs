@@ -8,8 +8,8 @@ namespace PhasePart.AMN{
         [SerializeField] AMNManager amnM;
         private TMP_InputField thisInput;
         private void Start() {
-        thisInput = this.GetComponent<TMP_InputField>(); 
-        thisInput.onValueChanged.AddListener(delegate {ValueChangeCheck(); });
+            thisInput = this.GetComponent<TMP_InputField>(); 
+            thisInput.onValueChanged.AddListener(delegate {ValueChangeCheck(); });
         }
         private void OnSubmit(){ //When there is enough characters
             print("That it");
@@ -20,11 +20,19 @@ namespace PhasePart.AMN{
         }
 
         private void ValueChangeCheck(){
-            thisInput.text = thisInput.text.ToUpper();
+            thisInput.text = FormatText();
 
             if(thisInput.text.Length == AMNManager.GetSizeAMN()){
                 OnSubmit();
             }
+        }
+
+        private string FormatText(){
+            if(thisInput.text.Length == 1){
+                return thisInput.text.ToUpper();
+            }
+
+            return thisInput.text[0].ToString().ToUpper() + thisInput.text.Substring(1).ToLower(); 
         }
     }
 }

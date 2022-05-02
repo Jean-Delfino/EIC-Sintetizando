@@ -33,7 +33,7 @@ namespace PhasePart.RNA.DNA{
         }
 
         public void ChangeRNAinDNAStructure(int index, string text){
-            print("ENTROU CHANGE " + "INDEX = " + index + " " + text);
+            //print("ENTROU CHANGE " + "INDEX = " + index + " " + text);
             insideDNARNA.GetChild(index).GetComponent<Letter>().Setup(text);
         }
 

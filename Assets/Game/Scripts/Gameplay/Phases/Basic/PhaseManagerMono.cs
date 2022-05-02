@@ -13,6 +13,15 @@ namespace PhasePart{
         [SerializeField] List<string> textInstructions = default; //Used in the Marking
         [SerializeField] GameObject instructions; //More complex information, visual probably
 
+        private void Start() {}
+
+        public void SpawnInstructions(Transform spawn){
+            Instantiate<GameObject>(instructions, spawn);
+        }
+
+        public void SpawnInstructions(){
+            instructions.SetActive(true);
+        }
         public void EndPhase(){
             FindObjectOfType<GameplayManager>(true).IncreacePhase();
         }

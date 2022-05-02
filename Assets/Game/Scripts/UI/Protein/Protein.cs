@@ -23,6 +23,8 @@ namespace ProteinPart{
 
         private static VideoChoice videoChoice;
         static string path = "Assets/Game/Data/Proteinas.json"; 
+        
+        //static string path; 
 
         [SerializeField] string proteinName; //Could use the name of the gameObject, used in json
         [SerializeField] string synthesizedProteinName; //Diferent from the protein name
@@ -38,8 +40,17 @@ namespace ProteinPart{
         public class PD{
             public List<ProteinDeclaration> proteinValues;
         }
+        //Assets/Game/Data/Proteinas.json
 
+        private void Awake() {
+            //Assets/Resources/Data/Proteinas.json
+            //path = Application.persistentDataPath + "/Assets/Game/Data/Proteinas.json"; 
+            //path = Application.persistentDataPath + "Assets/Resources/Proteinas.json";
+            //path = "D:/Conta EIC/Area de trabalho/Sintetizando/EIC-Sintetizando/Assets/Resources/Proteinas.json";
+            //path = Path.Combine (Application.streamingAssetsPath, "Resources/Proteinas.json");
+        }
         void Start() {
+            //Debug.Log("PATH =  " + path);
             GetDNAString();
         }
 

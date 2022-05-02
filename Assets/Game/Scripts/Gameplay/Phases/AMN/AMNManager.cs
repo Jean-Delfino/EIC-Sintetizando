@@ -14,12 +14,14 @@ namespace PhasePart.AMN{
         [System.Serializable]
         private class AMNDescriber{
             public AMN value; //A,G,U,C
-            public Image table = null; //One quarter of the aminoacids circle
-        } 
+            public GameObject table = null; //One quarter of the aminoacids circle
+        }
 
         [SerializeField] List<AMNDescriber> basics; //The "tables" and their anwsers
-        [SerializeField] Letter letterPrefab;
-        [SerializeField] Transform letterSpawn;
+        private GameObject actualTable = null;
+
+        [SerializeField] Letter letterPrefab = default;
+        [SerializeField] Transform letterSpawn = default;
 
         private static int numberOfAMN = 7; 
         private int actualCompleted = 0; 
@@ -27,8 +29,12 @@ namespace PhasePart.AMN{
         private static int sizeAMN = 3;
 
         private static string RNAtoAMN; //Sub product of the RNASpawner completion
-        private string nameAMN; //Change in every input
         private int indexOfRNA = 0; //RNA control of the position
+
+        private string nameAMN; //Change in every input
+        
+        [SerializeField] AMNStack completedAMNstack = default;
+
 
         private void Start() {
             SpawnAMN();
@@ -70,6 +76,13 @@ namespace PhasePart.AMN{
             perc = basics.Find(x => {
                 return x.value.GetValue() == RNAstring[i].ToString();
             }).value; 
+
+            if(actualTable != null){
+                actualTable.SetActive(false);
+            }
+            
+            actualTable = basics[i].table;
+            actualTable.SetActive(true);
 
             for(i = 1; i < sizeAMN; i++){
 

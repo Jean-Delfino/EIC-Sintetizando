@@ -20,7 +20,7 @@ namespace PhasePart.RNA{
     public class CellNucleusManager : PhaseManagerMono{
         //[SerializeField] GameObject visualDNA = default; //Prototype
         [SerializeField] RNASpawner rnaReference; //Sets the RNA and the RNA sets it
-        [SerializeField] DNAStructureWithRNA dnaSetupReference; //Visual part of the DNA
+        [SerializeField] DNAManager dnaReference; // The original DNA
 
         const string DNAtranscriptionBeg = "TAC"; //Always the beg of the DNA
         string[] DNAtranscriptionEnd = {"ATT", "ATC", "ACT"}; //The end of the DNA
@@ -39,18 +39,19 @@ namespace PhasePart.RNA{
             }
 
             string firstCut = CutDNAString();
+            dnaReference.SetFiniteDNAString(firstCut);
 
             rnaReference.InstantiateAllRNABasedOnDNA(firstCut); //Just to set it first
-            dnaSetupReference.SetupStructure(quantity, firstCut); //Instantiate everything need in the visual DNAPart
+            dnaReference.SetupStructure(quantity, firstCut); //Instantiate everything need in the visual DNAPart
             EndPhase();
         }
 
         public void ChangeDNAStructure(string cut){
-            dnaSetupReference.ChangeAllFirstHalf(cut);
+            dnaReference.ChangeFirstHalf(cut);
         }
 
         public void ChangeRNAinDNAStructure(int index, string text){
-            dnaSetupReference.ChangeRNAinDNAStructure(index, text);
+            dnaReference.ChangeRNAinDNAStructure(index, text);
         }
 
         //Need to do all the animation of the game
@@ -67,24 +68,23 @@ namespace PhasePart.RNA{
                     sub = Util.RandomSubString(DNAString, quantity, 0, (DNAString.Length - quantity));
                     print("sub : " + sub);
                 }while(Util.FindOcorrence(sub, DNAtranscriptionEnd, AMNManager.GetSizeAMN()));
-            }while(!DNAWithAllBases(sub)); //Tests if it have at least one of all the bases (A,T,C,G)
+            }while(!DNAWithAllBases(sub, rnaReference.GetDictionaryKeysCount())); 
+            //Tests if it have at least one of all the bases (A,T,C,G)
 
             return sub;
         }
 
-        private bool DNAWithAllBases(string cut){
+        private bool DNAWithAllBases(string cut, int number){
             int i;
             List<char> bases = new List<char>();
 
             for(i = 0; i < cut.Length; i++){
                 if(!bases.Contains(cut[i])){
                     bases.Add(cut[i]);
+                    if(bases.Count == number){
+                        return true;
+                    }
                 }
-            }
-
-            if(bases.Count == rnaReference.GetDictionaryKeysCount()){
-                //print("AOBA");
-                return true;
             }
 
             return false;
@@ -96,7 +96,5 @@ namespace PhasePart.RNA{
         public static void SetDNAString(string proteinDNA){
             DNAString = proteinDNA;
         }
-
-        
     }
 }

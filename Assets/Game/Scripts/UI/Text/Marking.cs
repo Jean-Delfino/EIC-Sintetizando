@@ -11,7 +11,8 @@ using UnityEngine;
 
 namespace GameUserInterface.Text{
     public class Marking : MonoBehaviour{
-        [SerializeField] GameObject goal;
+        [SerializeField] GameObject goal = default;
+        [SerializeField] Transform spawnField = default;
 
         int currentGoal;
 
@@ -19,18 +20,18 @@ namespace GameUserInterface.Text{
             int i;
 
             for(i = 0; i < quantity; i++){
-                Instantiate<GameObject>(goal , this.transform);
+                Instantiate<GameObject>(goal , spawnField);
             }
             currentGoal = 0;
         }
 
         public void SpawnGoal(List<string> texts){
-            Instantiate<GameObject>(goal , this.transform).GetComponent<InfoEditableComponent>().Setup(texts,0);
+            Instantiate<GameObject>(goal , spawnField).GetComponent<InfoEditableComponent>().Setup(texts,0);
         }
 
         public void ShowGoal(int index){
-            this.transform.GetChild(currentGoal).GetChild(0).gameObject.SetActive(false);
-            this.transform.GetChild(index).GetChild(0).gameObject.SetActive(true);
+            spawnField.GetChild(currentGoal).GetChild(0).gameObject.SetActive(false);
+            spawnField.GetChild(index).GetChild(0).gameObject.SetActive(true);
         } //Just a prototype
     }
 }

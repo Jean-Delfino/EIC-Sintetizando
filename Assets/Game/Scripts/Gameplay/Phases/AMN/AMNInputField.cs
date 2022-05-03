@@ -12,7 +12,7 @@ namespace PhasePart.AMN{
             thisInput.onValueChanged.AddListener(delegate {ValueChangeCheck(); });
         }
         private void OnSubmit(){ //When there is enough characters
-            print("That it");
+            //print("That it");
             if(amnM.VerifyAMN(thisInput.text)){
                 thisInput.text = "";
             }
@@ -20,6 +20,10 @@ namespace PhasePart.AMN{
         }
 
         private void ValueChangeCheck(){
+            if(thisInput.text.Length == 0){
+                return;
+            }
+
             thisInput.text = FormatText();
 
             if(thisInput.text.Length == AMNManager.GetSizeAMN()){

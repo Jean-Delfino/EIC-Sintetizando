@@ -11,9 +11,13 @@ namespace PhasePart.RNA.DNA{
         [SerializeField] Transform secondHalfDNA;
         [SerializeField] Transform insideDNARNA;
 
+        int layoutSonAddition;
+
         public void SetupStructure(int quantity, string text){
             int i;
             Letter hold;
+
+            layoutSonAddition = firstHalfDNA.childCount;
 
             for(i = 0; i < quantity; i++){
                 hold = Instantiate<Letter>(prefabDisplay, firstHalfDNA);
@@ -24,17 +28,25 @@ namespace PhasePart.RNA.DNA{
             }
         }
 
+        public void ChangeAllSecondHalf(string text){
+            int i;
+
+            for(i = 0; i < secondHalfDNA.childCount; i++){
+                secondHalfDNA.GetChild(i + layoutSonAddition).GetComponent<Letter>().Setup(text[i].ToString());
+            }
+        }
+
         public void ChangeAllFirstHalf(string text){
             int i;
 
             for(i = 0; i < firstHalfDNA.childCount; i++){
-                firstHalfDNA.GetChild(i).GetComponent<Letter>().Setup(text[i].ToString());
+                firstHalfDNA.GetChild(i + layoutSonAddition).GetComponent<Letter>().Setup(text[i].ToString());
             }
         }
 
         public void ChangeRNAinDNAStructure(int index, string text){
             //print("ENTROU CHANGE " + "INDEX = " + index + " " + text);
-            insideDNARNA.GetChild(index).GetComponent<Letter>().Setup(text);
+            insideDNARNA.GetChild(index + layoutSonAddition).GetComponent<Letter>().Setup(text);
         }
 
         public void ChangeVisibilitySecondHalfDNA(){

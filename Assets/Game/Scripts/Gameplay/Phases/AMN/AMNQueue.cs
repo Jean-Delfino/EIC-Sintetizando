@@ -5,9 +5,17 @@ using UnityEngine;
 using GameUserInterface.Text;
 
 namespace PhasePart.AMN{
-    public class AMNStack : MonoBehaviour{
+    public class AMNQueue : MonoBehaviour{
         
         [SerializeField] Letter amnPrefab;
+
+        //[SerializeField] RIBOSSOMO
+
+        Color actualColor;
+
+        public void NewAMNInLine(){
+            //Generates a new color
+        }
 
         public void PushAMN(string amnName){
             Letter hold;

@@ -33,7 +33,7 @@ namespace PhasePart.AMN{
 
         private string nameAMN; //Change in every input
         
-        [SerializeField] AMNStack completedAMNstack = default;
+        [SerializeField] AMNQueue completedAMNstack = default;
 
 
         private void Start() {
@@ -100,7 +100,7 @@ namespace PhasePart.AMN{
         }
 
         public bool VerifyAMN(string AMN){
-            if(AMN == nameAMN){
+            if(AMN.ToUpper() == nameAMN.ToUpper()){
                 actualCompleted++;
                 EndPhase();
 

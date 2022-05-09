@@ -20,6 +20,10 @@ namespace PhasePart.RNA.DNA{
            dnaSetupReference.ChangeVisibilitySecondHalfDNA();
            base.EndPhase();
         }
+
+        public void TurnDNAOn(){
+            this.dnaSetupReference.GetHolderOfStructure().SetActive(true);
+        }
         public void SetFiniteDNAString(string finiteDNAString){
             this.finiteDNAString = finiteDNAString;
         }

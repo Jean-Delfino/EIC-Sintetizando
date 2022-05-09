@@ -44,6 +44,7 @@ namespace PhasePart.RNA{
             string sub = originalPlace.CutDNAString();
             RNA hold;
 
+            SetInputData(RNASpawn); //Protected function of all the InputPhase manager
             //sub = DNAtranscriptionBeg + sub + DNAtranscriptionEnd[Random.Range(0 , DNAtranscriptionEnd.Length)];
             SetInputData(RNASpawn); //Protected function of all the InputPhase manager
 
@@ -70,8 +71,9 @@ namespace PhasePart.RNA{
         public void InstantiateAllRNARandom(){
             int i;
             RNA hold;
-            SetInputData(RNASpawn);      
 
+            SetInputData(RNASpawn); //Protected function of all the InputPhase manager
+      
             for(i = 0 ; i < quantity ; i++){
                 hold = Instantiate<RNA>(prefab, RNASpawn);
                 hold.SetPosition(i); //Puts its original position, so i can build the "replic" vector

@@ -4,26 +4,18 @@ using UnityEngine;
 
 namespace GameUserInterface.Text{
     public class InfoComponent : MonoBehaviour{
-        [SerializeField] Transform childRef = null; //Where the information is
+        [SerializeField] GameObject childRef = null; //Where the information is
         private bool visibility = false;
 
         void Start(){
             if(childRef == null){
-                childRef = this.transform;
-            }
-        }
-
-        public void OnMouseInfoVisibility(){  //Mouse events normally
-            visibility = !visibility;
-            
-            foreach(Transform child in childRef){
-                child.gameObject.SetActive(visibility);
+                childRef = this.gameObject;
             }
         }
 
         public void SingleObjectVisibility(){
             visibility = !visibility;
-            childRef.gameObject.SetActive(visibility);
+            childRef.SetActive(visibility);
         }
     }
 }

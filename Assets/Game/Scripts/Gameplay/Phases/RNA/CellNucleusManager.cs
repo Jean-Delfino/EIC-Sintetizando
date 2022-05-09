@@ -40,9 +40,11 @@ namespace PhasePart.RNA{
 
             string firstCut = CutDNAString();
             dnaReference.SetFiniteDNAString(firstCut);
+            dnaReference.TurnDNAOn(); //A little more 
+            dnaReference.SetupStructure(quantity, firstCut); //Instantiate everything need in the visual DNAPart
 
             rnaReference.InstantiateAllRNABasedOnDNA(firstCut); //Just to set it first
-            dnaReference.SetupStructure(quantity, firstCut); //Instantiate everything need in the visual DNAPart
+
             EndPhase();
         }
 

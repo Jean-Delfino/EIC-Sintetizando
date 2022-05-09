@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 using UnityEngine.UI;
 
 using GameUserInterface.Text;
-/*Needs a input field child to work with*/
+
+/*
+    Needs a input field child to work with
+    See SendInput function in this class
+*/
 
 namespace PhasePart{
     public class TextWithInput : Letter{
         protected int originalPosition; //Works fine, can be useful later
-        [SerializeField] InputField mainInputField; //Used in the prefabs
+        [SerializeField] TMP_InputField mainInputField; //Used in the prefabs
 
         public static InputPhase owner;
 
@@ -34,7 +39,7 @@ namespace PhasePart{
             mainInputField.DeactivateInputField();
         }
 
-        public InputField GetMainInputField(){
+        public TMP_InputField GetMainInputField(){
             return this.mainInputField;
         }
 

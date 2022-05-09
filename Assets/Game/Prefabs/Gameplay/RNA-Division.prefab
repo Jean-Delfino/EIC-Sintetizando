@@ -300,7 +300,6 @@ GameObject:
   - component: {fileID: 7758649026670977171}
   - component: {fileID: 7758649026670977173}
   - component: {fileID: 7758649026670977172}
-  - component: {fileID: 8935040360443004033}
   m_Layer: 5
   m_Name: RNA-Division
   m_TagString: Untagged
@@ -348,7 +347,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 0
+  m_Spacing: 10
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -370,20 +369,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
---- !u!114 &8935040360443004033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7758649026670977170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65ea89e7a1f5bda46b414250f6888655, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainInputField: {fileID: 0}
-  lightConfirm: {fileID: 0}
 --- !u!1 &8540261198271354560
 GameObject:
   m_ObjectHideFlags: 0

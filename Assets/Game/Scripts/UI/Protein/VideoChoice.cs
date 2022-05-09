@@ -22,19 +22,19 @@ namespace ProteinPart{
         private int actualVideoClip;
 
         //public RawImage rawImage;
-        private Task videoTask;
+        //private Task videoTask;
     
 
         private void Start(){
             Protein.Setup(this);
             videoPlayer = GetComponent<VideoPlayer>();
-
+            /*
             Action<object> action = (object obj) =>
                                     {
-                                    FinishCheck();
+                                        FinishCheck();
                                     };
 
-            videoTask = new Task(action, null);
+            videoTask = new Task(action, null);*/
         }
 
         public void ChooseProtein(int index){
@@ -45,10 +45,10 @@ namespace ProteinPart{
             PlayVideo();
         }
 
-        private async Task FinishCheck(){
+        private IEnumerator FinishCheck(){
             print("Entrou aqui");
             while(videoPlayer.isPlaying){
-                await Task.Yield();
+                yield return null;
             }
 
             ShowScreen();
@@ -62,7 +62,8 @@ namespace ProteinPart{
         public void StopVideo(){
             if(!videoPlayer.isPlaying) return;
 
-            videoTask.Wait();
+            //videoTask.Wait();
+            StopCoroutine(FinishCheck());
             videoPlayer.Pause();
         }
 
@@ -70,7 +71,8 @@ namespace ProteinPart{
             if(videoPlayer.isPlaying) return;
 
             videoPlayer.Play();
-            videoTask.Start();
+            StartCoroutine(FinishCheck());
+            //videoTask.Start();
         }
 
         public void SkipVideo(){

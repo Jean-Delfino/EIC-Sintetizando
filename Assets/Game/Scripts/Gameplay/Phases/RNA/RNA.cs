@@ -24,7 +24,6 @@ namespace PhasePart.RNA{
         }
 
         public void RandomStart(){
-            
             GenerateText();
         }
 

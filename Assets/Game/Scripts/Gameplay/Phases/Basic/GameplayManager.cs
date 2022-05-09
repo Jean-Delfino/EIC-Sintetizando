@@ -26,7 +26,7 @@ public sealed class GameplayManager : MonoBehaviour{
         public List<string> messages = default; //Used by InfoDisplay
     }
 
-    [SerializeField] List<Phase> gamePhases;
+    [SerializeField] List<Phase> gamePhases; //List of managers
     private int actualPhase = -1;
 
     [SerializeField] Marking marking; //Denotates which is the current phase

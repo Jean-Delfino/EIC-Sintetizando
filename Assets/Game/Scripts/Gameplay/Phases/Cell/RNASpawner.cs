@@ -14,6 +14,9 @@ using PhasePart.AMN;
 
 namespace PhasePart.RNA{
     public class RNASpawner : InputPhase{
+        [Space]
+        [Header("RNA Manager Atributes")]
+        [Space]
         [SerializeField] CellNucleusManager originalPlace; //Where the RNA starts (the nucleus)
 
         private int quantity; //Needs to be multiple of 3, and it will because of the AMN

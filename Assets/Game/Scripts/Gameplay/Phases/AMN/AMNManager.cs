@@ -17,6 +17,10 @@ namespace PhasePart.AMN{
             public GameObject table = null; //One quarter of the aminoacids circle
         }
 
+        [Space]
+        [Header("AMN Manager Atributes")]
+        [Space]
+
         [SerializeField] List<AMNDescriber> basics; //The "tables" and their anwsers
         private GameObject actualTable = null;
 
@@ -33,14 +37,14 @@ namespace PhasePart.AMN{
 
         private string nameAMN; //Change in every input
         
-        [SerializeField] AMNQueue completedAMNstack = default;
+        [SerializeField] GameObject visualAMN; //Where all the tables, the ribossome and the transporter will be
+        [SerializeField] AMNQueue completedAMNstack = default; //Push a AMN when its ends
 
 
         private void Start() {
+            visualAMN.SetActive(true);
             SpawnAMN();
             SetAMN();
-            //SearchAMN("AUU");
-            //SearchAMN("ACG");
         }
 
         private void SpawnAMN(){

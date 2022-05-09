@@ -9,7 +9,7 @@ namespace PhasePart.AMN{
         
         [SerializeField] Letter amnPrefab;
 
-        //[SerializeField] RIBOSSOMO
+        [SerializeField] GameObject transporter;
 
         Color actualColor;
 

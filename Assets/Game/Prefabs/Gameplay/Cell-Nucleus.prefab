@@ -345,6 +345,7 @@ GameObject:
   - component: {fileID: 343992188851605539}
   - component: {fileID: 6775715251577742394}
   - component: {fileID: 708883785906236509}
+  - component: {fileID: 3104234719828513336}
   m_Layer: 5
   m_Name: DNA-Hold
   m_TagString: Untagged
@@ -439,6 +440,24 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &3104234719828513336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3315618362923861260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c2d61169c94e7c49b13ac8d56e4da1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabDisplay: {fileID: 8804357258214381281, guid: 99bb5df1f524c974f88f72e27f8db0d2, type: 3}
+  DNAHold: {fileID: 3315618362923861260}
+  firstHalfDNA: {fileID: 5341635429717313731}
+  secondHalfDNA: {fileID: 4345207428580383033}
+  secondHalfDNAObject: {fileID: 5065716514992717838}
+  insideDNARNA: {fileID: 2081956647526650009}
 --- !u!1 &3689847943202204749
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,7 +907,8 @@ GameObject:
   - component: {fileID: 5797033963906917099}
   - component: {fileID: 1264408571923965004}
   - component: {fileID: 7879897698936106703}
-  - component: {fileID: 6546892892563353013}
+  - component: {fileID: 7930233253658075592}
+  - component: {fileID: 8032377900623207448}
   m_Layer: 5
   m_Name: Cell-Nucleus
   m_TagString: Untagged
@@ -955,7 +975,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6546892892563353013
+--- !u!95 &7930233253658075592
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5087328998736695151}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b7c2da9e83c8d3543be134f7617ffac3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8032377900623207448
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -964,15 +1004,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5087328998736695151}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c2d61169c94e7c49b13ac8d56e4da1b, type: 3}
+  m_Script: {fileID: 11500000, guid: 95e15615f06faf74584bc10004e4eb9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabDisplay: {fileID: 8804357258214381281, guid: 99bb5df1f524c974f88f72e27f8db0d2, type: 3}
-  DNAHold: {fileID: 3315618362923861260}
-  firstHalfDNA: {fileID: 5341635429717313731}
-  secondHalfDNA: {fileID: 4345207428580383033}
-  secondHalfDNAObject: {fileID: 5065716514992717838}
-  insideDNARNA: {fileID: 2081956647526650009}
 --- !u!1 &5286268918379115949
 GameObject:
   m_ObjectHideFlags: 0

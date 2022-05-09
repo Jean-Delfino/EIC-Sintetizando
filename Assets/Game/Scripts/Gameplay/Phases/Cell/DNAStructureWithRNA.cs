@@ -7,11 +7,16 @@ using GameUserInterface.Text;
 namespace PhasePart.RNA.DNA{
     public class DNAStructureWithRNA : MonoBehaviour{
         [SerializeField] Letter prefabDisplay; 
-
         [SerializeField] GameObject DNAHold = default;
+
+        [Space]
         [SerializeField] Transform firstHalfDNA = default;
+
+        [Space]
         [SerializeField] Transform secondHalfDNA = default;
         [SerializeField] GameObject secondHalfDNAObject = default; 
+
+        [Space]
         [SerializeField] Transform insideDNARNA = default;
 
         int layoutSonAddition;
@@ -59,5 +64,9 @@ namespace PhasePart.RNA.DNA{
         public GameObject GetHolderOfStructure(){
             return DNAHold;
         }
+
+        //Animations
+
+        
     }
 }

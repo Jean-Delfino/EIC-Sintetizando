@@ -4,7 +4,11 @@ using UnityEngine;
 
 namespace PhasePart.RNA.DNA{
     public class DNAManager : PhaseManagerMono{
-        [SerializeField] DNAStructureWithRNA dnaSetupReference; //Visual part of the DNA
+        [Space]
+        [Header("DNA Manager Atributes")]
+        [Space]
+        [SerializeField] DNAStructureWithRNA dnaSetupReference = default; //Visual part of the DNA
+        [SerializeField] CellAnimator cellReferece = default; //Call all the animations
 
         private Dictionary<string, string> validationDNADNA = new Dictionary<string, string>(){
             {"A", "T"},

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 /*
     Before it was a placeholder, now it hold the basic information of the phase
@@ -9,11 +10,13 @@ using UnityEngine;
 
 namespace PhasePart{
     public class PhaseManagerMono : MonoBehaviour , PhaseManager{
-        [SerializeField] PhaseDescription pd; //Used in the mission
+        [Space]
+        [Header("Basic Manager Atributes")]
+        [Space]
+
+        [SerializeField] PhaseDescription phaseDescription; //Used in the mission
         [SerializeField] List<string> textInstructions = default; //Used in the Marking
         [SerializeField] GameObject instructions; //More complex information, visual probably
-
-        private void Start() {}
 
         public void SpawnInstructions(Transform spawn){
             Instantiate<GameObject>(instructions, spawn);
@@ -27,7 +30,7 @@ namespace PhasePart{
         }
 
         public PhaseDescription GetPhaseDescription(){
-            return this.pd;
+            return this.phaseDescription;
         }
 
         public List<string> GetTextInstructions(){

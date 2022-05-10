@@ -20,9 +20,12 @@ namespace PhasePart.RNA.DNA{
         private string finiteDNAString; //Gets it from the RNASpawner
 
         private void Start() {
-           dnaSetupReference.ChangeAllSecondHalf(CreateComplementarDNA()); 
-           dnaSetupReference.ChangeVisibilitySecondHalfDNA();
-           base.EndPhase();
+            dnaSetupReference.ChangeAllSecondHalf(CreateComplementarDNA()); //Create the complement of the DNA
+            dnaSetupReference.ChangeVisibilitySecondHalfDNA(); 
+
+            cellReferece.RNAEscapeNucleus();//Animation of the RNA passing the hole
+
+            base.EndPhase();
         }
 
         public void TurnDNAOn(){
@@ -54,6 +57,15 @@ namespace PhasePart.RNA.DNA{
             }
 
             return complement;
+        }
+
+        public void DNANucleusVisibility(bool state){
+            if(state){
+                cellReferece.ExpandCellNucleus();
+                return;
+            }
+
+            cellReferece.ShrinkCellNucleus();
         }
     }
 }

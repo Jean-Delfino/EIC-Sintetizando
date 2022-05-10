@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System;
 
 using UnityEngine;
-using Animation.Basic;
 
 namespace PhasePart.RNA.DNA{
-    public class CellAnimator : MonoBehaviour, AnimationController{
+
+    /*
+        Control all the animations of the Cell, self explanatory
+    */
+
+    public class CellAnimator : MonoBehaviour{
 
         Animator myAnimator;
         [SerializeField] GameObject nucleus;
         [SerializeField] GameObject notNuclues;
 
-        Action myAction;
+        //Action myAction;
 
         void Start(){
             myAnimator = gameObject.GetComponent<Animator>(); 
@@ -20,20 +24,30 @@ namespace PhasePart.RNA.DNA{
         
         //Expand cell nucleus
         public void ExpandCellNucleus(){
-            myAction = NotNucleusChange;
-            myAnimator.Play("ExpandNucleus");
-            //await PlayAnimationUntilEnd(myAnimator, "ExpandNucleus");
+            NotNucleusChange();
+
+            myAnimator.SetBool("Shrink", false);
+            myAnimator.SetBool("Expand", true);
         }
 
         //Shrink cell nucleus
         public void ShrinkCellNucleus(){
-            //await PlayAnimationUntilEnd(myAnimator, "ShrinkNucleus");
-            myAnimator.Play("ShrinkNucleus");
-            myAction = NotNucleusChange;
+            if(!notNuclues.activeSelf) NotNucleusChange();
+
+            myAnimator.SetBool("Expand", false);
+            myAnimator.SetBool("Shrink", true);
         }
 
-        public void AnimationColector(){
-            myAction();
+        public void Revert(){ //Not used, but could be
+            myAnimator.SetBool("Shrink", false);
+            myAnimator.SetBool("Expand", false);
+            myAnimator.SetBool("Revert", true);
+        }
+
+        public void RNAEscapeNucleus(){
+            if(!notNuclues.activeSelf) NotNucleusChange();
+
+            myAnimator.SetBool("RNAEscape", true);
         }
 
         public void NotNucleusChange(){

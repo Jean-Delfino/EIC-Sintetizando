@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
+using PhasePart.RNA.DNA;
 using GameUserInterface.Text;
 
 //Unity Lerp
@@ -42,6 +43,8 @@ namespace PhasePart.AMN{
 
 
         private void Start() {
+            //FindObjectOfType<DNAManager>(true).DNANucleusVisibility(false); It shrink it the DNAManager already
+            
             visualAMN.SetActive(true);
             SpawnAMN();
             SetAMN();

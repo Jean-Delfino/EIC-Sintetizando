@@ -44,7 +44,8 @@ namespace PhasePart.RNA{
             dnaReference.SetupStructure(quantity, firstCut); //Instantiate everything need in the visual DNAPart
 
             rnaReference.InstantiateAllRNABasedOnDNA(firstCut); //Just to set it first
-
+            dnaReference.DNANucleusVisibility(true); //Expand the nucleus
+                
             EndPhase();
         }
 

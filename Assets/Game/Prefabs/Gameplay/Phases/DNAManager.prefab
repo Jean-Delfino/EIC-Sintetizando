@@ -49,11 +49,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46ab6b75e048b0945944f7a2ef669ecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pd:
-    namePhase: Saida do RNA
-    descriptionPhase: Aqui o rna sai por um buraquinho no DNA
+  phaseDescription:
+    namePhase: DNAMANAGER
+    descriptionPhase: "N\xC3O TEM DESCRI\xC7\xC3O"
     additionalInfo: {fileID: 0}
   textInstructions:
   - "Essa parte \xE9 totalmente visual"
   instructions: {fileID: 0}
   dnaSetupReference: {fileID: 0}
+  cellReferece: {fileID: 0}

@@ -51,15 +51,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9436a74761bc264e81cd574b1cf63fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pd:
-    namePhase: "Parte da c\xE9lula"
-    descriptionPhase: Quando o DNA nao foi quebrado ainda
+  phaseDescription:
+    namePhase: A
+    descriptionPhase: AAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
     additionalInfo: {fileID: 0}
   textInstructions:
   - "Isso deve fazer algo que ainda n\xE3o sei exatamente"
   instructions: {fileID: 0}
   rnaReference: {fileID: 0}
-  dnaSetupReference: {fileID: 0}
+  dnaReference: {fileID: 0}
 --- !u!222 &807698542915809970
 CanvasRenderer:
   m_ObjectHideFlags: 0

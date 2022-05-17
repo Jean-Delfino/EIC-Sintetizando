@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
+<<<<<<< Updated upstream
+=======
+using GameUserInterface.Animation;
+>>>>>>> Stashed changes
 using UnityEngine;
 
 namespace PhasePart.RNA.DNA{
@@ -10,6 +14,7 @@ namespace PhasePart.RNA.DNA{
         Control all the animations of the Cell, self explanatory
     */
 
+<<<<<<< Updated upstream
     public class CellAnimator : MonoBehaviour{
 
         Animator myAnimator;
@@ -23,14 +28,23 @@ namespace PhasePart.RNA.DNA{
         }
         
         //Expand cell nucleus
+=======
+    public class CellAnimator : AnimatorUser{
+        [SerializeField] GameObject nucleus;
+        [SerializeField] GameObject notNuclues;
+        
+>>>>>>> Stashed changes
         public void ExpandCellNucleus(){
             NotNucleusChange();
 
             myAnimator.SetBool("Shrink", false);
             myAnimator.SetBool("Expand", true);
         }
+<<<<<<< Updated upstream
 
         //Shrink cell nucleus
+=======
+>>>>>>> Stashed changes
         public void ShrinkCellNucleus(){
             if(!notNuclues.activeSelf) NotNucleusChange();
 
@@ -44,7 +58,11 @@ namespace PhasePart.RNA.DNA{
             myAnimator.SetBool("Revert", true);
         }
 
+<<<<<<< Updated upstream
         public void RNAEscapeNucleus(){
+=======
+        public void RNAEscapeNucleus(){ //The RNA escape from a hole in the DNA
+>>>>>>> Stashed changes
             if(!notNuclues.activeSelf) NotNucleusChange();
 
             myAnimator.SetBool("RNAEscape", true);

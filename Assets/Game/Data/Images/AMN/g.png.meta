@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream:Assets/Game/Data/Images/AMN/g.png.meta
 guid: b0b9a47a8c25b714b9d832194cc5fc79
+=======
+guid: 7882e91e9aa13a746827d60c18781b2c
+>>>>>>> Stashed changes:Assets/Game/Data/Images/AMN/Table-A.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

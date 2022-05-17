@@ -21,30 +21,44 @@ namespace PhasePart.AMN{
         [Space]
         [Header("AMN Manager Atributes")]
         [Space]
+<<<<<<< Updated upstream
 
         [SerializeField] List<AMNDescriber> basics; //The "tables" and their anwsers
         private GameObject actualTable = null;
 
+=======
+
+        [SerializeField] List<AMNDescriber> basics = default; //The "tables" and their anwsers
+        private GameObject actualTable = null;
+
+>>>>>>> Stashed changes
         [SerializeField] Letter letterPrefab = default;
         [SerializeField] Transform letterSpawn = default;
 
         private static int numberOfAMN = 7; 
         private int actualCompleted = 0; 
+        private const int ribossomeMaxNumber = 3;
 
         private static int sizeAMN = 3;
-
         private static string RNAtoAMN; //Sub product of the RNASpawner completion
         private int indexOfRNA = 0; //RNA control of the position
 
         private string nameAMN; //Change in every input
         
+<<<<<<< Updated upstream
         [SerializeField] GameObject visualAMN; //Where all the tables, the ribossome and the transporter will be
+=======
+        [SerializeField] GameObject visualAMN = default; //Where all the tables, the ribossome and the transporter will be
+>>>>>>> Stashed changes
         [SerializeField] AMNQueue completedAMNstack = default; //Push a AMN when its ends
 
 
         private void Start() {
+<<<<<<< Updated upstream
             //FindObjectOfType<DNAManager>(true).DNANucleusVisibility(false); It shrink it the DNAManager already
             
+=======
+>>>>>>> Stashed changes
             visualAMN.SetActive(true);
             SpawnAMN();
             SetAMN();
@@ -69,6 +83,7 @@ namespace PhasePart.AMN{
                 indexOfRNA++;
             }
 
+            completedAMNstack.NewAMNInLine(actualCompleted + ribossomeMaxNumber < numberOfAMN,actualCompleted.ToString());
             SearchAMN(RNAstring);
         }
 
@@ -79,10 +94,19 @@ namespace PhasePart.AMN{
         private void SearchAMN(string RNAstring){
             int i = 0;
             AMN perc;
+            AMNDescriber hold;
 
-            perc = basics.Find(x => {
+            hold = basics.Find(x => {
                 return x.value.GetValue() == RNAstring[i].ToString();
-            }).value; 
+            }); 
+
+            if(actualTable != null){
+                actualTable.SetActive(false);
+            }
+            
+            perc = hold.value;
+            actualTable = hold.table;
+            actualTable.SetActive(true);
 
             if(actualTable != null){
                 actualTable.SetActive(false);
@@ -99,7 +123,6 @@ namespace PhasePart.AMN{
                     }) != null;
                 });
             }
-
 
             nameAMN = perc.GetAMN(0).GetValue().ToUpper();
             print(nameAMN);

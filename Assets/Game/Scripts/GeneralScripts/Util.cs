@@ -95,6 +95,11 @@ public static class Util{
         return index;
     }
 
+<<<<<<< Updated upstream
+=======
+    //String
+
+>>>>>>> Stashed changes
     public static string RandomSubString(string origin, int lenghtCUT, int min, int max){
         int position = UnityEngine.Random.Range(0, max);
         //return DNAString.Substring(position, quantity - (2 *  AMNManager.GetSizeAMN()));
@@ -130,4 +135,32 @@ public static class Util{
         return UnityEvent.GetValidMethodInfo(obj, 
             m_myEvent.GetPersistentMethodName(eventIndex), argumentType);
     }
+
+    //Color
+    
+    public static Color RandomSolidColor(){
+        int count = 0;
+        int i = 0;
+        float number;
+        float[] tableTruthFillet = new float[3];
+
+        while(i < 3 && count < 3){
+            number = UnityEngine.Random.Range(0f,1f);
+            tableTruthFillet[i] = number; 
+
+            if(number != 0f){
+                count++;
+            }
+
+            i++;
+        }
+
+        if(count == 0){
+            tableTruthFillet[0] = 1f; //color Red
+        }
+
+        return new Color(tableTruthFillet[0], tableTruthFillet[1], tableTruthFillet[2]);
+    }
+
+
 }

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +10,6 @@ using TMPro;
 using PhasePart;
 using PhasePart.Wait;
 using GameUserInterface.Text;
-
-//Colocar o Pooling
 
 /*
     Component responsable for the Gameplay, it organize the flow, but not the interactions
@@ -33,14 +33,21 @@ public sealed class GameplayManager : MonoBehaviour{
     [SerializeField] InfoDisplay info; //Show the messages in the gamePhases
 
     //[SerializeField] Transform phaseInstructionSpawn; //Used in the beginning of the phase to spawn a mini tutorial
-    [SerializeField] GameObject instructionBlock; //Block the flow of the game while the instruction is on
-
+    [Space]
+    [Header("Extra Phase Related Atributes")]
+    [Space]
+    
+    [SerializeField] InstructionManager iM;
     [SerializeField] GameObject waitManager; //Appear between phases, phaseInstruction basically
     private bool onAwait = false; //True when the waitManager is active
+    private bool onInstruction = false;
 
     private GameObject objRef = null; //Ref to the waitManager OR PhaseManagerMono
 
+
     private void Start(){
+        //iM.SetInstructionReminder(ShowInstruction);
+
         SpawnAllGoals(); //Spawn the information in the PhaseManager
         IncreacePhase(); //actualPhase always just increace, so starting with -1 is correct
     }
@@ -63,6 +70,9 @@ public sealed class GameplayManager : MonoBehaviour{
     private void ManagerWait(){
         objRef = waitManager; //The first object objRef gets is waitManager, always
         PoolObject(objRef); //Set it to active
+        //Make the WaitManager visible
+        Util.ChangeAlphaCanvasImageAnimation(objRef.GetComponent<CanvasGroup>(),
+            1f, 0.75f);
 
         PhaseDescription aux = gamePhases[actualPhase].manager.GetPhaseDescription();
         objRef.GetComponent<MissionManager>().Setup(actualPhase, aux.GetName(), 
@@ -77,28 +87,97 @@ public sealed class GameplayManager : MonoBehaviour{
         }
     }
 
-    public bool Check(int numberPhase){
+    public async Task<bool> Check(int numberPhase){
         if(onAwait && numberPhase == actualPhase){
             PhaseManagerMono hold = gamePhases[actualPhase].manager;
+            //Make the WaitManager invisible
+            Util.ChangeAlphaCanvasImageAnimation(objRef.GetComponent<CanvasGroup>(),
+            0f, 0.3f);
+
             PoolObject(objRef); //Make the wait manager to be inactive
-
-            objRef =  hold.gameObject;
-
-            if(hold.GetInstructions() != null){
-                //Instantiate the instruction on the screen
-                hold.SpawnInstructions(); //Set the instructions
-                instructionBlock.SetActive(true);
-            }
-
-            PoolObject(objRef); //Makes one of the PhaseManagers to be active
+            objRef =  hold.gameObject; //Manager
 
             RestartPhase(); //Change it back when there was no waitManager
             marking.ShowGoal(actualPhase); //Puts the actual phase as the goal of the gameplay
+            
+            if(hold.GetInstructions() != null){
+                //"Instantiate" the instruction on the screen
+                hold.SpawnInstructions(); //Set the instructions
+                await ShowInstruction(hold);
+                await WaitFirstCloseInstruction();
+                return true;
+            }
+            
+            iM.ButtonChangeOfScaleAnimation(new Vector3(0, 0, 1), 2f);
+            PoolObject(objRef); //Makes one of the PhaseManagers to be active
+            
             return true;
         }   
 
         return false;
     }
+
+    private async Task WaitFirstCloseInstruction(){
+        while(onInstruction == true){
+            await Task.Yield();
+        }
+
+        PoolObject(objRef); //Makes one of the PhaseManagers to be active
+    }
+
+    //Invisible to black
+    public async void ShowInstruction(){
+        if(gamePhases[actualPhase].manager.GetInstructions() == null){
+            await Task.Yield();
+            return;
+        }
+
+        onInstruction = true;
+        float time = iM.GetFadeTime();
+        
+        iM.gameObject.SetActive(true);
+        
+        //Fade In
+        Util.ChangeAlphaCanvasImageAnimation(iM.gameObject.GetComponent<CanvasGroup>(),
+            1f, iM.GetFadeTime());
+
+        await Task.Delay(Util.ConvertToMili(time));
+
+        gamePhases[actualPhase].manager.StartAnimation();
+    }
+
+    //Same as the above, but with a diferrent name to be more readable
+    //And less acess to the gamePhases
+    private async Task ShowInstruction(PhaseManagerMono hold){
+        onInstruction = true;
+        float time = iM.GetFadeTime();
+
+        iM.gameObject.SetActive(true);
+        
+        //Fade In
+        Util.ChangeAlphaCanvasImageAnimation(iM.gameObject.GetComponent<CanvasGroup>(),
+            1f, iM.GetFadeTime());
+
+        hold.StartAnimation();
+        await Task.Delay(Util.ConvertToMili(time));
+    }
+
+    //Used in all the instructions "Close Buttons", not a script though
+    //Sequencial await 
+    public async void ShowInstructionReminder(){
+        float time = iM.GetFadeTime();
+
+        //Fade Out
+        Util.ChangeAlphaCanvasImageAnimation(iM.gameObject.GetComponent<CanvasGroup>(),
+            0f, time);
+
+        await Task.Delay(Util.ConvertToMili(time));
+        onInstruction = false;
+
+        iM.gameObject.SetActive(false);
+        iM.ButtonChangeOfScaleAnimation(new Vector3(1, 1, 1), 2f);
+    }
+
     public void WaitFor(){
         onAwait = true;
     }

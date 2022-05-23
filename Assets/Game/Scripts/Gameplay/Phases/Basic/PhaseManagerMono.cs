@@ -22,8 +22,16 @@ namespace PhasePart{
             Instantiate<GameObject>(instructions, spawn);
         }
 
-        public void SpawnInstructions(){
+        public GameObject SpawnInstructions(){ //Kinda of a good practice
             instructions.SetActive(true);
+            return instructions;
+        }
+
+        public void StartAnimation(){
+            instructions.GetComponent<Animator>().SetBool("Instruction", true);
+        }
+        public void StopAnimation(){
+            instructions.GetComponent<Animator>().SetBool("Instruction", false);
         }
         public void EndPhase(){
             FindObjectOfType<GameplayManager>(true).IncreacePhase();

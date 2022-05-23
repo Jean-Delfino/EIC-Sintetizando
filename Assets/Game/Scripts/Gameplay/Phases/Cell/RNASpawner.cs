@@ -117,7 +117,7 @@ namespace PhasePart.RNA{
         }
 
         public new void EndPhase(){
-            print("Next phase = " + nextPhase);
+            //print("Next phase = " + nextPhase);
             if(nextPhase == quantity){
                 //Here its change phases
                 AMNManager.SetRNAtoAMNString(Util.ConvertToString(anwsers));

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Threading.Tasks;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,22 +34,25 @@ namespace PhasePart.AMN{
         private int actualCompleted = 0; 
 
         private static int sizeAMN = 3;
+        private const int ribossomeMaxNumber = 3; //Number of ribossome in the transcription
+        private bool animationPause = false; //Used in the VerifyAMN to pause the game
 
         private static string RNAtoAMN; //Sub product of the RNASpawner completion
         private int indexOfRNA = 0; //RNA control of the position
 
         private string nameAMN; //Change in every input
         
-        [SerializeField] GameObject visualAMN; //Where all the tables, the ribossome and the transporter will be
-        [SerializeField] AMNQueue completedAMNstack = default; //Push a AMN when its ends
+        [SerializeField] GameObject visualAMN = default; //Where all the tables, the ribossome and the transporter will be
+        [SerializeField] AMNQueue completedAMNQueue = default; //Push a AMN when its ends
 
 
         private void Start() {
             //FindObjectOfType<DNAManager>(true).DNANucleusVisibility(false); It shrink it the DNAManager already
-            
             visualAMN.SetActive(true);
+
             SpawnAMN();
             SetAMN();
+            SetAllRibossome();
         }
 
         private void SpawnAMN(){
@@ -72,6 +77,10 @@ namespace PhasePart.AMN{
             SearchAMN(RNAstring);
         }
 
+        private async void SetAllRibossome(){
+            await completedAMNQueue.SetAllRibossomeEnter(ribossomeMaxNumber);
+        }
+
         public static void SetRNAtoAMNString(string RNA){
             AMNManager.RNAtoAMN = RNA;
         }
@@ -79,16 +88,18 @@ namespace PhasePart.AMN{
         private void SearchAMN(string RNAstring){
             int i = 0;
             AMN perc;
-
-            perc = basics.Find(x => {
+            AMNDescriber hold;
+            
+            hold = basics.Find(x => {
                 return x.value.GetValue() == RNAstring[i].ToString();
-            }).value; 
+            }); 
 
             if(actualTable != null){
                 actualTable.SetActive(false);
-            }
-            
-            actualTable = basics[i].table;
+            }  
+
+            perc = hold.value;
+            actualTable = hold.table;
             actualTable.SetActive(true);
 
             for(i = 1; i < sizeAMN; i++){
@@ -106,15 +117,32 @@ namespace PhasePart.AMN{
             //ShowAMN(RNAstring); Test
         }
 
-        public bool VerifyAMN(string AMN){
+        public async Task<bool> VerifyAMN(string AMN){
             if(AMN.ToUpper() == nameAMN.ToUpper()){
+                await WaitAnimationFlow(); //False on the first one
+
                 actualCompleted++;
+                QueueNewAMN(); //Push AMN to queue and Ribossome animation
                 EndPhase();
 
                 return true;
             }
 
             return false;
+        }
+
+        private async void QueueNewAMN(){
+            animationPause = true;
+            
+            await completedAMNQueue.NewAMNInLine(actualCompleted + ribossomeMaxNumber < (numberOfAMN + 1),(actualCompleted+ribossomeMaxNumber).ToString());
+
+            animationPause = false;
+        }
+
+        private async Task WaitAnimationFlow(){
+            while(animationPause){
+                await Task.Yield();
+            }
         }
 
         private void ShowAMN(string phrase){
@@ -129,7 +157,7 @@ namespace PhasePart.AMN{
         public new void EndPhase(){
             if(actualCompleted == numberOfAMN){
                 //Here its change phases
-                print("ENTROU");
+                //print("ENTROU");
                 base.EndPhase();
                 return;
             }

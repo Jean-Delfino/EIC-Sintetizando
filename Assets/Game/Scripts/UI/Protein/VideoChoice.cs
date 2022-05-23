@@ -18,6 +18,10 @@ namespace ProteinPart{
         [SerializeField] List<VideoClip> videoClips = new List<VideoClip>();
         [SerializeField] Transform screens;
 
+        [SerializeField] GameObject transition; //for now it should be enough
+
+        private float animationsTime = 1f;
+
         private VideoPlayer videoPlayer;
         private int actualVideoClip;
 
@@ -54,10 +58,23 @@ namespace ProteinPart{
             ShowScreen();
         }
 
-        private void ShowScreen(){
+        private async void ShowScreen(){
             this.gameObject.SetActive(false); //Instanteneous stop all coroutine
-            screens.GetChild(actualVideoClip).gameObject.SetActive(true);
+
+            await PlayTransitionIn();
         }
+
+        private async Task PlayTransitionIn(){
+            transition.SetActive(true);
+            
+            //Black to invisible
+            Util.ChangeAlphaImageAnimation(transition.GetComponent<RectTransform>(), 0f, animationsTime);
+
+            screens.GetChild(actualVideoClip).gameObject.SetActive(true);
+
+            await Task.Delay(Util.ConvertToMili(animationsTime));
+            transition.SetActive(false); //Just to be sure, not needed
+        }   
 
         public void StopVideo(){
             if(!videoPlayer.isPlaying) return;

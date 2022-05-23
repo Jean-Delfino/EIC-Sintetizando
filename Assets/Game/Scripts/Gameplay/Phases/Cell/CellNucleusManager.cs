@@ -44,8 +44,14 @@ namespace PhasePart.RNA{
             dnaReference.SetupStructure(quantity, firstCut); //Instantiate everything need in the visual DNAPart
 
             rnaReference.InstantiateAllRNABasedOnDNA(firstCut); //Just to set it first
-            dnaReference.DNANucleusVisibility(true); //Expand the nucleus
-                
+            
+            //Expand the nucleus
+            DNAAnimation();
+        }
+
+        private async void DNAAnimation(){
+            await dnaReference.DNANucleusVisibility(true);
+
             EndPhase();
         }
 
@@ -69,7 +75,7 @@ namespace PhasePart.RNA{
                 do{
                     //Cuts a part of the DNA to make the substring
                     sub = Util.RandomSubString(DNAString, quantity, 0, (DNAString.Length - quantity));
-                    print("sub : " + sub);
+                    //print("sub : " + sub);
                 }while(Util.FindOcorrence(sub, DNAtranscriptionEnd, AMNManager.GetSizeAMN()));
             }while(!DNAWithAllBases(sub, rnaReference.GetDictionaryKeysCount())); 
             //Tests if it have at least one of all the bases (A,T,C,G)

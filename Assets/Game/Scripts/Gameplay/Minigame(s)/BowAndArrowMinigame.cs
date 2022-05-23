@@ -5,6 +5,8 @@ using UnityEngine;
 
 //Use Pooling
 
+//Use Instantiate diferent
+
 /*
     Rotates a Bow and Shoots a arrow on the player click
     If the Card is correct this phases end and a GameplayManager phase is called

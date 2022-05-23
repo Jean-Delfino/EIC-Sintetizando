@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 using UnityEngine;
 using TMPro;
 
@@ -11,9 +13,9 @@ namespace PhasePart.AMN{
             thisInput = this.GetComponent<TMP_InputField>(); 
             thisInput.onValueChanged.AddListener(delegate {ValueChangeCheck(); });
         }
-        private void OnSubmit(){ //When there is enough characters
+        private async void OnSubmit(){ //When there is enough characters
             //print("That it");
-            if(amnM.VerifyAMN(thisInput.text)){
+            if(await amnM.VerifyAMN(thisInput.text)){
                 thisInput.text = "";
             }
             //Error ? Change the score ?

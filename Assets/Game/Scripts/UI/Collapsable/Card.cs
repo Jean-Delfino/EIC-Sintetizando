@@ -13,8 +13,8 @@ namespace GameUserInterface.Collapsable{
         private void OnDestroy() {
             this.transform.parent.GetComponent<BodyCard>().CheckEnd();
         }
-        public void OnClick(){
-            if(FindObjectOfType<GameplayManager>().Check(numberPhase)){
+        public async void OnClick(){
+            if(await FindObjectOfType<GameplayManager>().Check(numberPhase)){
                 Destroy(this.gameObject);
             }
         }

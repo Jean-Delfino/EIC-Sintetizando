@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System;
+
 using UnityEngine;
+
 
 namespace PhasePart.RNA.DNA{
     public class DNAManager : PhaseManagerMono{
@@ -8,7 +12,7 @@ namespace PhasePart.RNA.DNA{
         [Header("DNA Manager Atributes")]
         [Space]
         [SerializeField] DNAStructureWithRNA dnaSetupReference = default; //Visual part of the DNA
-        [SerializeField] CellAnimator cellReferece = default; //Call all the animations
+        [SerializeField] CellAnimator cellReference = default; //Call all the animations
 
         private Dictionary<string, string> validationDNADNA = new Dictionary<string, string>(){
             {"A", "T"},
@@ -23,7 +27,12 @@ namespace PhasePart.RNA.DNA{
             dnaSetupReference.ChangeAllSecondHalf(CreateComplementarDNA()); //Create the complement of the DNA
             dnaSetupReference.ChangeVisibilitySecondHalfDNA(); 
 
-            cellReferece.RNAEscapeNucleus();//Animation of the RNA passing the hole
+            //Animation of the RNA passing the hole
+            RNAEscapeAnimation();
+        }
+
+        private async void RNAEscapeAnimation(){
+            await Task.Delay(Util.ConvertToMili(cellReference.RNAEscapeNucleus()));
 
             base.EndPhase();
         }
@@ -59,13 +68,14 @@ namespace PhasePart.RNA.DNA{
             return complement;
         }
 
-        public void DNANucleusVisibility(bool state){
+        public async Task DNANucleusVisibility(bool state){
             if(state){
-                cellReferece.ExpandCellNucleus();
+                await Task.Delay(Util.ConvertToMili(cellReference.ExpandCellNucleus()));
                 return;
             }
 
-            cellReferece.ShrinkCellNucleus();
+            await Task.Delay(Util.ConvertToMili(cellReference.ShrinkCellNucleus()));
+            return;
         }
     }
 }

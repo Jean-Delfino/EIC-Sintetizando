@@ -31,6 +31,7 @@ namespace GameUserInterface.Text{
 
         public void ShowGoal(int index){
             spawnField.GetChild(currentGoal).GetChild(0).gameObject.SetActive(false);
+            currentGoal = index;
             spawnField.GetChild(index).GetChild(0).gameObject.SetActive(true);
         } //Just a prototype
     }

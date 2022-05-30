@@ -15,5 +15,9 @@ namespace PhasePart.AMN{
         public void SetAMNColor(Color newColor){
             AMNcolor.color = newColor;
         }
+
+        public Image ReturnAMNLetterImage(){
+            return AMNcolor;
+        }
     }
 }

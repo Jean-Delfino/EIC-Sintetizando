@@ -56,7 +56,12 @@ namespace PhasePart.AMN{
 
         private Transform firtsOne = null;
 
-        /*
+        [SerializeField] Transform amnQueue = default;
+        [SerializeField] GameObject amnPrefab = default;
+
+        [SerializeField] float howMuchSpace = -43;
+
+        
         private void Start() {
             SetPool(3);
             Tests();
@@ -70,7 +75,7 @@ namespace PhasePart.AMN{
             await RibossomeEnter(Util.RandomSolidColor(),"4");
             await RibossomeExit(amnQueue,amnPrefab);
             await RibossomeEnter(Util.RandomSolidColor(),"5");
-        }*/
+        }
 
         private void PoolObjectReset(Transform newElement, GameObject childZero){
             pool.Enqueue(newElement.gameObject);
@@ -96,6 +101,13 @@ namespace PhasePart.AMN{
             }
         }
 
+        private void ChangeColorSimbolRibossome(Color newColor){
+            AMNLetter moveObjectAmn = simbolRibossome.GetChild(1).GetComponent<AMNLetter>();
+
+            LeanTween.color(simbolRibossome.GetChild(0).GetComponent<RectTransform>(), newColor, fadeColorTime);
+            LeanTween.color(moveObjectAmn.ReturnAMNLetterImage().transform.GetComponent<RectTransform>(), newColor, fadeColorTime);
+        }   
+
         //Every object in the queue has a AMN (except the last one)
         //So we need to animate this too
         //Waste destination is the AMN queue
@@ -107,19 +119,29 @@ namespace PhasePart.AMN{
             moveObjectAmn.SetParent(holdRibossome); //Deparenting it from moveObject
             
             Task[] taskAnimation = new Task[2];
-            taskAnimation[0] = MoveTowardsEnter(moveObjectAmn, wasteDestination.GetChild(wasteDestination.childCount-1), 1f, animationsTime);
+            //(Transform moveObject, Transform target,float scaleMultiplier, float time)
+            taskAnimation[0] = MoveTowardsEnter(moveObjectAmn, wasteDestination.GetChild(0), 0f, animationsTime);
             taskAnimation[1] = MoveTowardsExit(moveObject, holdRibossome, endTarget, animationsTime);
 
             await Task.WhenAll(taskAnimation);
 
             PoolObjectReset(moveObject, childPrefab); //Enqueue and setting it correctly
+            DestroyImmediate(moveObjectAmn.gameObject);
+            //moveObjectAmn.SetParent(wasteDestination); //Don't need to change the Sinbling Index
+            //moveObjectAmn.SetSiblingIndex(wasteDestination.childCount-2);
+            LeanTween.moveY(wasteDestination.GetComponent<RectTransform>(), wasteDestination.position.y + howMuchSpace, 1f);
+            
+            await Task.Delay(Util.ConvertToMili(1f));
 
-            moveObjectAmn.SetParent(wasteDestination); //Don't need to change the Sinbling Index
-            moveObjectAmn.SetSiblingIndex(wasteDestination.childCount-2);
+            simbolRibossome.GetChild(1).SetParent(wasteDestination);
+            Instantiate<GameObject>(childPrefab, simbolRibossome);
+
+            LeanTween.moveY(wasteDestination.GetComponent<RectTransform>(), wasteDestination.position.y - howMuchSpace, 1f);
+
+            await Task.Delay(Util.ConvertToMili(1f));
 
             if(queue.childCount > 1) {
-                LeanTween.color(simbolRibossome, queue.GetChild(0).
-                        GetComponent<Image>().color, fadeColorTime);
+                ChangeColorSimbolRibossome(queue.GetChild(0).GetComponent<Image>().color);
                 
                 await Task.Delay(Util.ConvertToMili(fadeColorTime));
             }
@@ -214,13 +236,12 @@ namespace PhasePart.AMN{
             if(queue.childCount == 2 && firtsOne == null){
                 firtsOne = hold.transform;
                 await MoveTowardsEnter(false, hold.transform, queue, queue.GetChild(0), 2.5f, animationsTime);
-                
-                LeanTween.color(simbolRibossome, hold.
-                    GetComponent<Image>().color, fadeColorTime);
+                ChangeColorSimbolRibossome(hold.GetComponent<Image>().color);
             
                 await Task.Delay(Util.ConvertToMili(fadeColorTime));
                 return;
             }
+
             await MoveTowardsEnter(true, hold.transform, queue, queue.GetChild(queue.childCount-1), 2.5f, animationsTime);
             //(Transform moveObject, Transform newParent, Transform target,float scaleMultiplier, float time)
         }

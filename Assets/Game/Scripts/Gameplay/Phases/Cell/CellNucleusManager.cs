@@ -37,26 +37,29 @@ namespace PhasePart.RNA{
             if(random){
                 rnaReference.InstantiateAllRNARandom();
             }
-            dnaReference.TurnDNAOn(); //Turn visible all the DNA structure, visible now
+            
+            //dnaReference.TurnDNAOn(); //Turn visible all the DNA structure, visible now
 
             //Separate the DNA and Expand the nucleus 
             DNAAnimations();
         }
 
         private async void DNAAnimations(){
-            //string firstCut = CutDNAString(); //
+            string firstCut = CutDNAString(); //
 
-            //dnaReference.SetFiniteDNAString(firstCut); //Puts cutted DNA on DNA
-            //dnaReference.SetupStructure(quantity, firstCut); //Instantiate everything need in the visual DNAPart
-            //dnaReference.ChangeSecondHalf();
+            dnaReference.SetFiniteDNAString(firstCut); //Puts cutted DNA on DNA
+            dnaReference.SetupStructure(quantity, firstCut); //Instantiate everything need in the visual DNAPart
+            dnaReference.ChangeSecondHalf(); //Complementar DNA
 
             //dnaReference.TurnDNAOn();
             //await dnaReference.DNASeparation();
 
-            //rnaReference.InstantiateAllRNABasedOnDNA(firstCut); //Just to set it first
-            await dnaReference.RNAVisibility();
+            rnaReference.InstantiateAllRNABasedOnDNA(firstCut); //Just to set it first
+            
+            await dnaReference.RNAVisibility(); //RNA visible
+            await dnaReference.DNASeparation(); //
+
             await dnaReference.DNANucleusVisibility(true);
-            await dnaReference.DNASeparation();
 
             EndPhase();
         }

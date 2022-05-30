@@ -98,20 +98,10 @@ namespace PhasePart.RNA.DNA{
             await Task.Delay(Util.ConvertToMili(1f));
 
             dnaSecond.SetActive(false);
+
+            Util.ChangeAlphaCanvasImageAnimation(dnaSecond.GetComponent<CanvasGroup>(),
+                1f, 0f);
         }
-        /*
-        public async Task DNASeparation(){
-            GameObject dnaRna = dnaSetupReference.GetRNADNA();
-
-            dnaRna.SetActive(true);
-
-            LeanTween.scale(dnaRna, new Vector3(1, 1, 1), 1f);
-
-            await Task.Delay(Util.ConvertToMili(1f));
-
-            return;
-        }*/
-
 
         public async Task DNANucleusVisibility(bool state){
             if(state){

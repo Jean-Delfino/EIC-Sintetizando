@@ -201,13 +201,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  animationsTime: 4
+  animationsTime: 1.5
+  fadeTime: 2
   fadeColorTime: 1
   ribossomePrefab: {fileID: 8651739193420691894, guid: edbc0e85abc34684885d6b4a12986591, type: 3}
   simbolRibossome: {fileID: 1900450266}
   rectTransformValuesReference: {fileID: 2030041317}
-  amnQueue: {fileID: 917450689}
-  amnPrefab: {fileID: 6792064276605649701, guid: 10b8402b3913caf43a5de668edfec826, type: 3}
   howMuchSpace: -43
 --- !u!1 &121766254
 GameObject:
@@ -1558,7 +1557,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2508306711304623180, guid: 10b8402b3913caf43a5de668edfec826, type: 3}
       propertyPath: m_Alpha
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6792064276605649700, guid: 10b8402b3913caf43a5de668edfec826, type: 3}
       propertyPath: m_Pivot.x

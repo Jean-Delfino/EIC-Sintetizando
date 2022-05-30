@@ -61,7 +61,7 @@ namespace PhasePart.RNA.DNA{
             if(!notNuclues.activeSelf) NotNucleusChange();
 
             myAnimator.SetBool("RNAEscape", true);
-            return animationTime / 0.8f; //Actual speed of this animation
+            return animationTime / 0.5f; //Actual speed of this animation
         }
 
         public void NotNucleusChange(){

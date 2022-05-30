@@ -78,7 +78,9 @@ namespace PhasePart.AMN{
         }
 
         private async void SetAllRibossome(){
+            animationPause = true;
             await completedAMNQueue.SetAllRibossomeEnter(ribossomeMaxNumber);
+            animationPause = false;
         }
 
         public static void SetRNAtoAMNString(string RNA){
@@ -122,7 +124,7 @@ namespace PhasePart.AMN{
                 await WaitAnimationFlow(); //False on the first one
 
                 actualCompleted++;
-                QueueNewAMN(); //Push AMN to queue and Ribossome animation
+                QueueNewAMN(AMN); //Push AMN to queue and Ribossome animation
                 EndPhase();
 
                 return true;
@@ -131,10 +133,11 @@ namespace PhasePart.AMN{
             return false;
         }
 
-        private async void QueueNewAMN(){
+        private async void QueueNewAMN(string amnName){
             animationPause = true;
             
-            await completedAMNQueue.NewAMNInLine(actualCompleted + ribossomeMaxNumber < (numberOfAMN + 1),(actualCompleted+ribossomeMaxNumber).ToString());
+            await completedAMNQueue.NewAMNInLine(actualCompleted + ribossomeMaxNumber < (numberOfAMN + 1),
+                (actualCompleted+ribossomeMaxNumber).ToString(), amnName);
 
             animationPause = false;
         }

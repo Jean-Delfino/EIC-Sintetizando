@@ -13,13 +13,13 @@ namespace PhasePart.AMN{
         [SerializeField] Letter amnPrefab = default;
         [SerializeField] RibossomeAnimator transporterList = default;
 
-        public async Task NewAMNInLine(bool newRb, string amnName){
+        public async Task NewAMNInLine(bool newRb, string amnNumber, string amnName){
             actualColor = Util.CreateNewDifferentColor(actualColor);           
 
-            await transporterList.RibossomeExit(this.transform, amnPrefab.gameObject);
+            await transporterList.RibossomeExit(this.transform, amnPrefab.gameObject, amnName);
 
             if(newRb){
-                await transporterList.RibossomeEnter(actualColor, amnName);
+                await transporterList.RibossomeEnter(actualColor, amnNumber);
             }
 
             //PushAMN(amnName); Not needed anymore, see RibossomeExit

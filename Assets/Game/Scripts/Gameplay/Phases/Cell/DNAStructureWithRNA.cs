@@ -62,8 +62,9 @@ namespace PhasePart.RNA.DNA{
             insideDNARNA.GetChild(index + layoutSonAddition).GetComponent<Letter>().Setup(text);
         }
 
+
         public void ChangeVisibilitySecondHalfDNA(bool state){
-            secondHalfDNAObject.transform.GetChild(1).gameObject.SetActive(state);
+            secondHalfDNAObject.SetActive(state);
         }
 
         public GameObject GetHolderOfStructure(){

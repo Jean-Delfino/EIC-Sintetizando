@@ -33,6 +33,12 @@ namespace PhasePart.RNA.DNA{
             return animationTime;
         }
 
+        public float SeparateDNA(){
+            myAnimator.SetBool("Separate", true);
+
+            return animationTime;
+        }
+
         //Shrink cell nucleus
         public float ShrinkCellNucleus(){
             if(!notNuclues.activeSelf) NotNucleusChange();
@@ -59,6 +65,11 @@ namespace PhasePart.RNA.DNA{
         }
 
         public void NotNucleusChange(){
+            int valueScale = Convert.ToInt32(!notNuclues.activeSelf);
+
+            Util.ChangeAlphaCanvasImageAnimation(notNuclues.
+                GetComponent<CanvasGroup>(),valueScale,animationTime);
+            
             notNuclues.SetActive(!notNuclues.activeSelf);
         }
     }

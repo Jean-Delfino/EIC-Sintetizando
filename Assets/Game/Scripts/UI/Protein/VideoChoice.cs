@@ -8,6 +8,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
+using GameUserInterface.Animation;
+
 /*
     This code pick one VideoChoice and set a videoPlayer, its also set some video options
     Like pause, play and skip.
@@ -18,16 +20,13 @@ namespace ProteinPart{
         [SerializeField] List<VideoClip> videoClips = new List<VideoClip>();
         [SerializeField] Transform screens;
 
-        [SerializeField] GameObject transition; //for now it should be enough
-
-        private float animationsTime = 1f;
+        [SerializeField] TransitionController myTransition = default;
 
         private VideoPlayer videoPlayer;
         private int actualVideoClip;
 
-        //public RawImage rawImage;
         //private Task videoTask;
-    
+        bool pause;
 
         private void Start(){
             Protein.Setup(this);
@@ -45,47 +44,46 @@ namespace ProteinPart{
             videoPlayer.clip = videoClips[index];
             actualVideoClip = index;
             this.transform.GetChild(0).gameObject.SetActive(true); //The buttons
-            //rawImage.texture = videoPlayer.texture;//----------
             PlayVideo();
         }
 
         private IEnumerator FinishCheck(){
-            print("Entrou aqui");
             while(videoPlayer.isPlaying){
                 yield return null;
             }
 
-            ShowScreen();
+            if(!pause){
+                ShowScreen();
+            }
         }
 
         private async void ShowScreen(){
+            print("Entrou aqui Show Screen");
             this.gameObject.SetActive(false); //Instanteneous stop all coroutine
 
-            await PlayTransitionIn();
+            await PlayTransitionIn(); //Don't get finished in SetActive(false)
         }
 
         private async Task PlayTransitionIn(){
-            transition.SetActive(true);
-            
-            //Black to invisible
-            Util.ChangeAlphaImageAnimation(transition.GetComponent<RectTransform>(), 0f, animationsTime);
+            myTransition.EnableTransition();
 
             screens.GetChild(actualVideoClip).gameObject.SetActive(true);
-
-            await Task.Delay(Util.ConvertToMili(animationsTime));
-            transition.SetActive(false); //Just to be sure, not needed
+            await Task.Delay(myTransition.PlayTransitionFadeIn());
+            
+            myTransition.DisableTransition(); //Just to be sure, not needed
         }   
 
         public void StopVideo(){
             if(!videoPlayer.isPlaying) return;
+            pause = true;
 
-            //videoTask.Wait();
             StopCoroutine(FinishCheck());
             videoPlayer.Pause();
         }
 
         public void PlayVideo(){
             if(videoPlayer.isPlaying) return;
+            pause = false;
 
             videoPlayer.Play();
             StartCoroutine(FinishCheck());

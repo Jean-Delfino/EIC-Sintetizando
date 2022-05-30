@@ -273,6 +273,7 @@ GameObject:
   - component: {fileID: 7170385565459342945}
   - component: {fileID: 7170385565459342950}
   - component: {fileID: 7551402957522627126}
+  - component: {fileID: 8422825704366688814}
   m_Layer: 5
   m_Name: MissionManager
   m_TagString: Untagged
@@ -358,6 +359,18 @@ MonoBehaviour:
   missionName: {fileID: 6768229347262169911}
   missionDescription: {fileID: 60816493505443088}
   additionalInformation: {fileID: 0}
+--- !u!225 &8422825704366688814
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7170385565459342948}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &5737980649070487228
 PrefabInstance:
   m_ObjectHideFlags: 0

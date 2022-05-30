@@ -20,10 +20,11 @@ namespace PhasePart.AMN{
 
         Use pooling
         
+        
+        AMNQueue values
+        
         //[SerializeField] Transform amnQueue = default;
         //[SerializeField] GameObject amnPrefab = default;
-
-        AMNQueue values
     */
     public class RibossomeAnimator : AnimatorUser{
 
@@ -54,7 +55,7 @@ namespace PhasePart.AMN{
         [SerializeField] RectTransform rectTransformValuesReference;
 
         private Transform firtsOne = null;
-        
+
         /*
         private void Start() {
             SetPool(3);

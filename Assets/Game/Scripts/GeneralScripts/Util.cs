@@ -147,10 +147,8 @@ public static class Util{
                 i++;
                 continue;
             }
-
-            if(tableTruthFillet[i] == 0){
-                tableTruthFillet[i] = (float) rand.NextDouble(); 
-            }
+            
+            tableTruthFillet[i] = (float) rand.NextDouble(); 
 
             if(tableTruthFillet[i] != 0){
                 count++;

@@ -18,6 +18,7 @@ namespace Menu{
                 Debug.LogWarning("SELECTION MANAGER NULL");
             }
         }
+        
         public void Resume(){
             selection.ChangePartitionByIndex(index);
         }

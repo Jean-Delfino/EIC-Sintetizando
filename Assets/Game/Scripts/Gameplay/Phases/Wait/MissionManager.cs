@@ -24,6 +24,7 @@ namespace PhasePart.Wait{
             Instantiate<GameObject>(information, this.additionalInformation);
         }
 
+        //Ok not to be async
         public void OnClickUnBlock(){
             WaitCheck(); //Protected function
         }

@@ -206,6 +206,8 @@ MonoBehaviour:
   ribossomePrefab: {fileID: 8651739193420691894, guid: edbc0e85abc34684885d6b4a12986591, type: 3}
   simbolRibossome: {fileID: 1900450266}
   rectTransformValuesReference: {fileID: 2030041317}
+  amnQueue: {fileID: 121766255}
+  amnPrefab: {fileID: 6792064276605649701, guid: 10b8402b3913caf43a5de668edfec826, type: 3}
 --- !u!1 &121766254
 GameObject:
   m_ObjectHideFlags: 0

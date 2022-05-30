@@ -1,6 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
 using UnityEngine;
+
+using GameUserInterface.Animation;
 
 /*
     Used in the first part of the game
@@ -13,13 +18,18 @@ using UnityEngine;
 namespace Menu{
     public class SelectionManager : MonoBehaviour{
         [SerializeField] float gap = 2;
+
         [SerializeField] GameObject boltSelection;
-        [SerializeField] int actualSelected;
-        private Transform childRef;
-        int childQTD;
+        [SerializeField] int actualSelected; //Bolt
+
+        private Transform childRef; 
+        int childQTD; //Qtd of childs in this transform
 
         [SerializeField] Transform partitionsFather;
-        GameObject father;
+
+        GameObject father; //Father of this transform
+
+        [SerializeField] TransitionController tC;
 
         void OnEnable(){
             StartCoroutine(ChangeBolt());
@@ -97,14 +107,27 @@ namespace Menu{
             }
         }
 
-        public void ChangePartitionByIndex(int index){
+        public async void ChangePartitionByIndex(int index){
             GameObject hold = partitionsFather.GetChild(index).gameObject;
-            hold.SetActive(!hold.activeSelf);
+
+            //await Task.Delay(tC.PlayTransitionIn(TransitionController.
+            //    TransitionType.OverTheScreen));
 
             father.SetActive(!father.activeSelf);
+            hold.SetActive(!hold.activeSelf);
+            
+            //await Task.Delay(tC.PlayTransitionOut(TransitionController.
+            //    TransitionType.OverTheScreen));
+            
+            //tC.RemoveTransitionComplete();
+
             actualSelected = index; //Just to be sure
 
             //Sound when "clicked"
+
+        }
+
+        public void BackToMenu(){
 
         }
 

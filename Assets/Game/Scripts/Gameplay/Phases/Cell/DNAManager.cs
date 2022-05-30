@@ -24,8 +24,8 @@ namespace PhasePart.RNA.DNA{
         private string finiteDNAString; //Gets it from the RNASpawner
 
         private void Start() {
-            dnaSetupReference.ChangeAllSecondHalf(CreateComplementarDNA()); //Create the complement of the DNA
-            dnaSetupReference.ChangeVisibilitySecondHalfDNA(); 
+            ChangeSecondHalf();
+            dnaSetupReference.ChangeVisibilitySecondHalfDNA(true);
 
             //Animation of the RNA passing the hole
             RNAEscapeAnimation();
@@ -44,6 +44,8 @@ namespace PhasePart.RNA.DNA{
             this.finiteDNAString = finiteDNAString;
         }
 
+
+        //Dna setup settings
         public void SetupStructure(int quantity, string firstCut){
             dnaSetupReference.SetupStructure(quantity, firstCut);
         }
@@ -53,10 +55,16 @@ namespace PhasePart.RNA.DNA{
             dnaSetupReference.ChangeAllFirstHalf(cut);
         }
 
+        public void ChangeSecondHalf(){
+            //Create the complement of the DNA
+            dnaSetupReference.ChangeAllSecondHalf(CreateComplementarDNA()); 
+        }
+
         public void ChangeRNAinDNAStructure(int index, string text){
             dnaSetupReference.ChangeRNAinDNAStructure(index, text);
         }
 
+        //Uses the Validation table
         private string CreateComplementarDNA(){
             string complement = "";
             int i;
@@ -67,6 +75,43 @@ namespace PhasePart.RNA.DNA{
 
             return complement;
         }
+
+
+        //Animations
+        public async Task RNAVisibility(){
+            GameObject dnaRna = dnaSetupReference.GetRNADNA();
+            
+            dnaRna.SetActive(true);
+
+            Util.ChangeAlphaCanvasImageAnimation(dnaRna.GetComponent<CanvasGroup>(),
+                1f, 1f);
+
+            await Task.Delay(Util.ConvertToMili(1f));
+        }
+
+        public async Task DNASeparation(){
+            GameObject dnaSecond = dnaSetupReference.GetSecondHalf();
+
+            Util.ChangeAlphaCanvasImageAnimation(dnaSecond.GetComponent<CanvasGroup>(),
+                0f, 1f);
+            
+            await Task.Delay(Util.ConvertToMili(1f));
+
+            dnaSecond.SetActive(false);
+        }
+        /*
+        public async Task DNASeparation(){
+            GameObject dnaRna = dnaSetupReference.GetRNADNA();
+
+            dnaRna.SetActive(true);
+
+            LeanTween.scale(dnaRna, new Vector3(1, 1, 1), 1f);
+
+            await Task.Delay(Util.ConvertToMili(1f));
+
+            return;
+        }*/
+
 
         public async Task DNANucleusVisibility(bool state){
             if(state){

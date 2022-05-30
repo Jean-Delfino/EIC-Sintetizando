@@ -47,8 +47,11 @@ public sealed class GameplayManager : MonoBehaviour{
 
     private void Start(){
         //iM.SetInstructionReminder(ShowInstruction);
-
         SpawnAllGoals(); //Spawn the information in the PhaseManager
+    }
+
+    public void StartGame(){
+        actualPhase = -1;
         IncreacePhase(); //actualPhase always just increace, so starting with -1 is correct
     }
 

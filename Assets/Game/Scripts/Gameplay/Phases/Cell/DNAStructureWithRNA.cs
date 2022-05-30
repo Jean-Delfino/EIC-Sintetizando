@@ -10,20 +10,22 @@ namespace PhasePart.RNA.DNA{
         [SerializeField] GameObject DNAHold = default;
 
         [Space]
-        [SerializeField] Transform firstHalfDNA = default;
-
+        [Header("GameObjects to the Animations")]
         [Space]
-        [SerializeField] Transform secondHalfDNA = default;
+
+        [SerializeField] GameObject firstHalfDNAObject = default; 
         [SerializeField] GameObject secondHalfDNAObject = default; 
-
-        [Space]
-        [SerializeField] Transform insideDNARNA = default;
+        [SerializeField] GameObject insideRNADNAObject = default; 
 
         int layoutSonAddition;
 
         public void SetupStructure(int quantity, string text){
             int i;
             Letter hold;
+
+            Transform firstHalfDNA = firstHalfDNAObject.transform.GetChild(1);
+            Transform secondHalfDNA = secondHalfDNAObject.transform.GetChild(1);
+            Transform insideDNARNA = insideRNADNAObject.transform.GetChild(1);
 
             layoutSonAddition = firstHalfDNA.childCount;
 
@@ -38,6 +40,7 @@ namespace PhasePart.RNA.DNA{
 
         public void ChangeAllSecondHalf(string text){
             int i;
+            Transform secondHalfDNA = secondHalfDNAObject.transform.GetChild(1);
 
             for(i = 0; i < secondHalfDNA.childCount; i++){
                 secondHalfDNA.GetChild(i + layoutSonAddition).GetComponent<Letter>().Setup(text[i].ToString());
@@ -46,6 +49,7 @@ namespace PhasePart.RNA.DNA{
 
         public void ChangeAllFirstHalf(string text){
             int i;
+            Transform firstHalfDNA = firstHalfDNAObject.transform.GetChild(1);
 
             for(i = 0; i < firstHalfDNA.childCount; i++){
                 firstHalfDNA.GetChild(i + layoutSonAddition).GetComponent<Letter>().Setup(text[i].ToString());
@@ -53,20 +57,29 @@ namespace PhasePart.RNA.DNA{
         }
 
         public void ChangeRNAinDNAStructure(int index, string text){
-            //print("ENTROU CHANGE " + "INDEX = " + index + " " + text);
+            Transform insideDNARNA = insideRNADNAObject.transform.GetChild(1);
+            
             insideDNARNA.GetChild(index + layoutSonAddition).GetComponent<Letter>().Setup(text);
         }
 
-        public void ChangeVisibilitySecondHalfDNA(){
-            secondHalfDNAObject.SetActive(true);
+        public void ChangeVisibilitySecondHalfDNA(bool state){
+            secondHalfDNAObject.transform.GetChild(1).gameObject.SetActive(state);
         }
 
         public GameObject GetHolderOfStructure(){
             return DNAHold;
         }
 
-        //Animations
+        public GameObject GetRNADNA(){
+            return insideRNADNAObject;
+        }
 
-        
+        public GameObject GetFirstHalf(){
+            return firstHalfDNAObject;
+        }
+
+        public GameObject GetSecondHalf(){
+            return secondHalfDNAObject;
+        }
     }
 }

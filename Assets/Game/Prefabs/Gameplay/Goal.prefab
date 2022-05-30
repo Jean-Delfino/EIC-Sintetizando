@@ -214,8 +214,9 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1133473174275096207}
-          m_TargetAssemblyTypeName: GameUserInterface.Text.InfoComponent, Assembly-CSharp
-          m_MethodName: SingleObjectVisibility
+          m_TargetAssemblyTypeName: GameUserInterface.Text.InfoEditableComponent,
+            Assembly-CSharp
+          m_MethodName: SetExternalTextVisible
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -230,8 +231,9 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1133473174275096207}
-          m_TargetAssemblyTypeName: GameUserInterface.Text.InfoComponent, Assembly-CSharp
-          m_MethodName: SingleObjectVisibility
+          m_TargetAssemblyTypeName: GameUserInterface.Text.InfoEditableComponent,
+            Assembly-CSharp
+          m_MethodName: SetExternalTextVisible
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -334,8 +336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childRef: {fileID: 8859102382875864454}
-  texts:
-  - {fileID: 2801787814667538319}
+  texts: []
 --- !u!1 &3430379194908761654
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 using GameUserInterface.Text;
 
+//Colocar nome aminoácidos
+
 namespace PhasePart.AMN{
     public class AMNLetter : Letter{
         [SerializeField] Image AMNcolor = default;

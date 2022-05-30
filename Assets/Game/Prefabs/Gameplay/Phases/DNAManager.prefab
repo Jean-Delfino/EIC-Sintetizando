@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2082586499854933013}
   - component: {fileID: 1249367191}
+  - component: {fileID: 569274660651924530}
   m_Layer: 5
   m_Name: DNAManager
   m_TagString: Untagged
@@ -57,4 +58,16 @@ MonoBehaviour:
   - "Essa parte \xE9 totalmente visual"
   instructions: {fileID: 0}
   dnaSetupReference: {fileID: 0}
-  cellReferece: {fileID: 0}
+  cellReference: {fileID: 0}
+--- !u!225 &569274660651924530
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6710892949579701222}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

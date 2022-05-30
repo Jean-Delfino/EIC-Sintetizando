@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4262674112026321472, guid: d3e90e662a46ff74c98983b5f978d7fe, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4262674112026321473, guid: d3e90e662a46ff74c98983b5f978d7fe, type: 3}
       propertyPath: m_RootOrder
@@ -679,10 +679,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5af8f2b0fa8064ea6787d042b87124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pd:
+  phaseDescription:
     namePhase: 
     descriptionPhase: 
     additionalInfo: {fileID: 0}
+  textInstructions: []
+  instructions: {fileID: 0}
   originalScene: {fileID: 119114145}
   bow: {fileID: 125909223}
   thrownSpeed: {x: 0, y: 0, z: 100}

@@ -37,20 +37,26 @@ namespace PhasePart.RNA{
             if(random){
                 rnaReference.InstantiateAllRNARandom();
             }
+            dnaReference.TurnDNAOn(); //Turn visible all the DNA structure, visible now
 
-            string firstCut = CutDNAString();
-            dnaReference.SetFiniteDNAString(firstCut);
-            dnaReference.TurnDNAOn();
-            dnaReference.SetupStructure(quantity, firstCut); //Instantiate everything need in the visual DNAPart
-
-            rnaReference.InstantiateAllRNABasedOnDNA(firstCut); //Just to set it first
-            
-            //Expand the nucleus
-            DNAAnimation();
+            //Separate the DNA and Expand the nucleus 
+            DNAAnimations();
         }
 
-        private async void DNAAnimation(){
+        private async void DNAAnimations(){
+            //string firstCut = CutDNAString(); //
+
+            //dnaReference.SetFiniteDNAString(firstCut); //Puts cutted DNA on DNA
+            //dnaReference.SetupStructure(quantity, firstCut); //Instantiate everything need in the visual DNAPart
+            //dnaReference.ChangeSecondHalf();
+
+            //dnaReference.TurnDNAOn();
+            //await dnaReference.DNASeparation();
+
+            //rnaReference.InstantiateAllRNABasedOnDNA(firstCut); //Just to set it first
+            await dnaReference.RNAVisibility();
             await dnaReference.DNANucleusVisibility(true);
+            await dnaReference.DNASeparation();
 
             EndPhase();
         }
@@ -75,7 +81,6 @@ namespace PhasePart.RNA{
                 do{
                     //Cuts a part of the DNA to make the substring
                     sub = Util.RandomSubString(DNAString, quantity, 0, (DNAString.Length - quantity));
-                    //print("sub : " + sub);
                 }while(Util.FindOcorrence(sub, DNAtranscriptionEnd, AMNManager.GetSizeAMN()));
             }while(!DNAWithAllBases(sub, rnaReference.GetDictionaryKeysCount())); 
             //Tests if it have at least one of all the bases (A,T,C,G)

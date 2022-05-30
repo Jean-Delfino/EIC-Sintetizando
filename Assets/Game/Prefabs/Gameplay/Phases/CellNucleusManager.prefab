@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7523869105389573679}
   - component: {fileID: 807698542915809970}
   - component: {fileID: 807698542915809969}
+  - component: {fileID: 9115644990207987630}
   m_Layer: 5
   m_Name: CellNucleusManager
   m_TagString: Untagged
@@ -98,3 +99,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &9115644990207987630
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085751355193392449}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

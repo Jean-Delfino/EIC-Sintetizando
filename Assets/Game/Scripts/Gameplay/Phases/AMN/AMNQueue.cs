@@ -13,10 +13,10 @@ namespace PhasePart.AMN{
         [SerializeField] Letter amnPrefab = default;
         [SerializeField] RibossomeAnimator transporterList = default;
 
-        public async Task NewAMNInLine(bool newRb, string amnNumber, string amnName){
+        public async Task NewAMNInLine(bool lastOne, bool newRb, string amnNumber, string amnName){
             actualColor = Util.CreateNewDifferentColor(actualColor);           
 
-            await transporterList.RibossomeExit(this.transform, amnPrefab.gameObject, amnName);
+            await transporterList.RibossomeExit(lastOne, this.transform, amnPrefab.gameObject, amnName);
 
             if(newRb){
                 await transporterList.RibossomeEnter(actualColor, amnNumber);
@@ -30,7 +30,7 @@ namespace PhasePart.AMN{
 
             transporterList.SetPool(ribossomeMaxNumber);
 
-            for(i = 0; i < ribossomeMaxNumber; i++){
+            for(i = 0; i < ribossomeMaxNumber - 1; i++){ //Set the max, but in the begginning only two will be spawned
                 actualColor = Util.CreateNewDifferentColor(actualColor);
                 await transporterList.RibossomeEnter(actualColor, (i+1).ToString());
             }
@@ -38,7 +38,7 @@ namespace PhasePart.AMN{
             await Task.Yield();
         }
 
-        public void PushAMN(string amnName){
+        public void PushAMN(string amnName){ //Old
             Letter hold;
 
             hold = Instantiate<Letter>(amnPrefab, this.transform);

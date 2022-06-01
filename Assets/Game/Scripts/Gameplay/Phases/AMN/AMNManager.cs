@@ -136,7 +136,8 @@ namespace PhasePart.AMN{
         private async void QueueNewAMN(string amnName){
             animationPause = true;
             
-            await completedAMNQueue.NewAMNInLine(actualCompleted + ribossomeMaxNumber < (numberOfAMN + 1),
+            await completedAMNQueue.NewAMNInLine(actualCompleted == (numberOfAMN - 1), 
+                actualCompleted + ribossomeMaxNumber < (numberOfAMN + 1),
                 (actualCompleted+ribossomeMaxNumber).ToString(), amnName);
 
             animationPause = false;

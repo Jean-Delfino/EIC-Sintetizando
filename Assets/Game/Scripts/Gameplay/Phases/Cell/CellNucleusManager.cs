@@ -22,13 +22,14 @@ namespace PhasePart.RNA{
         [SerializeField] RNASpawner rnaReference; //Sets the RNA and the RNA sets it
         [SerializeField] DNAManager dnaReference; // The original DNA
 
-        const string DNAtranscriptionBeg = "TAC"; //Always the beg of the DNA
-        string[] DNAtranscriptionEnd = {"ATT", "ATC", "ACT"}; //The end of the DNA
-        static string DNAString; //Original DNA string of the protein
+        private const string DNAtranscriptionBeg = "TAC"; //Always the beg of the DNA
+        private string[] DNAtranscriptionEnd = {"ATT", "ATC", "ACT"}; //The end of the DNA
+        private static string DNAString; //Original DNA string of the protein
 
-        static bool random = false; //Sets if the start is a random protein or not
+        private static bool random = false; //Sets if the start is a random protein or not
 
         private int quantity;
+
         private void Start(){
             quantity = AMNManager.GetNumberOfAMN() * AMNManager.GetSizeAMN();
 
@@ -57,7 +58,7 @@ namespace PhasePart.RNA{
             rnaReference.InstantiateAllRNABasedOnDNA(firstCut); //Just to set it first
             
             await dnaReference.RNAVisibility(); //RNA visible
-            await dnaReference.DNASeparation(); //
+            await dnaReference.DNASeparation(); 
 
             await dnaReference.DNANucleusVisibility(true);
 
@@ -89,6 +90,10 @@ namespace PhasePart.RNA{
             //Tests if it have at least one of all the bases (A,T,C,G)
 
             return sub;
+        }
+
+        public string GetAEndingString(){
+            return DNAtranscriptionEnd[UnityEngine.Random.Range(0, DNAtranscriptionBeg.Length)];
         }
 
         private bool DNAWithAllBases(string cut, int number){

@@ -10,6 +10,12 @@ using PhasePart.AMN;
     Spawn all the RNA, based on the original DNA string of the protein
     Has a reference to the NucleusManager because the Nucleus Manager should be the original
     Every visual change in the RNA will be reflect in the Nucleus
+
+    Before string
+        sub = DNAtranscriptionBeg + DNA + DNAtranscriptionEnd[Random.Range(0 , DNAtranscriptionEnd.Length)];
+
+    Now
+        sub = DNA + DNAtranscriptionEnd[Random.Range(0 , DNAtranscriptionEnd.Length)];
 */
 
 namespace PhasePart.RNA{
@@ -42,33 +48,30 @@ namespace PhasePart.RNA{
             SetInputOperation();
         }
 
-        private void InstantiateAllRNABasedOnDNA(){
+        private void InstantiateRNAUsingString(int actualNumber, string dataString){
             int i;
-            string sub = originalPlace.CutDNAString();
             RNA hold;
 
-            SetInputData(RNASpawn); //Protected function of all the InputPhase manager
-            //sub = DNAtranscriptionBeg + sub + DNAtranscriptionEnd[Random.Range(0 , DNAtranscriptionEnd.Length)];
-            SetInputData(RNASpawn); //Protected function of all the InputPhase manager
-
-            for(i = 0 ; i < quantity ; i++){
+            for(i = 0 ; i < dataString.Length ; i++){
                 hold = Instantiate<RNA>(prefab, RNASpawn);
-                hold.SetPosition(i); //Puts its original position, so i can build the "replic" vector
-                hold.Setup(sub[i].ToString());
+                hold.SetPosition(actualNumber + i); //Puts its original position, so i can build the "replic" vector
+                hold.Setup(dataString[i].ToString());
             }
         }
 
-        public void InstantiateAllRNABasedOnDNA(string sub){
-            int i;
-            RNA hold;
+        private void InstantiateAllRNABasedOnDNA(){
+            InstantiateAllRNABasedOnDNA(originalPlace.CutDNAString());
+        }
 
+        public void InstantiateAllRNABasedOnDNA(string sub){
             SetInputData(RNASpawn); //Protected function of all the InputPhase manager
 
-            for(i = 0 ; i < quantity ; i++){
-                hold = Instantiate<RNA>(prefab, RNASpawn);
-                hold.SetPosition(i); //Puts its original position, so i can build the "replic" vector
-                hold.Setup(sub[i].ToString());
-            }
+            InstantiateRNAUsingString(0, sub);
+
+            //Instantiate 3 dots
+
+            //Instantiate one of the ending DNA string
+            InstantiateRNAUsingString(quantity,originalPlace.GetAEndingString());
         }
 
         public void InstantiateAllRNARandom(){
@@ -127,20 +130,6 @@ namespace PhasePart.RNA{
             return;
         }
 
-        public void StartNewWaveDNAString(){ //Here we don't have the problem of "destroying" the DNA
-            string sub = originalPlace.CutDNAString();
-            int i = 0;
-
-            ResetValuesInRNA();
-            //print("Next phase = " + nextPhase);
-            originalPlace.ChangeDNAStructure(sub);
-
-            foreach(Transform child in RNASpawn){
-                child.GetComponent<RNA>().RNASetup(sub[i].ToString());
-                i++;
-            }
-        }
-
         public void ConfirmPhase(){ //Can be used, but don make much sense
             RNA childComp;
 
@@ -163,6 +152,20 @@ namespace PhasePart.RNA{
             }
 
             EndPhase();
+        }
+
+        public void StartNewWaveDNAString(){ //Here we don't have the problem of "destroying" the DNA
+            string sub = originalPlace.CutDNAString();
+            int i = 0;
+
+            ResetValuesInRNA();
+            //print("Next phase = " + nextPhase);
+            originalPlace.ChangeDNAStructure(sub);
+
+            foreach(Transform child in RNASpawn){
+                child.GetComponent<RNA>().RNASetup(sub[i].ToString());
+                i++;
+            }
         }
 
         public void StartNewWave(){ //First version

@@ -30,6 +30,10 @@ namespace PhasePart{
         public void SetPosition(int index){
             originalPosition = index;
         }
+
+        public int GetOriginalPosition(){
+            return originalPosition;
+        }
         
         public void ActivateInput(){
             mainInputField.ActivateInputField();

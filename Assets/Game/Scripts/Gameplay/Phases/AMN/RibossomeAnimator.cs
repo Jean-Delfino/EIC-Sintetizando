@@ -69,7 +69,7 @@ namespace PhasePart.AMN{
 
         private bool noRBSintetized = true;
 
-        /*
+        
         private void Start() {
             SetPool(3);
             Tests();
@@ -96,13 +96,12 @@ namespace PhasePart.AMN{
             await RibossomeEnter(Util.RandomSolidColor(),"7");
 
             await RibossomeExit(false, amnQueue, amnPrefab, "BBB");
+            await RibossomeExit(false, amnQueue, amnPrefab, "CCC");
+
             print("TEST -- ANIMATION ENDING");
 
-            if(queue.GetChild(1).GetChild(0) == null){
-                print("Oxe");
-            }
-            await RibossomeExit(true, amnQueue, amnPrefab, "CCC");
-        }*/
+            await RibossomeExit(true, amnQueue, amnPrefab, "Fim");
+        }
 
         //Second part of pooling, the reset of a pooled object
         private void PoolObjectReset(Transform newElement, GameObject childZero){
@@ -178,6 +177,8 @@ namespace PhasePart.AMN{
         }
 
         private async Task ChangeSimbol(GameObject childPrefab){
+            if(queue.childCount < 3) return; //There is no one sinthetizing
+
             Transform currentlySynthesizing = queue.GetChild(1); //Save time 
 
             //Gets the amn in the ribossome
@@ -190,6 +191,12 @@ namespace PhasePart.AMN{
                 hold.ReturnAMNLetterImage().transform);
 
             await Task.Delay(Util.ConvertToMili(fadeColorTime));
+        }
+
+        private async Task EndSimbolRibossome(){
+            float time = Util.ChangeAlphaCanvasImageAnimation(simbolRibossome.GetComponent<CanvasGroup>(), 0f, animationsTime);
+            await Task.Delay(Util.ConvertToMili(time));
+            simbolRibossome.gameObject.SetActive(false);
         }
 
         //Every object in the queue has a AMN (except the last one)
@@ -206,8 +213,8 @@ namespace PhasePart.AMN{
             if(noRBSintetized){
                 moveObjectAmn = moveObject.GetChild(0); //Take the AMNLetter
                 moveObjectAmn.SetParent(holdRibossome); //Deparenting it from moveObject
-
-                await MoveTowardsEnter(moveObjectAmn, wasteDestination.GetChild(0), 0f, animationsTime);
+                
+                await MoveTowardsEnter(moveObjectAmn, wasteDestination.GetChild(wasteDestination.childCount - 2), 0f, animationsTime);
 
                 await WasteDestinationMove(wasteDestination, childPrefab, amnName);
                 await ChangeSimbol(childPrefab);
@@ -218,13 +225,17 @@ namespace PhasePart.AMN{
                 return;
             }
 
-            moveObjectAmn = queue.GetChild(1).GetChild(0); //Gets the second child
+            if(!lastOne){
+                moveObjectAmn = queue.GetChild(1).GetChild(0); //Gets the second child
+                moveObjectAmn.SetParent(holdRibossome); //Deparenting it from moveObject
+                taskAnimation[0] = MoveTowardsEnter(moveObjectAmn, wasteDestination.GetChild(0), 0f, animationsTime);
+            }else{
+                taskAnimation[0] = EndSimbolRibossome(); //No more ribossome, so it's ok to not use the simbol ribossome anymore
+            }
 
             lastChild.SetAsFirstSibling();
             moveObject.SetParent(holdRibossome);//Deparenting, so there is no problem with layout group
-            moveObjectAmn.SetParent(holdRibossome); //Deparenting it from moveObject
 
-            taskAnimation[0] = MoveTowardsEnter(moveObjectAmn, wasteDestination.GetChild(0), 0f, animationsTime);
             taskAnimation[1] = MoveTowardsExit(moveObject, holdRibossome, endTarget, animationsTime);
 
             await Task.WhenAll(taskAnimation);
@@ -233,9 +244,8 @@ namespace PhasePart.AMN{
             PoolObjectReset(moveObject, childPrefab); //Enqueue and setting it correctly
 
             //Moving the AMNQueue
-            await WasteDestinationMove(wasteDestination, childPrefab, amnName);
-
-            if(!lastOne){
+            if(!lastOne){ //One is always invisible remember
+                await WasteDestinationMove(wasteDestination, childPrefab, amnName);
                 DestroyImmediate(moveObjectAmn.gameObject); //Destroy the AMN ball used by the ribossome
                 await ChangeSimbol(childPrefab);
             }
@@ -329,7 +339,7 @@ namespace PhasePart.AMN{
             //Terrible, i know, i don't like it too
             if(queue.childCount == 2 && firtsOne == null){
                 firtsOne = hold.transform;
-                await MoveTowardsEnter(false, hold.transform, queue, queue.GetChild(0), 2.5f, animationsTime);
+                await MoveTowardsEnter(false, firtsOne, queue, queue.GetChild(0), 2.5f, animationsTime);
                 ChangeColorSimbolRibossome(hold.GetComponent<Image>().color);
             
                 //await Task.Delay(Util.ConvertToMili(fadeColorTime));

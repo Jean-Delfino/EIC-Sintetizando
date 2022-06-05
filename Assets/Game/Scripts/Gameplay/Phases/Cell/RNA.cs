@@ -33,8 +33,9 @@ namespace PhasePart.RNA{
         }
 
         // Invoked when the value of the text field changes.
-        void ValueChangeCheck(){
+        public void ValueChangeCheck(){
             RNASpawner RNAonwer = (RNASpawner)owner;
+            print(this.transform.gameObject.name + "ENTERED VALUE CHANGE CHECK");
 
             if(GetValueInputText() == "") {
                 SetColor(RNAonwer.GetColorDef());
@@ -77,7 +78,7 @@ namespace PhasePart.RNA{
             return this.GetValue();
         }
 
-        public int GetOriginalPosition(){
+        public new int GetOriginalPosition(){
             return this.originalPosition;
         }
         

@@ -22,7 +22,9 @@ namespace ProteinPart{
         [SerializeField] Transform maxParent = default;
 
         private static VideoChoice videoChoice;
+        //static string path = "/Assets/Game/Data/Proteinas.json"; 
         static string path = "Assets/Game/Data/Proteinas.json"; 
+
         
         //static string path; 
 
@@ -76,7 +78,9 @@ namespace ProteinPart{
         //Choose only the needed
         //Could this part be in a singleton
         public void GetDNAString(){
+            //string content = File.ReadAllText(Application.persistentDataPath + path);
             string content = File.ReadAllText(path);
+
 
             PD myPD = JsonUtility.FromJson<PD>(content);
             

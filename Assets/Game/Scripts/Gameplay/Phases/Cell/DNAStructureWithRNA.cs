@@ -17,7 +17,11 @@ namespace PhasePart.RNA.DNA{
         [SerializeField] GameObject secondHalfDNAObject = default; 
         [SerializeField] GameObject insideRNADNAObject = default; 
 
-        int layoutSonAddition;
+        private int layoutSonAddition = -1;
+        private int firstQuantity = -1;
+        
+        private int separation = -1;
+        private string separationString;
 
         public void SetupStructure(int quantity, string text){
             int i;
@@ -27,7 +31,9 @@ namespace PhasePart.RNA.DNA{
             Transform secondHalfDNA = secondHalfDNAObject.transform.GetChild(1);
             Transform insideDNARNA = insideRNADNAObject.transform.GetChild(1);
 
-            layoutSonAddition = firstHalfDNA.childCount;
+            if(layoutSonAddition == -1){
+                layoutSonAddition = firstHalfDNA.childCount;
+            }
 
             for(i = 0; i < quantity; i++){
                 hold = Instantiate<Letter>(prefabDisplay, firstHalfDNA);
@@ -41,10 +47,26 @@ namespace PhasePart.RNA.DNA{
         public void ChangeAllSecondHalf(string text){
             int i;
             Transform secondHalfDNA = secondHalfDNAObject.transform.GetChild(1);
-
-            for(i = 0; i < secondHalfDNA.childCount; i++){
+            //secondHalfDNA.childCount
+            for(i = 0; i < firstQuantity; i++){
                 secondHalfDNA.GetChild(i + layoutSonAddition).GetComponent<Letter>().Setup(text[i].ToString());
             }
+            for(i = 0; i < separation; i++){
+                ChangeSecondHalf(secondHalfDNA, i + firstQuantity, separationString);
+            }
+            for(i = i + firstQuantity; i < secondHalfDNA.childCount; i++){
+                secondHalfDNA.GetChild(i + layoutSonAddition).GetComponent<Letter>().Setup(text[i - separation].ToString());
+            }
+        }
+
+        public void ChangeSecondHalf(int index, string text){
+            Transform secondHalfDNA = secondHalfDNAObject.transform.GetChild(1);
+
+            secondHalfDNA.GetChild(layoutSonAddition + index).GetComponent<Letter>().Setup(text);
+        }
+
+        private void ChangeSecondHalf(Transform secondHalfDNA, int index, string text){
+            secondHalfDNA.GetChild(layoutSonAddition + index).GetComponent<Letter>().Setup(text);
         }
 
         public void ChangeAllFirstHalf(string text){
@@ -65,6 +87,18 @@ namespace PhasePart.RNA.DNA{
 
         public void ChangeVisibilitySecondHalfDNA(bool state){
             secondHalfDNAObject.SetActive(state);
+        }  
+
+        public void SetSeparation(int separation){
+            this.separation = separation;
+        }
+
+        public void SetSeparationString(string separationString){
+            this.separationString = separationString;
+        }   
+
+        public void SetQuantity(int firstQuantity){
+            this.firstQuantity = firstQuantity;
         }
 
         public GameObject GetHolderOfStructure(){

@@ -69,7 +69,7 @@ namespace PhasePart.AMN{
 
         private bool noRBSintetized = true;
 
-        
+        /*
         private void Start() {
             SetPool(3);
             Tests();
@@ -101,7 +101,7 @@ namespace PhasePart.AMN{
             print("TEST -- ANIMATION ENDING");
 
             await RibossomeExit(true, amnQueue, amnPrefab, "Fim");
-        }
+        }*/
 
         //Second part of pooling, the reset of a pooled object
         private void PoolObjectReset(Transform newElement, GameObject childZero){

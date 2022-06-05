@@ -57,6 +57,7 @@ public sealed class GameplayManager : MonoBehaviour{
 
     public void IncreacePhase(){
         actualPhase++;
+        print("actualPhase = " + actualPhase);
         
         if(actualPhase == gamePhases.Count){
             print("Jogo acabou");

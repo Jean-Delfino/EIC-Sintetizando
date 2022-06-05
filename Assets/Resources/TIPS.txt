@@ -1,3 +1,7 @@
 https://stackoverflow.com/questions/58782072/json-file-not-found-after-the-build
 
 https://www.reddit.com/r/Unity3D/comments/8hfkj2/how_to_make_it_possible_for_your_game_to/
+
+ERROS CÓDIGOS
+
+RNASpawner USO do RNA (onValueChanged)

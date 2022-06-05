@@ -136,9 +136,10 @@ namespace PhasePart.AMN{
         private async void QueueNewAMN(string amnName){
             animationPause = true;
             //Test if it's actualCompleted == numberOfAMN or numberOfAMN - 1, it change the animation
-            await completedAMNQueue.NewAMNInLine(actualCompleted == (numberOfAMN), 
-                actualCompleted + ribossomeMaxNumber < (numberOfAMN + 1),
-                (actualCompleted+ribossomeMaxNumber).ToString(), amnName);
+            //print("Completed = " + actualCompleted);
+            await completedAMNQueue.NewAMNInLine(actualCompleted == (numberOfAMN + 1), 
+                (actualCompleted + ribossomeMaxNumber -1 ) < (numberOfAMN + 1),
+                (actualCompleted + ribossomeMaxNumber - 1).ToString(), amnName);
 
             animationPause = false;
         }
@@ -159,7 +160,7 @@ namespace PhasePart.AMN{
         }
 
         public new void EndPhase(){
-            if(actualCompleted == numberOfAMN){
+            if(actualCompleted == numberOfAMN + 1){
                 //Here its change phases
                 //print("ENTROU");
                 base.EndPhase();

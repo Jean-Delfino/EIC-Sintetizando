@@ -9,10 +9,12 @@ namespace PhasePart.AMN{
     public class AMNInputField : MonoBehaviour{
         [SerializeField] AMNManager amnM;
         private TMP_InputField thisInput;
+
         private void Start() {
             thisInput = this.GetComponent<TMP_InputField>(); 
             thisInput.onValueChanged.AddListener(delegate {ValueChangeCheck(); });
         }
+        
         private async void OnSubmit(){ //When there is enough characters
             //print("That it");
             if(await amnM.VerifyAMN(thisInput.text)){

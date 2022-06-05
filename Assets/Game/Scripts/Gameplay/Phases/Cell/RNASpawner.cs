@@ -26,9 +26,17 @@ namespace PhasePart.RNA{
         [SerializeField] CellNucleusManager originalPlace; //Where the RNA starts (the nucleus)
 
         private int quantity; //Needs to be multiple of 3, and it will because of the AMN
+        private int originalQuantity; //Reference to make easy to work
 
         [SerializeField] RNA prefab = default;
+        [SerializeField] TextWithInput middleRNA = default;
+        [SerializeField] string nonUsableCharacter = "-";
+
         [SerializeField] Transform RNASpawn = default;
+        
+        [Space]
+        [Header("Colors used in the lights")]
+        [Space]
         //Color for the player input
         [SerializeField] Color defColor = default;
         [SerializeField] Color whenRight = default;
@@ -44,34 +52,48 @@ namespace PhasePart.RNA{
         private int nextPhase = 0;
 
         private void Start(){
+            originalQuantity = quantity;
+
+            //The amount of dna + the ending string dna
+            quantity += (AMNManager.GetSizeAMN());
+
             anwsers = new string[quantity];
             SetInputOperation();
         }
 
-        private void InstantiateRNAUsingString(int actualNumber, string dataString){
+        private void InstantiateRNAUsingString(int actualNumber, string dataString,TextWithInput prefabT){
             int i;
-            RNA hold;
+            TextWithInput hold;
 
             for(i = 0 ; i < dataString.Length ; i++){
-                hold = Instantiate<RNA>(prefab, RNASpawn);
+                hold = Instantiate<TextWithInput>(prefabT, RNASpawn);
                 hold.SetPosition(actualNumber + i); //Puts its original position, so i can build the "replic" vector
                 hold.Setup(dataString[i].ToString());
             }
         }
 
-        private void InstantiateAllRNABasedOnDNA(){
-            InstantiateAllRNABasedOnDNA(originalPlace.CutDNAString());
+        private string InstantiateAllRNABasedOnDNA(){
+            return InstantiateAllRNABasedOnDNA(originalPlace.CutDNAString());
         }
 
-        public void InstantiateAllRNABasedOnDNA(string sub){
+        public string InstantiateAllRNABasedOnDNA(string sub){
+            string ending = originalPlace.GetAEndingString();
+
+            string additionalString = string.Concat(Enumerable.Repeat(
+                    nonUsableCharacter, CellNucleusManager.GetNumberOfCharacterToEnd()));
+            
             SetInputData(RNASpawn); //Protected function of all the InputPhase manager
 
-            InstantiateRNAUsingString(0, sub);
+            InstantiateRNAUsingString(0, sub, prefab);
 
             //Instantiate 3 dots
-
+            InstantiateRNAUsingString(-CellNucleusManager.GetNumberOfCharacterToEnd(), 
+                additionalString, middleRNA);
+            
             //Instantiate one of the ending DNA string
-            InstantiateRNAUsingString(quantity,originalPlace.GetAEndingString());
+            InstantiateRNAUsingString(quantity,ending, prefab);
+
+            return additionalString + ending;
         }
 
         public void InstantiateAllRNARandom(){
@@ -116,12 +138,16 @@ namespace PhasePart.RNA{
 
         public void ChangeQuantityToNextPhase(int increace){
             nextPhase += increace;  
+            EndPhase(); //To end the game when the player filled everything
             //print("Next phase = " + nextPhase);
         }
 
         public new void EndPhase(){
             //print("Next phase = " + nextPhase);
+            //if(nextPhase == 1){ //Test only
+
             if(nextPhase == quantity){
+                print("ENTROU AQUI END PHASE");
                 //Here its change phases
                 AMNManager.SetRNAtoAMNString(Util.ConvertToString(anwsers));
                 base.EndPhase();
@@ -154,6 +180,7 @@ namespace PhasePart.RNA{
             EndPhase();
         }
 
+        //NEED TO BE CHANGED
         public void StartNewWaveDNAString(){ //Here we don't have the problem of "destroying" the DNA
             string sub = originalPlace.CutDNAString();
             int i = 0;
@@ -201,6 +228,10 @@ namespace PhasePart.RNA{
         public void SetCorrespondentValidation(int index, string value){
             anwsers[index] = value; 
             //This change the CellNucleusManager
+            if(index > originalQuantity - 1){
+                index += CellNucleusManager.GetNumberOfCharacterToEnd();
+            }
+
             originalPlace.ChangeRNAinDNAStructure(index, value);
         }
 
@@ -232,6 +263,10 @@ namespace PhasePart.RNA{
 
         public int GetDictionaryKeysCount(){
             return validationDNARNA.Keys.Count;
+        }
+
+        public string GetNonUsableCharacter(){
+            return this.nonUsableCharacter;
         }
 
     }

@@ -35,8 +35,6 @@ namespace PhasePart{
                     //Get the input based on the index of siblings
                     actual.DeactivateInput(); //Deactivates the actual
 
-                    actualInput += input;
-
                     do{
                         actualInput += input;
                         

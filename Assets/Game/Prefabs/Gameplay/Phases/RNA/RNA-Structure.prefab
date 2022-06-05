@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65ea89e7a1f5bda46b414250f6888655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  letterText: {fileID: 5975432030528623542}
   mainInputField: {fileID: 5344608514065438332}
   lightConfirm: {fileID: 1994834820806241854}
 --- !u!1 &1994834819940998267
@@ -994,3 +995,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d69a5a9f17c3e40827b594a917a57b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  validInputField: 1

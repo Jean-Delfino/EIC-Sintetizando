@@ -24,6 +24,9 @@ namespace PhasePart.RNA{
 
         private const string DNAtranscriptionBeg = "TAC"; //Always the beg of the DNA
         private string[] DNAtranscriptionEnd = {"ATT", "ATC", "ACT"}; //The end of the DNA
+
+        private static int numberOfCharacterToEnd = 3;
+
         private static string DNAString; //Original DNA string of the protein
 
         private static bool random = false; //Sets if the start is a random protein or not
@@ -46,16 +49,24 @@ namespace PhasePart.RNA{
         }
 
         private async void DNAAnimations(){
-            string firstCut = CutDNAString(); //
+            string firstCut = CutDNAString();
+            string nonUsableCharacter = rnaReference.GetNonUsableCharacter();
+            int i;
 
             dnaReference.SetFiniteDNAString(firstCut); //Puts cutted DNA on DNA
             dnaReference.SetupStructure(quantity, firstCut); //Instantiate everything need in the visual DNAPart
-            dnaReference.ChangeSecondHalf(); //Complementar DNA
 
-            //dnaReference.TurnDNAOn();
-            //await dnaReference.DNASeparation();
+            //The ending of the DNA that its used in the RNASpawner
+            string additional = rnaReference.InstantiateAllRNABasedOnDNA(firstCut); //Just to set it first
+            dnaReference.SetupStructure(additional.Length, additional);
+            
+            for(i = 0; i < numberOfCharacterToEnd; i++){
+                ChangeRNAinDNAStructure(quantity + i, nonUsableCharacter);
+                ChangeDNAinDNAStructure(quantity + i, nonUsableCharacter);
+            }
 
-            rnaReference.InstantiateAllRNABasedOnDNA(firstCut); //Just to set it first
+            SetSeparationInDNA(nonUsableCharacter, quantity);
+            dnaReference.ChangeSecondHalf(additional.Substring(numberOfCharacterToEnd)); //Complementar DNA -- NEED TO CHANGE
             
             await dnaReference.RNAVisibility(); //RNA visible
             await dnaReference.DNASeparation(); 
@@ -65,12 +76,25 @@ namespace PhasePart.RNA{
             EndPhase();
         }
 
+        private void SetSeparationInDNA(string separationString, int firstQuantity){
+            dnaReference.SetSeparationInDNAStructure(numberOfCharacterToEnd, separationString, firstQuantity);
+        }
+
+
+        public static int GetNumberOfCharacterToEnd(){
+            return numberOfCharacterToEnd;
+        }
+
         public void ChangeDNAStructure(string cut){
             dnaReference.ChangeFirstHalf(cut);
         }
 
         public void ChangeRNAinDNAStructure(int index, string text){
             dnaReference.ChangeRNAinDNAStructure(index, text);
+        }
+
+        public void ChangeDNAinDNAStructure(int index, string text){
+            dnaReference.ChangeSecondHalf(index, text);
         }
 
         //Need to do all the animation of the game

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2809477810835710143}
   - component: {fileID: 2809477810835710142}
   - component: {fileID: 5257269735387090396}
+  - component: {fileID: 1885136588511387004}
   m_Layer: 5
   m_Name: AMN-Structure
   m_TagString: Untagged
@@ -92,7 +93,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8d840713feedee4e839f7911603c3cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  letterText: {fileID: 0}
+  letterText: {fileID: 8163640381736356202}
+--- !u!114 &1885136588511387004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2809477810835710136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 65
+  m_PreferredHeight: 65
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &2809477811939388755
 GameObject:
   m_ObjectHideFlags: 0

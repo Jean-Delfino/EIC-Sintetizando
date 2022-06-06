@@ -9,6 +9,7 @@ namespace PhasePart.RNA{
     public class RNA : TextWithInput{ 
         [SerializeField] Image lightConfirm = default; 
         private bool valueInput = false;
+        private bool singletonInput = false;
 
         void Start(){
             //Adds a listener to the main input field and invokes a method when the value changes.
@@ -34,8 +35,8 @@ namespace PhasePart.RNA{
 
         // Invoked when the value of the text field changes.
         public void ValueChangeCheck(){
+            if(singletonInput) return;
             RNASpawner RNAonwer = (RNASpawner)owner;
-            print(this.transform.gameObject.name + "ENTERED VALUE CHANGE CHECK");
 
             if(GetValueInputText() == "") {
                 SetColor(RNAonwer.GetColorDef());
@@ -44,15 +45,18 @@ namespace PhasePart.RNA{
                 return;
             }
             
+            singletonInput = true;
             string val = GetValueInputText().ToUpper(); //Easier to work
             RNAonwer.SetCorrespondentValidation(originalPosition, val); //In the anwser of original position puts val
 
             //Validates the input with the RNA
             if(RNAonwer.GetValueValidation(GetValue()) == val){
                 RNAonwer.ChangeQuantityToNextPhase(Convert.ToInt32(!valueInput)); //0 or 1, 0 if already true
-                valueInput = true; //Now its true, so if it's wrong it gonna put -1 and if right it's gonna put 0
 
                 SetValue(val, RNAonwer.GetColorRight());
+                valueInput = true; //Now its true, so if it's wrong it gonna put -1 and if right it's gonna put 0
+                singletonInput = false;
+
                 return;
             }
             //0 or -1
@@ -62,6 +66,7 @@ namespace PhasePart.RNA{
             valueInput = false; //Now false, so if it's wrong it gonna put 0 and if right it's gonna put 1
 
             SetValue(val, RNAonwer.GetColorWrong());
+            singletonInput = false;
         }
 
         public void SetValue(string valuePas, Color valueColor){

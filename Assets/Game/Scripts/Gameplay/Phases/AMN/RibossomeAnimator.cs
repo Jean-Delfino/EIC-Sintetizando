@@ -60,8 +60,8 @@ namespace PhasePart.AMN{
         [SerializeField] float howMuchToMove = -120;
 
         
-        [SerializeField] Transform amnQueue = default;
-        [SerializeField] GameObject amnPrefab = default;
+        //[SerializeField] Transform amnQueue = default;
+        //[SerializeField] GameObject amnPrefab = default;
 
         [Space]
         [Header("Atributes used to animation dif")]

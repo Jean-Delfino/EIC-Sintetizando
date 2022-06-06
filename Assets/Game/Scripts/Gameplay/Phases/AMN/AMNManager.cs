@@ -27,9 +27,6 @@ namespace PhasePart.AMN{
         [SerializeField] List<AMNDescriber> basics; //The "tables" and their anwsers
         private GameObject actualTable = null;
 
-        [SerializeField] Letter letterPrefab = default;
-        [SerializeField] Transform letterSpawn = default;
-
         private static int numberOfAMN = 7; 
         private int actualCompleted = 0; 
 
@@ -43,34 +40,36 @@ namespace PhasePart.AMN{
         private string nameAMN; //Change in every input
         
         [SerializeField] GameObject visualAMN = default; //Where all the tables, the ribossome and the transporter will be
+        
         [SerializeField] AMNQueue completedAMNQueue = default; //Push a AMN when its ends
-
+        [SerializeField] AMNSpawner amnLetterQueue = default;
 
         private void Start() {
             //FindObjectOfType<DNAManager>(true).DNANucleusVisibility(false); It shrink it the DNAManager already
             visualAMN.SetActive(true);
+            Util.ChangeAlphaCanvasImageAnimation(visualAMN.GetComponent<CanvasGroup>(), 1f, 1f);
 
             SpawnAMN();
-            SetAMN();
+            SetSearchAMN();
             SetAllRibossome();
         }
 
         private void SpawnAMN(){
-            int i;
-
-            for(i = 0; i < sizeAMN; i++){
-                Instantiate<Letter>(letterPrefab, letterSpawn);
-                //Here i don't need the set position
-            }
+            amnLetterQueue.SpawnAMN(RNAtoAMN);
         }
 
-        private void SetAMN(){
+        private float SetAMN(bool lastOne){
+            SetSearchAMN();
+
+            return amnLetterQueue.NextAMN(lastOne);
+        }
+
+        private void SetSearchAMN(){
             int i;
             string RNAstring = "";
 
             for(i = 0; i < sizeAMN; i++){
                 RNAstring += RNAtoAMN[indexOfRNA];
-                letterSpawn.GetChild(i).GetComponent<Letter>().Setup(RNAtoAMN[indexOfRNA].ToString());
                 indexOfRNA++;
             }
 
@@ -121,10 +120,11 @@ namespace PhasePart.AMN{
 
         public async Task<bool> VerifyAMN(string AMN){
             if(AMN.ToUpper() == nameAMN.ToUpper()){
-                await WaitAnimationFlow(); //False on the first one
+                await WaitAnimationFlow();
 
                 actualCompleted++;
-                QueueNewAMN(AMN); //Push AMN to queue and Ribossome animation
+                await QueueNewAMN(AMN); //Push AMN to queue and Ribossome animation
+
                 EndPhase();
 
                 return true;
@@ -133,13 +133,25 @@ namespace PhasePart.AMN{
             return false;
         }
 
-        private async void QueueNewAMN(string amnName){
+        private async Task QueueNewAMN(string amnName){
             animationPause = true;
             //Test if it's actualCompleted == numberOfAMN or numberOfAMN - 1, it change the animation
             //print("Completed = " + actualCompleted);
-            await completedAMNQueue.NewAMNInLine(actualCompleted == (numberOfAMN + 1), 
+            Task[] taskAnimation = new Task[2]; //All animation of the object
+
+            taskAnimation[0] = completedAMNQueue.NewAMNInLine(actualCompleted == (numberOfAMN + 1), 
                 (actualCompleted + ribossomeMaxNumber -1 ) < (numberOfAMN + 1),
                 (actualCompleted + ribossomeMaxNumber - 1).ToString(), amnName);
+            
+            //Move the string to the left
+            if(actualCompleted <= numberOfAMN){
+                print("Actual " + actualCompleted);
+                taskAnimation[1] = Task.Delay(Util.ConvertToMili(SetAMN(actualCompleted == numberOfAMN)));
+            }else{
+                taskAnimation[1] = Task.Delay(0);
+            }
+
+            await Task.WhenAll(taskAnimation);
 
             animationPause = false;
         }
@@ -150,26 +162,15 @@ namespace PhasePart.AMN{
             }
         }
 
-        private void ShowAMN(string phrase){
-            int i = 0;
-
-            foreach(Transform child in letterSpawn){
-                child.GetComponent<Letter>().Setup(phrase[i].ToString());
-                i++;
-            }
-        }
-
-        public new void EndPhase(){
+        public new bool EndPhase(){
             if(actualCompleted == numberOfAMN + 1){
                 //Here its change phases
                 //print("ENTROU");
                 base.EndPhase();
-                return;
+                return true;
             }
-            //Move the string to the left
-            
-            SetAMN();
-            return;
+
+            return false;
         }
 
         public static int GetSizeAMN(){
@@ -182,6 +183,17 @@ namespace PhasePart.AMN{
 
     }
 }
+
+
+        /*
+        private void ShowAMN(string phrase){
+            int i = 0;
+
+            foreach(Transform child in letterSpawn){
+                child.GetComponent<Letter>().Setup(phrase[i].ToString());
+                i++;
+            }
+        }*/
 
 /*
     private void SetLetterAMN(){ //Not used anymore

@@ -7,7 +7,7 @@ namespace GameUserInterface.Animation{
         // Start is called before the first frame update
         protected Animator myAnimator;
         void Start(){
-            myAnimator = gameObject.GetComponent<Animator>(); 
+            myAnimator = this.gameObject.GetComponent<Animator>(); 
         }
 
         protected IEnumerator WaitForSecondsAnimation(float time){

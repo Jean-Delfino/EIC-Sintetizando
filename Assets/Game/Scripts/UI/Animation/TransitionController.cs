@@ -9,37 +9,45 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace GameUserInterface.Animation{
-    public class TransitionController : MonoBehaviour{
+    //This object do not await, the other object will await
+    
+    public enum TransitionType{
+        Falling,
+        CloseOfCurtains
+    }
 
-        public enum TransitionType{
-            OverTheScreen,
-            CloseOfCurtains
-        }
 
+    public class TransitionController : AnimatorUser{
         [System.Serializable]
         private class Transition{
-            public VideoClip animationIn = default;
-            public VideoClip animationOut = default;
-            public float animationTime = default;
+            public float animationTimeIn = default;
+            public float animationTimeOut = default;
         }
 
-        [SerializeField] List<Transition> videoClips = default;
+        float betweenTransition = 0.05f;
+
+        [SerializeField] List<Transition> videos = default;
         [SerializeField] GameObject painelClickBlock = default;
 
         //[SerializeField] Animator myAnimator = default;
         [SerializeField] RectTransform transitionScreen = default;
-        [SerializeField] VideoPlayer videoPlayer = default;
-
         [SerializeField] float animationTime = default;
 
-        //This object do not await, the other object will await
         //Black to invisible
         public int PlayTransitionFadeIn(){
             Util.ChangeAlphaImageAnimation(transitionScreen, 0f, animationTime);
             return Util.ConvertToMili(animationTime);
         }
 
+        public int PlayTransitionFadeOut(){ //Not used yet
+            Util.ChangeAlphaImageAnimation(transitionScreen, 1f, animationTime);
+            return Util.ConvertToMili(animationTime);
+        }
+
+
         public void DisableTransition(){
+            //myAnimator.SetBool("Expand", true);
+
             transitionScreen.gameObject.SetActive(false);
         }
 
@@ -51,22 +59,22 @@ namespace GameUserInterface.Animation{
             print(type);
             print((int) type);
         */
-        public int PlayTransitionIn(TransitionType type){
+        public float PlayTransitionIn(TransitionType type){
+            myAnimator.SetBool(type.ToString(),true);
             painelClickBlock.SetActive(true);
-            videoPlayer.clip = videoClips[(int) type].animationIn;
-            videoPlayer.Play();
-            return Util.ConvertToMili(videoClips[(int) type].animationTime);
+
+            return videos[(int) type].animationTimeIn;
         }
 
-        public int PlayTransitionOut(TransitionType type){
+        public float PlayTransitionOut(TransitionType type){
+            myAnimator.SetBool(type.ToString(), false);
             painelClickBlock.SetActive(false);
-            videoPlayer.clip = videoClips[(int) type].animationOut;
-            videoPlayer.Play();
-            return Util.ConvertToMili(videoClips[(int) type].animationTime);
+
+            return videos[(int) type].animationTimeOut;
         }
 
-        public void RemoveTransitionComplete(){
-            videoPlayer.clip = null;
+        public float GetBetweenTransition(){
+            return this.betweenTransition;
         }
 
     }

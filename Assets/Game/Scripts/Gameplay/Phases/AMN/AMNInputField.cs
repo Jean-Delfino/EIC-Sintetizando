@@ -10,6 +10,8 @@ namespace PhasePart.AMN{
         [SerializeField] AMNManager amnM;
         private TMP_InputField thisInput;
 
+        private bool wait = false;
+
         private void Start() {
             thisInput = this.GetComponent<TMP_InputField>(); 
             thisInput.onValueChanged.AddListener(delegate {ValueChangeCheck(); });
@@ -17,10 +19,15 @@ namespace PhasePart.AMN{
         
         private async void OnSubmit(){ //When there is enough characters
             //print("That it");
-            if(await amnM.VerifyAMN(thisInput.text)){
+            print(wait + " O K " + thisInput.text);
+            if(!wait && amnM.VerifyAMN(thisInput.text)){
+                string auxTextAMN = thisInput.text;
+                wait = true;
+                thisInput.text = "";
+                await amnM.PushNewAMN(auxTextAMN);
+                wait = false;
                 thisInput.text = "";
             }
-            //Error ? Change the score ?
         }
 
         private void ValueChangeCheck(){

@@ -60,13 +60,13 @@ namespace PhasePart.RNA{
             string additional = rnaReference.InstantiateAllRNABasedOnDNA(firstCut); //Just to set it first
             dnaReference.SetupStructure(additional.Length, additional);
             
-            for(i = 0; i < numberOfCharacterToEnd; i++){
+            for(i = 0; i < numberOfCharacterToEnd; i++){ //Dots
                 ChangeRNAinDNAStructure(quantity + i, nonUsableCharacter);
                 ChangeDNAinDNAStructure(quantity + i, nonUsableCharacter);
             }
 
             SetSeparationInDNA(nonUsableCharacter, quantity);
-            dnaReference.ChangeSecondHalf(additional.Substring(numberOfCharacterToEnd)); //Complementar DNA -- NEED TO CHANGE
+            dnaReference.ChangeSecondHalf(additional.Substring(numberOfCharacterToEnd)); //Complementar DNA
             
             await dnaReference.RNAVisibility(); //RNA visible
             await dnaReference.DNASeparation(); 

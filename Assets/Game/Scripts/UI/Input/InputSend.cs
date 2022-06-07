@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.Events;
 
 using TMPro;
-using System;
 
 /*
     Gets a list of UnityEvents and for each it give the input of the TMProInput

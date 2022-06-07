@@ -16,20 +16,25 @@ using GameUserInterface.Animation;
 */
 
 namespace Menu{
-    public class SelectionManager : MonoBehaviour{
-        [SerializeField] float gap = 2;
+    public class SelectionManager : TransitionUser{
+        [Space]
+        [Header ("  Bolt")]
+        [Space]
 
-        [SerializeField] GameObject boltSelection;
-        [SerializeField] int actualSelected; //Bolt
+        [SerializeField] BoltExecuter boltToSelection = default; //Strategy to use when instantiating bolts
 
-        private Transform childRef; 
-        int childQTD; //Qtd of childs in this transform
+        private Transform childRef; //Get child of this transform
+
+        private int actualSelected; //Bolt
+        private int childQTD; //Qtd of childs in this transform
+
+        [Space]
+        [Header ("  Partition of the game")]
+        [Space]
 
         [SerializeField] Transform partitionsFather;
 
         GameObject father; //Father of this transform
-
-        [SerializeField] TransitionController tC;
 
         void OnEnable(){
             StartCoroutine(ChangeBolt());
@@ -52,12 +57,14 @@ namespace Menu{
         void PositioningBolt(int increment){
             DestroyBolt(childRef);
             actualSelected += increment;
+
             PositioningBoltInstantiating();
         }
 
         void PositioningBoltInstantiating(){
             childRef = this.transform.GetChild(actualSelected);
-            InstantiateBolt(childRef);
+            
+            boltToSelection.InstantiateBolt(childRef);
             //Sound when "change bolts"
 
         }
@@ -68,26 +75,12 @@ namespace Menu{
             PositioningBoltInstantiating();
         }
         
-        void DestroyBolt(Transform origin){
+        private void DestroyBolt(Transform origin){
             int i;
             
             for (i = origin.childCount - 1; i > -1; i--){
                 GameObject.Destroy(origin.GetChild(i).gameObject);
             }
-        }
-
-        void InstantiateBolt(Transform origin){
-            GameObject boltHold = null;
-            float width = origin.GetComponent<RectTransform>().rect.width;
-
-            SpawnBolt(boltHold , origin , new Vector3(-(width + gap), 0 , 0), new Vector3(0 , 0 , 0));
-            SpawnBolt(boltHold , origin , new Vector3(width + gap , 0 , 0), new Vector3(0 , 180 , 0));
-        }
-
-        void SpawnBolt(GameObject holder , Transform origin , Vector3 pos , Vector3 rotation){
-            holder = Instantiate<GameObject>(boltSelection , origin);
-            holder.GetComponent<RectTransform>().localPosition += pos;
-            holder.GetComponent<RectTransform>().Rotate(rotation , Space.Self);
         }
 
         IEnumerator ChangeBolt(){
@@ -110,19 +103,16 @@ namespace Menu{
         public async void ChangePartitionByIndex(int index){
             GameObject hold = partitionsFather.GetChild(index).gameObject;
 
-            //await Task.Delay(tC.PlayTransitionIn(TransitionController.
-            //    TransitionType.OverTheScreen));
+            await Task.Delay(PlayTransitionIn());
 
             father.SetActive(!father.activeSelf);
             hold.SetActive(!hold.activeSelf);
-            
-            //await Task.Delay(tC.PlayTransitionOut(TransitionController.
-            //    TransitionType.OverTheScreen));
-            
-            //tC.RemoveTransitionComplete();
+
+            await Task.Delay(GetBetweenTransitionTime());
+            await Task.Delay(PlayTransitionOut());
 
             actualSelected = index; //Just to be sure
-
+            
             //Sound when "clicked"
 
         }

@@ -154,8 +154,11 @@ namespace PhasePart.AMN{
         }
 
         private async Task RibossomeQueueMove(){
-            LeanTween.moveX(queue.parent.GetComponent<RectTransform>(), 
-                queue.parent.position.x + howMuchToMove, 0.5f).setEase(animationCurve);
+            RectTransform rT = queue.parent.GetComponent<RectTransform>();
+
+            float moveDistance = rT.anchoredPosition.x + howMuchToMove;
+
+            LeanTween.moveX(rT, moveDistance, 0.5f).setEase(animationCurve);
             
             await Task.Delay(Util.ConvertToMili(0.5f));
         }

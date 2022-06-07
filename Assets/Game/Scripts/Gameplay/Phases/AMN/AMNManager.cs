@@ -118,19 +118,22 @@ namespace PhasePart.AMN{
             //ShowAMN(RNAstring); Test
         }
 
-        public async Task<bool> VerifyAMN(string AMN){
+        public bool VerifyAMN(string AMN){
+            print("ENTROU AQUI AMNManager");
             if(AMN.ToUpper() == nameAMN.ToUpper()){
-                await WaitAnimationFlow();
-
-                actualCompleted++;
-                await QueueNewAMN(AMN); //Push AMN to queue and Ribossome animation
-
-                EndPhase();
-
                 return true;
             }
-
+            print("DEU RUIM");
             return false;
+        }
+
+        public async Task PushNewAMN(string AMN){
+            await WaitAnimationFlow();
+
+            actualCompleted++;
+            await QueueNewAMN(AMN); //Push AMN to queue and Ribossome animation
+
+            EndPhase();
         }
 
         private async Task QueueNewAMN(string amnName){
@@ -145,7 +148,7 @@ namespace PhasePart.AMN{
             
             //Move the string to the left
             if(actualCompleted <= numberOfAMN){
-                print("Actual " + actualCompleted);
+                //print("Actual " + actualCompleted);
                 taskAnimation[1] = Task.Delay(Util.ConvertToMili(SetAMN(actualCompleted == numberOfAMN)));
             }else{
                 taskAnimation[1] = Task.Delay(0);

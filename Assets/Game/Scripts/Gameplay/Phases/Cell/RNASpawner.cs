@@ -76,6 +76,7 @@ namespace PhasePart.RNA{
             return InstantiateAllRNABasedOnDNA(originalPlace.CutDNAString());
         }
 
+        //Get the additional information
         public string InstantiateAllRNABasedOnDNA(string sub){
             string ending = originalPlace.GetAEndingString();
 

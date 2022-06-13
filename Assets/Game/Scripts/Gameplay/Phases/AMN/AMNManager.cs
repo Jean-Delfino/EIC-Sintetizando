@@ -142,7 +142,8 @@ namespace PhasePart.AMN{
             //print("Completed = " + actualCompleted);
             Task[] taskAnimation = new Task[2]; //All animation of the object
 
-            taskAnimation[0] = completedAMNQueue.NewAMNInLine(actualCompleted == (numberOfAMN + 1), 
+            taskAnimation[0] = completedAMNQueue.NewAMNInLine(
+                (actualCompleted) == (numberOfAMN + 1), 
                 (actualCompleted + ribossomeMaxNumber -1 ) < (numberOfAMN + 1),
                 (actualCompleted + ribossomeMaxNumber - 1).ToString(), amnName);
             

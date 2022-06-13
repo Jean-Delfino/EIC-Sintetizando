@@ -25,6 +25,8 @@ namespace PhasePart.AMN{
         
         //[SerializeField] Transform amnQueue = default;
         //[SerializeField] GameObject amnPrefab = default;
+
+        Simbol is the actual sinthetizing AMN
     */
     public class RibossomeAnimator : AnimatorUser{
 
@@ -60,8 +62,10 @@ namespace PhasePart.AMN{
         [SerializeField] float howMuchToMove = -120;
 
         
-        //[SerializeField] Transform amnQueue = default;
-        //[SerializeField] GameObject amnPrefab = default;
+        [SerializeField] Transform amnQueue = default;
+        [SerializeField] GameObject amnPrefab = default;
+
+        private GameObject childPrefab;
 
         [Space]
         [Header("Atributes used to animation dif")]
@@ -69,39 +73,43 @@ namespace PhasePart.AMN{
 
         private bool noRBSintetized = true;
 
-        /*
+        
         private void Start() {
             SetPool(3);
             Tests();
         }
 
         private async void Tests(){
-            await RibossomeEnter(Util.RandomSolidColor(),"1");
+            Color firstColor = Util.RandomSolidColor();
+            //Task notFirst = ;
+            childPrefab = amnPrefab;
+
+            await RibossomeEnter(firstColor,"1");
             await RibossomeEnter(Util.RandomSolidColor(),"2");
 
-            await RibossomeExit(false, amnQueue, amnPrefab, "AMN");
+            await RibossomeExit(false, 2, amnQueue.GetComponent<AMNQueue>().
+                TurnVisibleAMNHolder(firstColor, "AMN"), amnQueue);
             await RibossomeEnter(Util.RandomSolidColor(),"3");
 
-            await RibossomeExit(false, amnQueue, amnPrefab, "MNA");
+            await RibossomeExit(false, 3, amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSimbolBall(), GetSimbolColor(), "MNA"), amnQueue);
             await RibossomeEnter(Util.RandomSolidColor(),"4");
 
-
-            await RibossomeExit(false, amnQueue, amnPrefab, "NMA");
+            await RibossomeExit(false, 4, amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSimbolBall(), GetSimbolColor(), "NMA"), amnQueue);
             await RibossomeEnter(Util.RandomSolidColor(),"5");
 
-            await RibossomeExit(false, amnQueue, amnPrefab, "Gly");
+            await RibossomeExit(false, 5, amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSimbolBall(), GetSimbolColor(), "Gly"), amnQueue);
             await RibossomeEnter(Util.RandomSolidColor(),"6");
 
-            await RibossomeExit(false, amnQueue, amnPrefab, "AAA");
+            await RibossomeExit(false, 6, amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSimbolBall(), GetSimbolColor(), "AAA"), amnQueue);
             await RibossomeEnter(Util.RandomSolidColor(),"7");
 
-            await RibossomeExit(false, amnQueue, amnPrefab, "BBB");
-            await RibossomeExit(false, amnQueue, amnPrefab, "CCC");
+            await RibossomeExit(false, 7, amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSimbolBall(), GetSimbolColor(), "BBB"), amnQueue);
+            await RibossomeExit(false, 8, amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSimbolBall(), GetSimbolColor(), "CCC"), amnQueue);
 
             print("TEST -- ANIMATION ENDING");
 
-            await RibossomeExit(true, amnQueue, amnPrefab, "Fim");
-        }*/
+            await RibossomeExit(true, 9, amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSimbolBall(), GetSimbolColor(), "Fim"), amnQueue);
+        }
 
         //Second part of pooling, the reset of a pooled object
         private void PoolObjectReset(Transform newElement, GameObject childZero){
@@ -111,7 +119,7 @@ namespace PhasePart.AMN{
                 rectTransformValuesReference);
             
             GameObject child = Instantiate<GameObject>(childZero, newElement);
-            child.transform.SetSiblingIndex(0);
+            child.transform.SetAsLastSibling();
             newElement.gameObject.SetActive(false);
         }
 
@@ -153,6 +161,14 @@ namespace PhasePart.AMN{
             Util.ChangeAlphaCanvasImageAnimation(before.GetAMNGroupName(), 1f, fadeTime);
         }
 
+        private void AMNRefSetup(Transform queue, GameObject childPrefab){
+            AMNLetter before = simbolRibossome.GetChild(1).GetComponent<AMNLetter>();
+            
+            before.transform.SetParent(queue); //Parenting the animation
+
+            Util.ChangeAlphaCanvasImageAnimation(before.GetAMNGroupName(), 1f, fadeTime);
+        }
+
         private async Task RibossomeQueueMove(){
             RectTransform rT = queue.parent.GetComponent<RectTransform>();
 
@@ -163,13 +179,13 @@ namespace PhasePart.AMN{
             await Task.Delay(Util.ConvertToMili(0.5f));
         }
 
-        private async Task WasteDestinationMove(Transform wasteDestination, GameObject childPrefab, string amnName){
+        private async Task WasteDestinationMove(Transform wasteDestination){
             LeanTween.moveY(wasteDestination.GetComponent<RectTransform>(), 
                 wasteDestination.position.y + howMuchSpace, 0.5f).setEase(animationCurve);
             
             await Task.Delay(Util.ConvertToMili(0.6f));
 
-            AMNRefSetup(wasteDestination, childPrefab, amnName); //Set the ball used in the scene
+            AMNRefSetup(wasteDestination, childPrefab); //Set the ball used in the scene
 
             //await Task.Delay(Util.ConvertToMili(3f)); Testing
 
@@ -179,19 +195,42 @@ namespace PhasePart.AMN{
             await Task.Delay(Util.ConvertToMili(0.8f));
         }
 
-        private async Task ChangeSimbol(GameObject childPrefab){
+        private async Task ChangeSimbol(GameObject newChildPrefab){
             if(queue.childCount < 3) return; //There is no one sinthetizing
 
             Transform currentlySynthesizing = queue.GetChild(1); //Save time 
 
             //Gets the amn in the ribossome
-            string refAMNnumeration = currentlySynthesizing.GetChild(0).GetComponent<AMNLetter>().GetValue();
+            string refAMNnumeration = currentlySynthesizing.GetChild(currentlySynthesizing.childCount - 1)
+                .GetComponent<AMNLetter>().GetValue();
 
-            AMNLetter hold = Instantiate<AMNLetter>(childPrefab.GetComponent<AMNLetter>(), simbolRibossome);
+            AMNLetter hold = Instantiate<AMNLetter>(newChildPrefab.GetComponent<AMNLetter>(), simbolRibossome);
             hold.Setup(refAMNnumeration);
 
-            ChangeColorSimbolRibossome(currentlySynthesizing.GetComponent<Image>().color, 
+            ChangeColorSimbolRibossome(currentlySynthesizing.transform.GetChild(0).GetComponent<Image>().color, 
                 hold.ReturnAMNLetterImage().transform);
+
+            await Task.Delay(Util.ConvertToMili(fadeColorTime));
+        }
+
+        private async Task ChangeSimbol(int numberRb){
+            if(queue.childCount < 3) return; //There is no one sinthetizing
+
+            Transform currentlySynthesizing = queue.GetChild(1); //Save time 
+
+            //Gets the amn in the ribossome
+            AMNLetter hold = simbolRibossome.GetChild(simbolRibossome.childCount - 1).GetComponent<AMNLetter>();
+            CanvasGroup cG = hold.transform.GetComponent<CanvasGroup>();
+            hold.Setup(numberRb.ToString());
+            
+            Util.ChangeAlphaCanvasImageAnimation(cG, 0f, 0f); //The ball setted as invisible by the AMNQueue
+            hold.gameObject.SetActive(true);
+            Util.ChangeAlphaCanvasImageAnimation(cG, 1f, fadeColorTime);
+
+            ChangeColorSimbolRibossome(currentlySynthesizing.transform.GetChild(0).GetComponent<Image>().color, 
+                hold.ReturnAMNLetterImage().transform);
+
+            simbolRibossome.GetComponent<RibossomeLetter>().Setup(numberRb.ToString());
 
             await Task.Delay(Util.ConvertToMili(fadeColorTime));
         }
@@ -205,7 +244,7 @@ namespace PhasePart.AMN{
         //Every object in the queue has a AMN (except the last one)
         //So we need to animate this too
         //Waste destination is the AMN queue
-        public async Task RibossomeExit(bool lastOne, Transform wasteDestination, GameObject childPrefab, string amnName){
+        public async Task RibossomeExit(bool lastOne, int numberRb, Task externalActions, Transform wasteDestination){
             Transform moveObject = queue.GetChild(0); //Takes out the first ribossome of the list
             Transform lastChild = queue.GetChild(queue.childCount-1);
 
@@ -213,14 +252,14 @@ namespace PhasePart.AMN{
 
             Task[] taskAnimation = new Task[2]; //All tasks of the object
 
-            if(noRBSintetized){
-                moveObjectAmn = moveObject.GetChild(0); //Take the AMNLetter
+            if(noRBSintetized){ //This is basically if start
+                moveObjectAmn = moveObject.GetChild(moveObject.childCount - 1); //Take the AMNLetter
                 moveObjectAmn.SetParent(holdRibossome); //Deparenting it from moveObject
                 
                 await MoveTowardsEnter(moveObjectAmn, wasteDestination.GetChild(wasteDestination.childCount - 2), 0f, animationsTime);
 
-                await WasteDestinationMove(wasteDestination, childPrefab, amnName);
-                await ChangeSimbol(childPrefab);
+                await externalActions;
+                await ChangeSimbol(numberRb);
 
                 await RibossomeQueueMove();
                 
@@ -228,8 +267,10 @@ namespace PhasePart.AMN{
                 return;
             }
 
-            if(!lastOne){
-                moveObjectAmn = queue.GetChild(1).GetChild(0); //Gets the second child
+            if(!lastOne){ 
+                int childOneChildCount = queue.GetChild(1).childCount - 1;
+                moveObjectAmn = queue.GetChild(1).GetChild(childOneChildCount); //Gets the second child
+                
                 moveObjectAmn.SetParent(holdRibossome); //Deparenting it from moveObject
                 taskAnimation[0] = MoveTowardsEnter(moveObjectAmn, wasteDestination.GetChild(0), 0f, animationsTime);
             }else{
@@ -238,19 +279,21 @@ namespace PhasePart.AMN{
 
             lastChild.SetAsFirstSibling();
             moveObject.SetParent(holdRibossome);//Deparenting, so there is no problem with layout group
-
+            
+            //Move to "infinity" the ribossome in the ribossome queue
             taskAnimation[1] = MoveTowardsExit(moveObject, holdRibossome, endTarget, animationsTime);
 
             await Task.WhenAll(taskAnimation);
+            await externalActions;
+
             lastChild.SetAsLastSibling();
 
             PoolObjectReset(moveObject, childPrefab); //Enqueue and setting it correctly
 
             //Moving the AMNQueue
             if(!lastOne){ //One is always invisible remember
-                await WasteDestinationMove(wasteDestination, childPrefab, amnName);
                 DestroyImmediate(moveObjectAmn.gameObject); //Destroy the AMN ball used by the ribossome
-                await ChangeSimbol(childPrefab);
+                await ChangeSimbol(numberRb);
             }
         }
 
@@ -328,12 +371,15 @@ namespace PhasePart.AMN{
         
         public async Task RibossomeEnter(Color newRibossomeColor, string numberAMN){
             GameObject hold = pool.Dequeue();
-            AMNLetter moveObjectAmn = hold.transform.GetChild(0).GetComponent<AMNLetter>();
+            RibossomeLetter rl = hold.GetComponent<RibossomeLetter>();
+            AMNLetter moveObjectAmn = hold.transform.
+                GetChild(hold.transform.childCount - 1).GetComponent<AMNLetter>();
 
             pool.Enqueue(hold);
             
-            hold.GetComponent<Image>().color = newRibossomeColor;
-            
+            rl.SetRibossomeColor(newRibossomeColor);
+            rl.Setup(numberAMN);
+
             moveObjectAmn.SetAMNColor(newRibossomeColor);
             moveObjectAmn.Setup(numberAMN);
             
@@ -348,9 +394,33 @@ namespace PhasePart.AMN{
                 //await Task.Delay(Util.ConvertToMili(fadeColorTime));
                 return;
             }
-
+            //(bool notFirst, Transform moveObject, Transform newParent, Transform target,float scaleMultiplier, float time)
             await MoveTowardsEnter(true, hold.transform, queue, queue.GetChild(queue.childCount-1), 2.5f, animationsTime);
-            //(Transform moveObject, Transform newParent, Transform target,float scaleMultiplier, float time)
+        
+        }
+
+        public void SetChildPrefab(GameObject childPrefab){
+            this.childPrefab = childPrefab;
+        }
+
+        public float GetAnimationsTime(){
+            return this.animationsTime;
+        }
+
+        public AnimationCurve GetAnimationCurve(){
+            return this.animationCurve;
+        }
+
+        public Transform GetSimbolBall(){
+            return simbolRibossome;
+        }
+
+        public Color GetSimbolColor(){
+            return simbolRibossome.GetChild(0).GetComponent<Image>().color;
+        }
+
+        public RibossomeLetter GetSimbolRibossomeRibossomeLetter(){
+            return simbolRibossome.GetComponent<RibossomeLetter>();
         }
     }
 }

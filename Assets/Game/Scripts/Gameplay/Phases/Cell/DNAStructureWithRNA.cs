@@ -23,6 +23,7 @@ namespace PhasePart.RNA.DNA{
         private int separation = -1;
         private string separationString;
 
+
         public void SetupStructure(int quantity, string text){
             int i;
             Letter hold;
@@ -44,19 +45,22 @@ namespace PhasePart.RNA.DNA{
             }
         }
 
-        public void ChangeAllSecondHalf(string text){
+        private void SetGenericStructure(Transform structure, string text){
             int i;
-            Transform secondHalfDNA = secondHalfDNAObject.transform.GetChild(1);
-            //secondHalfDNA.childCount
+
             for(i = 0; i < firstQuantity; i++){
-                secondHalfDNA.GetChild(i + layoutSonAddition).GetComponent<Letter>().Setup(text[i].ToString());
+                ChangeStructureLetter(structure, i + layoutSonAddition, text[i].ToString());
             }
             for(i = 0; i < separation; i++){
-                ChangeSecondHalf(secondHalfDNA, i + firstQuantity, separationString);
+                ChangeStructureLetter(structure, i + firstQuantity, separationString);
             }
-            for(i = i + firstQuantity; i < secondHalfDNA.childCount; i++){
-                secondHalfDNA.GetChild(i + layoutSonAddition).GetComponent<Letter>().Setup(text[i - separation].ToString());
+            for(i = i + firstQuantity; i < structure.childCount; i++){
+                ChangeStructureLetter(structure, i + layoutSonAddition, text[i - separation].ToString());
             }
+        }
+
+        private void ChangeStructureLetter(Transform structure, int index, string text){
+            structure.GetChild(layoutSonAddition + index).GetComponent<Letter>().Setup(text);
         }
 
         public void ChangeSecondHalf(int index, string text){
@@ -65,17 +69,16 @@ namespace PhasePart.RNA.DNA{
             secondHalfDNA.GetChild(layoutSonAddition + index).GetComponent<Letter>().Setup(text);
         }
 
-        private void ChangeSecondHalf(Transform secondHalfDNA, int index, string text){
-            secondHalfDNA.GetChild(layoutSonAddition + index).GetComponent<Letter>().Setup(text);
+        public void ChangeAllSecondHalf(string text){
+            Transform secondHalfDNA = secondHalfDNAObject.transform.GetChild(1);
+
+            SetGenericStructure(secondHalfDNA, text);
         }
 
         public void ChangeAllFirstHalf(string text){
-            int i;
             Transform firstHalfDNA = firstHalfDNAObject.transform.GetChild(1);
 
-            for(i = 0; i < firstHalfDNA.childCount; i++){
-                firstHalfDNA.GetChild(i + layoutSonAddition).GetComponent<Letter>().Setup(text[i].ToString());
-            }
+            SetGenericStructure(firstHalfDNA, text);
         }
 
         public void ChangeRNAinDNAStructure(int index, string text){

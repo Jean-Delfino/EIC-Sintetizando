@@ -40,6 +40,8 @@ namespace PhasePart.RNA{
 
             if(GetValueInputText() == "") {
                 SetColor(RNAonwer.GetColorDef());
+                //The main diferrence is that i don't need to pass it to Upper
+                RNAonwer.SetCorrespondentValidation(originalPosition, "");
                 RNAonwer.ChangeQuantityToNextPhase(Convert.ToInt32(valueInput) * -1);
                 valueInput = false;
                 return;

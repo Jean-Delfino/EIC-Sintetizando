@@ -24,7 +24,7 @@ namespace PhasePart.RNA.DNA{
         private string finiteDNAString; //Gets it from the RNASpawner
 
         private void Start() {
-            print("ENTROU AQUI");
+            //print("ENTROU AQUI");
             ChangeSecondHalf();
             dnaSetupReference.ChangeVisibilitySecondHalfDNA(true);
 
@@ -64,7 +64,7 @@ namespace PhasePart.RNA.DNA{
 
         public void ChangeSecondHalf(string additionalString){
             finiteDNAString += additionalString;
-            print(additionalString);
+            //print(additionalString);
             //Create the complement of the DNA
             dnaSetupReference.ChangeAllSecondHalf(CreateComplementarDNA());
         }

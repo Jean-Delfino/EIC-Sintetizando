@@ -129,11 +129,16 @@ namespace PhasePart.RNA{
 
         public void ResetValuesInRNA(){
             int i = 0;
+            int qtdNonUsable = CellNucleusManager.GetNumberOfCharacterToEnd();
 
-            foreach(Transform child in RNASpawn){
-                child.GetComponent<RNA>().SetValue("", defColor);
+            for(i = 0; i < originalQuantity; i++){
+                RNASpawn.GetChild(i).GetComponent<RNA>().SetValue("", defColor);
                 SetCorrespondentValidation(i, "");
-                i++;
+            }
+
+            for(i = i + qtdNonUsable; i < RNASpawn.childCount; i++){
+                RNASpawn.GetChild(i).GetComponent<RNA>().SetValue("", defColor);
+                SetCorrespondentValidation(i-qtdNonUsable, "");
             }
         }
 
@@ -148,7 +153,7 @@ namespace PhasePart.RNA{
             //if(nextPhase == 1){ //Test only
 
             if(nextPhase == quantity){
-                print("ENTROU AQUI END PHASE");
+                //print("ENTROU AQUI END PHASE");
                 //Here its change phases
                 AMNManager.SetRNAtoAMNString(Util.ConvertToString(anwsers));
                 base.EndPhase();
@@ -184,15 +189,29 @@ namespace PhasePart.RNA{
         //NEED TO BE CHANGED
         public void StartNewWaveDNAString(){ //Here we don't have the problem of "destroying" the DNA
             string sub = originalPlace.CutDNAString();
+            string ending = originalPlace.GetAEndingString();
+
+            int qtdNonUsable = CellNucleusManager.GetNumberOfCharacterToEnd();
+
+            sub += ending;
+
             int i = 0;
 
             ResetValuesInRNA();
             //print("Next phase = " + nextPhase);
-            originalPlace.ChangeDNAStructure(sub);
-
+            originalPlace.ChangeDNAStructure(sub + ending);
+            /*
             foreach(Transform child in RNASpawn){
                 child.GetComponent<RNA>().RNASetup(sub[i].ToString());
                 i++;
+            }*/
+
+            for(i = 0; i < originalQuantity; i++){
+                RNASpawn.GetChild(i).GetComponent<RNA>().RNASetup(sub[i].ToString());
+            }
+
+            for(i = i + qtdNonUsable; i < RNASpawn.childCount; i++){
+                RNASpawn.GetChild(i).GetComponent<RNA>().RNASetup(sub[i - qtdNonUsable].ToString());
             }
         }
 
@@ -227,7 +246,7 @@ namespace PhasePart.RNA{
         } //Best performance
 
         public void SetCorrespondentValidation(int index, string value){
-            anwsers[index] = value; 
+            anwsers[index] = value; //Because of original position in TextWithInput this work
             //This change the CellNucleusManager
             if(index > originalQuantity - 1){
                 index += CellNucleusManager.GetNumberOfCharacterToEnd();

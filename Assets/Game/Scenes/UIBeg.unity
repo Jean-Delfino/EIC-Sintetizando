@@ -1980,6 +1980,10 @@ PrefabInstance:
       value: hidrolas
       objectReference: {fileID: 0}
     - target: {fileID: 2419849989867989271, guid: 617ef43e126b2da4fbf4c74a75993daf, type: 3}
+      propertyPath: proteinDescription
+      value: 
+      objectReference: {fileID: 11400000, guid: d4ba4713edcbbd44a8e7dc9de2176a7c, type: 2}
+    - target: {fileID: 2419849989867989271, guid: 617ef43e126b2da4fbf4c74a75993daf, type: 3}
       propertyPath: synthesizedProteinName
       value: "Hidrolase \xC1cida"
       objectReference: {fileID: 0}
@@ -3089,6 +3093,10 @@ PrefabInstance:
       propertyPath: proteinName
       value: glucagon
       objectReference: {fileID: 0}
+    - target: {fileID: 2419849989867989271, guid: 617ef43e126b2da4fbf4c74a75993daf, type: 3}
+      propertyPath: proteinDescription
+      value: 
+      objectReference: {fileID: 11400000, guid: 64d9017c51f01ad4c804199af7439a9f, type: 2}
     - target: {fileID: 2419849989867989271, guid: 617ef43e126b2da4fbf4c74a75993daf, type: 3}
       propertyPath: synthesizedProteinName
       value: Proglucagon
@@ -7330,6 +7338,10 @@ PrefabInstance:
       value: insulina
       objectReference: {fileID: 0}
     - target: {fileID: 2419849989867989271, guid: 617ef43e126b2da4fbf4c74a75993daf, type: 3}
+      propertyPath: proteinDescription
+      value: 
+      objectReference: {fileID: 11400000, guid: 28651c51949b5e74bb3c77e8a77632c8, type: 2}
+    - target: {fileID: 2419849989867989271, guid: 617ef43e126b2da4fbf4c74a75993daf, type: 3}
       propertyPath: synthesizedProteinName
       value: Proinsulina
       objectReference: {fileID: 0}
@@ -7947,6 +7959,10 @@ PrefabInstance:
       propertyPath: proteinName
       value: tirosinas
       objectReference: {fileID: 0}
+    - target: {fileID: 2419849989867989271, guid: 617ef43e126b2da4fbf4c74a75993daf, type: 3}
+      propertyPath: proteinDescription
+      value: 
+      objectReference: {fileID: 11400000, guid: c410bb90dd8fcc745af1fe1f3ee4b644, type: 2}
     - target: {fileID: 2419849989867989271, guid: 617ef43e126b2da4fbf4c74a75993daf, type: 3}
       propertyPath: synthesizedProteinName
       value: Tirosinase

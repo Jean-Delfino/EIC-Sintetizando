@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -68,11 +69,23 @@ namespace PhasePart.AMN{
 
         private async void Tests(){
             Color firstColor = Util.RandomSolidColor();
-            //Task notFirst = ;
+            Func<int, Task> actionOnItem = async item => {
+                await amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSinthetizingFromQueue(), "Gly");
+            };
+
             childPrefab = amnPrefab;
 
             await RibossomeEnter(firstColor, "1", false);
-            await RibossomeExit(true, Util.RandomSolidColor(), 2, amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSinthetizingFromQueue(), "Gly"));
+            await RibossomeExit(true, Util.RandomSolidColor(), 2, actionOnItem);
+            await RibossomeExit(true, Util.RandomSolidColor(), 3, actionOnItem);
+            
+            await RibossomeExit(true, Util.RandomSolidColor(), 4, actionOnItem);
+            await RibossomeExit(true, Util.RandomSolidColor(), 5, actionOnItem);
+            await RibossomeExit(true, Util.RandomSolidColor(), 6, actionOnItem);
+            await RibossomeExit(true, Util.RandomSolidColor(), 7, actionOnItem);
+            await RibossomeExit(true, Util.RandomSolidColor(), 8, actionOnItem);
+
+            
             /*
             await RibossomeEnter(Util.RandomSolidColor(),"2");
             //await RibossomeEnter(Util.RandomSolidColor(),"3");
@@ -108,8 +121,6 @@ namespace PhasePart.AMN{
 
         //Second part of pooling, the reset of a pooled object
         private void PoolObjectReset(Transform newElement, GameObject childZero){
-            pool.Enqueue(newElement.gameObject);
-
             Util.CopyRectTransform(newElement.GetComponent<RectTransform>(),
                 rectTransformValuesReference);
             
@@ -122,11 +133,10 @@ namespace PhasePart.AMN{
             int i;
             GameObject hold;
 
-            //hold = Instantiate<GameObject>(ribossomePrefab, queue);
-
             for(i = 0; i < poolCapacity; i++){
                 hold = Instantiate<GameObject>(ribossomePrefab, holdRibossome);
                 hold.SetActive(false);
+                hold.name = "Ribossome " + i.ToString();
                 pool.Enqueue(hold);
             }
         }
@@ -136,7 +146,7 @@ namespace PhasePart.AMN{
         //Waste destination is the AMN queue
         public async Task RibossomeExit(bool newAMN, 
             Color newRibossomeColor, int numberAMN, 
-            Task externalActions){
+            Func<int,Task> externalActions){
 
             await RibossomeExit(externalActions, ribossomeQueue.GetRibossomeSinthetizing());
 
@@ -147,33 +157,37 @@ namespace PhasePart.AMN{
             await Task.Yield();
         }
 
-        private async Task RibossomeExit(Task externalActions, RibossomeLetter rlSint){
+        private async Task RibossomeExit(Func<int,Task> externalActions, RibossomeLetter rlSint){
             await ribossomeQueue.MoveAllRibossome(new Vector3(0, 0, 0), animationsTime, animationCurve);
 
             saveColor = rlSint.GetRibossomeColor();
             rlSint.SetAMNPresence();
-            //currentlySynthesizing.transform.GetChild(0).GetComponent<Image>().color
 
-            await externalActions;
+            await externalActions(0);
         }
 
         public async Task RibossomeEnter(Color newRibossomeColor, string numberAMN, bool move){
             GameObject hold = pool.Dequeue();
             RibossomeLetter rl = hold.GetComponent<RibossomeLetter>();
-            AMNLetter moveObjectAmn = hold.transform.
-                GetChild(hold.transform.childCount - 1).GetComponent<AMNLetter>();
+            AMNLetter moveObjectAmn;
 
             pool.Enqueue(hold);
+
+            print("NAME = " + hold.name);
 
             rl.SetRibossomeColor(newRibossomeColor);
             rl.Setup(numberAMN);
 
-            moveObjectAmn.SetAMNColor(newRibossomeColor);
-            moveObjectAmn.Setup(numberAMN);
-
             if(!rl.GetAMNPresence()){
                 PoolObjectReset(hold.transform, childPrefab);
+                rl.SetAMNPresence();
             }
+
+            moveObjectAmn = hold.transform.
+                GetChild(hold.transform.childCount - 1).GetComponent<AMNLetter>();
+
+            moveObjectAmn.SetAMNColor(newRibossomeColor);
+            moveObjectAmn.Setup(numberAMN);
 
             hold.SetActive(true);
             

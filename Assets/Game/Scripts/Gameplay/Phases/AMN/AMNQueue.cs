@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -28,17 +29,14 @@ namespace PhasePart.AMN{
 
 
         public async Task NewAMNInLine(bool lastOne, bool newRb, string amnNumber, string amnName){
-            Task queueTask = PushNewAMN(transporterList.GetSinthetizingFromQueue(), amnName);
+            Func<int, Task> moveAction = async act => {
+                await PushNewAMN(transporterList.GetSinthetizingFromQueue(), amnName);
+            };
 
             actualAMNNumber++;
             actualColor = Util.CreateNewDifferentColor(actualColor);
 
-            await transporterList.RibossomeExit(!lastOne, actualColor, actualAMNNumber + 1, queueTask);
-
-            /*
-            if(newRb){
-                await transporterList.RibossomeEnter(actualColor, amnNumber);
-            } */
+            await transporterList.RibossomeExit(!lastOne, actualColor, actualAMNNumber + 1, moveAction);
         }
 
         public async Task SetAllRibossomeEnter(int ribossomeMaxNumber){
@@ -67,20 +65,8 @@ namespace PhasePart.AMN{
             SetVisibleGroupName(newAMN.GetComponent<AMNLetter>(), amnName, animationTime);
             
             newAMN.SetParent(this.transform);
-            // LeanTween.move(newAMN.GetComponent<RectTransform>(), 
-            //     saveInitial, animationTime).
-            //     setEase(transporterList.GetAnimationCurve());
             
             await Task.Delay(Util.ConvertToMili(animationTime));    
-            /*
-            Instantiate<Letter>(amnPrefab, sinthetizing).gameObject.SetActive(false);
-            
-            LeanTween.move(fatherPosition, 
-                saveInitial, animationTime).
-                setEase(transporterList.GetAnimationCurve());
-            
-            await Task.Delay(Util.ConvertToMili(animationTime));
-            */
         }
 
         private void SetVisibleGroupName(AMNLetter amnLetter, string amnName, float time){

@@ -27,6 +27,11 @@ namespace PhasePart.AMN{
             }
 
             elemColor = newColor;
+            stateRib = 0;
+        }
+
+        public void SetState(int state){
+            stateRib = state;
         }
 
         public void IncreaceState(){

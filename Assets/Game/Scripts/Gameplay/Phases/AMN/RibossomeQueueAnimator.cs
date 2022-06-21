@@ -31,6 +31,8 @@ namespace PhasePart.AMN{
 
         private List<RibossomeLetter> inRibossomeQueue = new List<RibossomeLetter>();
 
+        private bool removeRb; //simply because Async doesn't allow ref
+
         public async Task MoveNewRibossome(bool moveOthers, RibossomeLetter rb,
             Vector3 rotation, float scaleMultiplier,
             float animationTime, AnimationCurve animationCurve){
@@ -41,8 +43,13 @@ namespace PhasePart.AMN{
                 animationTime, animationCurve));
             
             if(moveOthers){
-            toMove.Add(MoveAllRibossome(rotation, 
-                animationTime, animationCurve));
+                toMove.Add(MoveAllRibossome(rotation, 
+                    animationTime, animationCurve));
+            }
+
+            if(removeRb){
+                inRibossomeQueue[0].SetState(0);
+                inRibossomeQueue.RemoveAt(0);
             }
 
             await Task.WhenAll(toMove);
@@ -57,11 +64,22 @@ namespace PhasePart.AMN{
 
             Task[] toMove = new Task[inRibossomeQueue.Count];
             int i;
+
+            //print("ESTA NO MOVE ALL");
+
+            removeRb = false;
             
             for(i = 0; i < inRibossomeQueue.Count; i++){
+                //print("MOVE RIBOSSOME " + i);
                 toMove[i] = (MoveRibossome(inRibossomeQueue[i],rotation, 1f, 
                     animationTime, animationCurve));
             }
+
+            // if(removeRb){
+            //     print("REMOVENDO E TAMANHO LISTA" + inRibossomeQueue.Count);
+            //     inRibossomeQueue[0].SetState(0);
+            //     inRibossomeQueue.RemoveAt(0);
+            // }
             
             await Task.WhenAll(toMove);
         }
@@ -73,11 +91,12 @@ namespace PhasePart.AMN{
             int rbState = rb.GetStateRib();
 
             if(rb.GetStateRib() == ribossomeStatePosition.Count - 1){
-                //Remove from list
                 await MoveTowardState(rb.transform, ribossomeStatePosition[rbState],
                     sleepRibossome,
                     exitRotation, 0,
                     animationTime, animationCurve);
+                //Remove from list
+                removeRb = true;
             }else{
                 await MoveTowardState(rb.transform, ribossomeStatePosition[rbState],
                     ribossomeQueue,

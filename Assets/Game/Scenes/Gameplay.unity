@@ -5671,6 +5671,10 @@ PrefabInstance:
         inferior direito</color> desse painel, voc\xEA poder\xE1 voltar as informa\xE7\xF5es
         at\xE9 fechar esse painel, ent\xE3o preste bastante aten\xE7\xE3o."
       objectReference: {fileID: 0}
+    - target: {fileID: 3293489750863936403, guid: b7600216c899f144497f710a22412a29, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4028905957945509159, guid: b7600216c899f144497f710a22412a29, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -5894,6 +5898,15 @@ PrefabInstance:
     - target: {fileID: 7093455182181789983, guid: b7600216c899f144497f710a22412a29, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -15.699951
+      objectReference: {fileID: 0}
+    - target: {fileID: 7722584388557062986, guid: b7600216c899f144497f710a22412a29, type: 3}
+      propertyPath: m_text
+      value: "Ainda falando sobre as fases na <color=green>parte superior</color>
+        est\xE1 detalhado um pouco sobre a fase, o conte\xFAdo faz parte do texto
+        da miss\xE3o que voc\xEA j\xE1 viu, mas sempre estar\xE1 dispon\xEDvel.\n\nNa
+        <color=green>caixa da esquerda</color> voc\xEA ter\xE1 informa\xE7\xF5es
+        breves sobre como jogar o jogo caso se esquecer, elas s\xE3o curtas mas muito
+        \xFAteis."
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7600216c899f144497f710a22412a29, type: 3}
@@ -6304,6 +6317,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1961326860}
     m_Modifications:
+    - target: {fileID: 366082663, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 366082663, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 366082663, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 366082663, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165949543, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165949543, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165949543, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165949543, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 689987675597053096, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -6413,6 +6458,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5542015587443750423, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278720980660377148, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278720980660377148, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278720980660377148, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278720980660377148, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}

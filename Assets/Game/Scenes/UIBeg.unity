@@ -795,7 +795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2612229180579854714, guid: e0d1d65c8165ce54ea9a6f5501bc7ff5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 686
       objectReference: {fileID: 0}
     - target: {fileID: 2612229180579854714, guid: e0d1d65c8165ce54ea9a6f5501bc7ff5, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -927,7 +927,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4988055720367134130, guid: e0d1d65c8165ce54ea9a6f5501bc7ff5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 686
       objectReference: {fileID: 0}
     - target: {fileID: 4988055720367134130, guid: e0d1d65c8165ce54ea9a6f5501bc7ff5, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -975,7 +975,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6601196751250480231, guid: e0d1d65c8165ce54ea9a6f5501bc7ff5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 686
       objectReference: {fileID: 0}
     - target: {fileID: 6601196751250480231, guid: e0d1d65c8165ce54ea9a6f5501bc7ff5, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -985,7 +985,7 @@ PrefabInstance:
       propertyPath: m_text
       value: "A digest\xE3o converte a maior parte da grande quantidade de <color=#50D500><b>carboidratos</b></color>
         presentes nessa dieta em <color=#50D500><b>glicose</b></color>, um tipo de
-        a\xE7ucar que \xE9 a principal <color=#50D500><b>fonte energ\xE9tica</b></color>
+        a\xE7\xFAcar que \xE9 a principal <color=#50D500><b>fonte energ\xE9tica</b></color>
         para o <color=#50D500><b>metabolismo</b></color> celular. Entretanto, a glicose
         livre na circula\xE7\xE3o sangu\xEDnea n\xE3o consegue por si s\xF3 entrar
         em algumas c\xE9lulas, e necessita, para isso, do <color=#50D500><b>horm\xF4nio

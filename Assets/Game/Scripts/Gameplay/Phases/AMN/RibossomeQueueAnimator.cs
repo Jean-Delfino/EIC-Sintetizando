@@ -47,11 +47,6 @@ namespace PhasePart.AMN{
                     animationTime, animationCurve));
             }
 
-            if(removeRb){
-                inRibossomeQueue[0].SetState(0);
-                inRibossomeQueue.RemoveAt(0);
-            }
-
             await Task.WhenAll(toMove);
 
             inRibossomeQueue.Add(rb);
@@ -62,26 +57,23 @@ namespace PhasePart.AMN{
 
             if(inRibossomeQueue.Count == 0) return;
 
-            Task[] toMove = new Task[inRibossomeQueue.Count];
+            List<Task> toMove = new List<Task>();
             int i;
-
-            //print("ESTA NO MOVE ALL");
 
             removeRb = false;
             
             for(i = 0; i < inRibossomeQueue.Count; i++){
                 //print("MOVE RIBOSSOME " + i);
-                toMove[i] = (MoveRibossome(inRibossomeQueue[i],rotation, 1f, 
+                toMove.Add(MoveRibossome(inRibossomeQueue[i],rotation, 1f, 
                     animationTime, animationCurve));
             }
 
-            // if(removeRb){
-            //     print("REMOVENDO E TAMANHO LISTA" + inRibossomeQueue.Count);
-            //     inRibossomeQueue[0].SetState(0);
-            //     inRibossomeQueue.RemoveAt(0);
-            // }
-            
             await Task.WhenAll(toMove);
+
+            if(removeRb){
+                inRibossomeQueue[0].SetStateRib(0);
+                inRibossomeQueue.RemoveAt(0);
+            }
         }
 
         private async Task MoveRibossome(RibossomeLetter rb, 
@@ -100,7 +92,7 @@ namespace PhasePart.AMN{
             }else{
                 await MoveTowardState(rb.transform, ribossomeStatePosition[rbState],
                     ribossomeQueue,
-                    rotation,scaleMultiplier, 
+                    rotation, scaleMultiplier, 
                     animationTime, animationCurve);
             }
             
@@ -128,7 +120,6 @@ namespace PhasePart.AMN{
                 moveObject.SetParent(newParent);
             }
         }
-
 
         public RibossomeLetter GetRibossomeSinthetizing(){
             return inRibossomeQueue[inRibossomeQueue.Count - 1];

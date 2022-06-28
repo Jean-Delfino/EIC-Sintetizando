@@ -27,32 +27,23 @@ namespace PhasePart.AMN{
             }
 
             elemColor = newColor;
-            stateRib = 0;
         }
 
-        public void SetState(int state){
-            stateRib = state;
+        public void ConnectTwoLetters(RibossomeLetter other){
+            
         }
 
-        public void IncreaceState(){
-            this.stateRib++;
-        }
+        public void IncreaceState(){this.stateRib++;}
 
-        public int GetStateRib(){
-            return this.stateRib;
-        }
+        public int GetStateRib(){return this.stateRib;}
 
-        public Color GetRibossomeColor(){
-            return this.elemColor;
-        }
+        public void SetStateRib(int stateRib){this.stateRib = stateRib;}
 
-        public void SetAMNPresence(){
-            withAMN = !withAMN; 
-        }
+        public Color GetRibossomeColor(){return this.elemColor;}
 
-        public bool GetAMNPresence(){
-            return withAMN;
-        }
+        public bool GetAMNPresence(){return withAMN;}
 
+        public void SetAMNPresence(){withAMN = !withAMN;}
+        public void SetAMNPresence(bool state){withAMN = state;}
     }
 }

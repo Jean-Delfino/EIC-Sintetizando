@@ -73,6 +73,10 @@ namespace PhasePart.AMN{
                 await amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSinthetizingFromQueue(), "Gly");
             };
 
+            Func<int, Task> nullAMN = async item => {
+                await Task.Yield();
+            };
+
             childPrefab = amnPrefab;
 
             await RibossomeEnter(firstColor, "1", false);
@@ -83,40 +87,11 @@ namespace PhasePart.AMN{
             await RibossomeExit(true, Util.RandomSolidColor(), 5, actionOnItem);
             await RibossomeExit(true, Util.RandomSolidColor(), 6, actionOnItem);
             await RibossomeExit(true, Util.RandomSolidColor(), 7, actionOnItem);
-            await RibossomeExit(true, Util.RandomSolidColor(), 8, actionOnItem);
-
+            await RibossomeExit(false, Util.RandomSolidColor(), 8, actionOnItem); 
             
-            /*
-            await RibossomeEnter(Util.RandomSolidColor(),"2");
-            //await RibossomeEnter(Util.RandomSolidColor(),"3");
-            await RibossomeExit(true, Util.RandomSolidColor(), 2, amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSinthetizingFromQueue(), "Gly"));
-
-            await RibossomeEnter(Util.RandomSolidColor(),"2");
-            */
-
-
-            
-            // await RibossomeEnter(Util.RandomSolidColor(),"3");
-
-            // await RibossomeExit(false, 3, amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSimbolBall(), GetSimbolColor(), "MNA"), amnQueue);
-            // await RibossomeEnter(Util.RandomSolidColor(),"4");
-
-            // await RibossomeExit(false, 4, amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSimbolBall(), GetSimbolColor(), "NMA"), amnQueue);
-            // await RibossomeEnter(Util.RandomSolidColor(),"5");
-
-            // await RibossomeExit(false, 5, amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSimbolBall(), GetSimbolColor(), "Gly"), amnQueue);
-            // await RibossomeEnter(Util.RandomSolidColor(),"6");
-
-            // await RibossomeExit(false, 6, amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSimbolBall(), GetSimbolColor(), "AAA"), amnQueue);
-            // await RibossomeEnter(Util.RandomSolidColor(),"7");
-
-            // await RibossomeExit(false, 7, amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSimbolBall(), GetSimbolColor(), "BBB"), amnQueue);
-            // await RibossomeExit(false, 8, amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSimbolBall(), GetSimbolColor(), "CCC"), amnQueue);
-
-            // print("TEST -- ANIMATION ENDING");
-
-            // await RibossomeExit(true, 9, amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSimbolBall(), GetSimbolColor(), "Fim"), amnQueue);
-            
+            print("ENDING");
+            await RibossomeExit(false, Util.RandomSolidColor(), 9, nullAMN);
+            await RibossomeExit(false, Util.RandomSolidColor(), 10, nullAMN);
         }
 
         //Second part of pooling, the reset of a pooled object
@@ -136,7 +111,7 @@ namespace PhasePart.AMN{
             for(i = 0; i < poolCapacity; i++){
                 hold = Instantiate<GameObject>(ribossomePrefab, holdRibossome);
                 hold.SetActive(false);
-                hold.name = "Ribossome " + i.ToString();
+                //hold.name = "Ribossome " + i.ToString();
                 pool.Enqueue(hold);
             }
         }
@@ -161,7 +136,7 @@ namespace PhasePart.AMN{
             await ribossomeQueue.MoveAllRibossome(new Vector3(0, 0, 0), animationsTime, animationCurve);
 
             saveColor = rlSint.GetRibossomeColor();
-            rlSint.SetAMNPresence();
+            rlSint.SetAMNPresence(false);
 
             await externalActions(0);
         }
@@ -173,11 +148,8 @@ namespace PhasePart.AMN{
 
             pool.Enqueue(hold);
 
-            print("NAME = " + hold.name);
-
-            rl.SetRibossomeColor(newRibossomeColor);
-            rl.Setup(numberAMN);
-
+            RibossomeSetup(rl, newRibossomeColor, numberAMN);
+            
             if(!rl.GetAMNPresence()){
                 PoolObjectReset(hold.transform, childPrefab);
                 rl.SetAMNPresence();
@@ -193,6 +165,12 @@ namespace PhasePart.AMN{
             
             await ribossomeQueue.MoveNewRibossome(move, rl, 
                 new Vector3(0, 0, 0), 2.5f, animationsTime, animationCurve);
+        }
+
+        private void RibossomeSetup(RibossomeLetter rl, Color newRibossomeColor, string numberAMN){
+            rl.SetRibossomeColor(newRibossomeColor);
+            rl.Setup(numberAMN);
+            rl.SetStateRib(0);
         }
 
         public void SetChildPrefab(GameObject childPrefab){

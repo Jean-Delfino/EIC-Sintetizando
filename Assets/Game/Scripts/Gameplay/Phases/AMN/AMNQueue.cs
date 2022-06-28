@@ -24,6 +24,8 @@ namespace PhasePart.AMN{
 
         [SerializeField] RibossomeAnimator transporterList = default;
 
+        Transform toConnect = null;
+
         //private int actualAMNNumber = 0; //Correct one
         private int actualAMNNumber = 1;
 
@@ -56,7 +58,6 @@ namespace PhasePart.AMN{
 
         public async Task PushNewAMN(Transform sinthetizing, string amnName){ //Name is close to the other on purpose
             float animationTime = transporterList.GetAnimationsTime();
-            Color amnColor = transporterList.GetColorOfSinthetizingRibossome();
 
             RectTransform fatherPosition = this.transform.parent.GetComponent<RectTransform>();
             Vector3 saveInitial = fatherPosition.anchoredPosition;
@@ -67,6 +68,18 @@ namespace PhasePart.AMN{
             newAMN.SetParent(this.transform);
             
             await Task.Delay(Util.ConvertToMili(animationTime));    
+        }
+
+        public async Task ConnectTwoAMN(Transform sinthetizing, string amnName){
+            if(toConnect == null){
+                toConnect = sinthetizing;
+                return;
+            }
+
+            float animationTime = transporterList.GetAnimationsTime();
+            Transform newAMN = sinthetizing.GetChild(sinthetizing.childCount - 1);
+
+            SetVisibleGroupName(newAMN.GetComponent<AMNLetter>(), amnName, animationTime);
         }
 
         private void SetVisibleGroupName(AMNLetter amnLetter, string amnName, float time){

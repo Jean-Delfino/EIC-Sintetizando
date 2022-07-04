@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 1287156949849134204}
   - component: {fileID: 5472589174868196177}
   - component: {fileID: 355939492379970684}
+  - component: {fileID: 7692350032162307726}
   m_Layer: 5
   m_Name: Bridge
   m_TagString: Untagged
@@ -201,11 +202,11 @@ RectTransform:
   m_Father: {fileID: 6792064276605649700}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -29.5}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -44.5}
   m_SizeDelta: {x: 10, y: 20}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1287156949849134204
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -227,14 +228,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 75a88e452128d49d293c6dc5da2b17d5, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -258,6 +259,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 10}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &7692350032162307726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2789441807426989604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8998b733905762a4aa178362872223bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amnLetterSize: 50
 --- !u!1 &6792064276605649701
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,6 +351,7 @@ MonoBehaviour:
   AMNcolor: {fileID: 8635446053799951149}
   amnName: {fileID: 4178681577630569325}
   cg: {fileID: 1084873173338972543}
+  amnBridge: {fileID: 7692350032162307726}
 --- !u!1 &8377175052803766447
 GameObject:
   m_ObjectHideFlags: 0

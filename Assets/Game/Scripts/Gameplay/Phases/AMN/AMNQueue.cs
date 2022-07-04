@@ -24,11 +24,11 @@ namespace PhasePart.AMN{
 
         [SerializeField] RibossomeAnimator transporterList = default;
 
-        Transform toConnect = null;
+        RibossomeLetter toConnect;
+        RibossomeLetter nextConnection;
 
         //private int actualAMNNumber = 0; //Correct one
         private int actualAMNNumber = 1;
-
 
         public async Task NewAMNInLine(bool lastOne, bool newRb, string amnNumber, string amnName){
             Func<int, Task> moveAction = async act => {
@@ -48,10 +48,14 @@ namespace PhasePart.AMN{
 
             for(i = 0; i < ribossomeMaxNumber - 1; i++){ //Set the max, but in the begginning only two will be spawned
                 actualColor = Util.CreateNewDifferentColor(actualColor);
-                await transporterList.RibossomeEnter(actualColor, (i+1).ToString(), false);
             }
 
             transporterList.SetChildPrefab(amnPrefab.gameObject);
+            await transporterList.RibossomeEnter(actualColor, (1).ToString(), false, 
+                async act => {
+                    await SetConnection(transporterList.GetSinthetizingFromQueue());
+                }
+            );
 
             await Task.Yield();
         }
@@ -71,15 +75,43 @@ namespace PhasePart.AMN{
         }
 
         public async Task ConnectTwoAMN(Transform sinthetizing, string amnName){
-            if(toConnect == null){
-                toConnect = sinthetizing;
-                return;
+            //Not connected
+            if(toConnect.GetAMNPresence()){
+                nextConnection = sinthetizing.GetComponent<RibossomeLetter>();
+
+                await ConnectionProcess(toConnect.GetAMN(), nextConnection, amnName);
+                toConnect.GetAMN().transform.SetParent(this.transform);
+                toConnect.SetAMNPresence(false);
+            }else{
+                toConnect.GetAMN().GetAMNBridge().StopConnection();
+                toConnect = nextConnection;
+                await ConnectTwoAMN(sinthetizing, amnName);
             }
 
-            float animationTime = transporterList.GetAnimationsTime();
-            Transform newAMN = sinthetizing.GetChild(sinthetizing.childCount - 1);
+            await Task.Yield();
+        }
 
-            SetVisibleGroupName(newAMN.GetComponent<AMNLetter>(), amnName, animationTime);
+        public async Task ConnectionProcess(AMNLetter actualHolder, RibossomeLetter sinthetizing, string amnName){
+            float animationTime = transporterList.GetAnimationsTime();
+            RectTransform amnRect = actualHolder.transform.GetComponent<RectTransform>();
+            RectTransform amnQueueRect = this.transform.GetComponent<RectTransform>();
+            AMNLetter newAMN = sinthetizing.GetAMN();
+
+            SetVisibleGroupName(actualHolder, amnName, animationTime);
+
+            float size = actualHolder.GetAMNBridge().Connection(newAMN.transform);
+            
+            LeanTween.moveY(amnQueueRect, amnQueueRect.anchoredPosition.y + amnRect.sizeDelta.y + size, animationTime);
+            LeanTween.moveY(amnRect, amnRect.anchoredPosition.y + amnRect.sizeDelta.y + size, animationTime);
+
+            await Task.Delay(Util.ConvertToMili(animationTime));
+
+            await Task.Yield();
+        }
+
+        public async Task SetConnection(Transform sinthetizing){
+            toConnect = sinthetizing.GetComponent<RibossomeLetter>();
+            await Task.Yield();
         }
 
         private void SetVisibleGroupName(AMNLetter amnLetter, string amnName, float time){

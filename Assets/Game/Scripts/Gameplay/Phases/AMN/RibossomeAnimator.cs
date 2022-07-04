@@ -51,7 +51,7 @@ namespace PhasePart.AMN{
 
         [SerializeField] GameObject ribossomePrefab = default;
 
-        private Color saveColor;
+        //private Color saveColor;
 
         //Pooling
         private Queue<GameObject> pool = new Queue<GameObject>();
@@ -70,7 +70,11 @@ namespace PhasePart.AMN{
         private async void Tests(){
             Color firstColor = Util.RandomSolidColor();
             Func<int, Task> actionOnItem = async item => {
-                await amnQueue.GetComponent<AMNQueue>().PushNewAMN(GetSinthetizingFromQueue(), "Gly");
+                await amnQueue.GetComponent<AMNQueue>().ConnectTwoAMN(GetSinthetizingFromQueue(), "Gly");
+            };
+
+            Func<int, Task> actionOnStart = async item => {
+                await amnQueue.GetComponent<AMNQueue>().SetConnection(GetSinthetizingFromQueue());
             };
 
             Func<int, Task> nullAMN = async item => {
@@ -79,7 +83,7 @@ namespace PhasePart.AMN{
 
             childPrefab = amnPrefab;
 
-            await RibossomeEnter(firstColor, "1", false);
+            await RibossomeEnter(firstColor, "1", false, actionOnStart);
             await RibossomeExit(true, Util.RandomSolidColor(), 2, actionOnItem);
             await RibossomeExit(true, Util.RandomSolidColor(), 3, actionOnItem);
             
@@ -99,8 +103,7 @@ namespace PhasePart.AMN{
             Util.CopyRectTransform(newElement.GetComponent<RectTransform>(),
                 rectTransformValuesReference);
             
-            GameObject child = Instantiate<GameObject>(childZero, newElement);
-            child.transform.SetAsLastSibling();
+            newElement.GetComponent<RibossomeLetter>().NewAMN(childZero);
             newElement.gameObject.SetActive(false);
         }
 
@@ -122,22 +125,21 @@ namespace PhasePart.AMN{
         public async Task RibossomeExit(bool newAMN, 
             Color newRibossomeColor, int numberAMN, 
             Func<int,Task> externalActions){
-
-            await RibossomeExit(externalActions, ribossomeQueue.GetRibossomeSinthetizing());
+            
+            //ribossomeQueue.GetRibossomeSinthetizing().SetAMNPresence(false);
+            await ribossomeQueue.MoveAllRibossome(new Vector3(0, 0, 0), animationsTime, animationCurve);
 
             if(newAMN){
                 await RibossomeEnter(newRibossomeColor, numberAMN.ToString(), false);
             }
 
             await Task.Yield();
+            await externalActions(0);
         }
 
-        private async Task RibossomeExit(Func<int,Task> externalActions, RibossomeLetter rlSint){
-            await ribossomeQueue.MoveAllRibossome(new Vector3(0, 0, 0), animationsTime, animationCurve);
-
-            saveColor = rlSint.GetRibossomeColor();
-            rlSint.SetAMNPresence(false);
-
+        public async Task RibossomeEnter(Color newRibossomeColor, string numberAMN, bool move, Func<int,Task> externalActions){
+            await RibossomeEnter(newRibossomeColor, numberAMN, move);
+            
             await externalActions(0);
         }
 
@@ -152,11 +154,10 @@ namespace PhasePart.AMN{
             
             if(!rl.GetAMNPresence()){
                 PoolObjectReset(hold.transform, childPrefab);
-                rl.SetAMNPresence();
+                rl.SetAMNPresence(true);
             }
 
-            moveObjectAmn = hold.transform.
-                GetChild(hold.transform.childCount - 1).GetComponent<AMNLetter>();
+            moveObjectAmn = rl.GetAMN();
 
             moveObjectAmn.SetAMNColor(newRibossomeColor);
             moveObjectAmn.Setup(numberAMN);
@@ -166,6 +167,7 @@ namespace PhasePart.AMN{
             await ribossomeQueue.MoveNewRibossome(move, rl, 
                 new Vector3(0, 0, 0), 2.5f, animationsTime, animationCurve);
         }
+
 
         private void RibossomeSetup(RibossomeLetter rl, Color newRibossomeColor, string numberAMN){
             rl.SetRibossomeColor(newRibossomeColor);

@@ -12,10 +12,18 @@ using GameUserInterface.Text;
 
 namespace PhasePart.AMN{
     public class AMNLetter : Letter{
+        [Space]
+        [Header("AMNLetter new atributes")]
+        [Space]
+
         [SerializeField] Image AMNcolor = default;
         [SerializeField] TextMeshProUGUI amnName = default;
-        [SerializeField] CanvasGroup cg = default;
 
+        [Space]
+        [Header("Exclusive usage in the AMNQueue")]
+        [Space]
+
+        [SerializeField] CanvasGroup cg = default;
         [SerializeField] AMNConnector amnBridge = default;
         
         public void SetAMNColor(Color newColor){
@@ -32,6 +40,10 @@ namespace PhasePart.AMN{
 
         public CanvasGroup GetAMNGroupName(){
             return cg;
+        }
+
+        public AMNConnector GetAMNBridge(){
+            return amnBridge;
         }
     }
 }

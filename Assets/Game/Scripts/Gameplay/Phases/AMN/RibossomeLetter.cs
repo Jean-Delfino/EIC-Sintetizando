@@ -17,6 +17,8 @@ namespace PhasePart.AMN{
 
         [SerializeField] List<Image> colorDef = default;
 
+        [SerializeField] AMNLetter ribossomeLetterAMN = default;
+
         private Color elemColor;
 
         public void SetRibossomeColor(Color newColor){
@@ -29,8 +31,15 @@ namespace PhasePart.AMN{
             elemColor = newColor;
         }
 
-        public void ConnectTwoLetters(RibossomeLetter other){
-            
+        public void NewAMN(GameObject letter){
+            GameObject child = Instantiate<GameObject>(letter, this.transform);
+            child.transform.SetAsLastSibling();
+            ribossomeLetterAMN = child.GetComponent<AMNLetter>();
+            SetAMNPresence(true);
+        }
+
+        public AMNLetter GetAMN(){
+            return this.ribossomeLetterAMN;
         }
 
         public void IncreaceState(){this.stateRib++;}

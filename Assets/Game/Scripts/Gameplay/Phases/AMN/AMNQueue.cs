@@ -77,11 +77,15 @@ namespace PhasePart.AMN{
         public async Task ConnectTwoAMN(Transform sinthetizing, string amnName){
             //Not connected
             if(toConnect.GetAMNPresence()){
-                nextConnection = sinthetizing.GetComponent<RibossomeLetter>();
 
-                await ConnectionProcess(toConnect.GetAMN(), nextConnection, amnName);
+                nextConnection = sinthetizing.GetComponent<RibossomeLetter>();
+                print("CONNECT = " + toConnect.gameObject.name);
+                print("NEXT = " + nextConnection.gameObject.name);
+
                 toConnect.GetAMN().transform.SetParent(this.transform);
+                await ConnectionProcess(toConnect.GetAMN(), nextConnection, amnName);
                 toConnect.SetAMNPresence(false);
+
             }else{
                 toConnect.GetAMN().GetAMNBridge().StopConnection();
                 toConnect = nextConnection;
@@ -100,9 +104,10 @@ namespace PhasePart.AMN{
             SetVisibleGroupName(actualHolder, amnName, animationTime);
 
             float size = actualHolder.GetAMNBridge().Connection(newAMN.transform);
-            
-            LeanTween.moveY(amnQueueRect, amnQueueRect.anchoredPosition.y + amnRect.sizeDelta.y + size, animationTime);
-            LeanTween.moveY(amnRect, amnRect.anchoredPosition.y + amnRect.sizeDelta.y + size, animationTime);
+
+
+            LeanTween.moveY(amnQueueRect, amnQueueRect.anchoredPosition.y + size, animationTime);
+            //LeanTween.moveY(amnRect, amnRect.anchoredPosition.y + amnRect.sizeDelta.y + size, animationTime);
 
             await Task.Delay(Util.ConvertToMili(animationTime));
 

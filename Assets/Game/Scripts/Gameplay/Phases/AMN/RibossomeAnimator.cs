@@ -114,7 +114,7 @@ namespace PhasePart.AMN{
             for(i = 0; i < poolCapacity; i++){
                 hold = Instantiate<GameObject>(ribossomePrefab, holdRibossome);
                 hold.SetActive(false);
-                //hold.name = "Ribossome " + i.ToString();
+                hold.name = "Ribossome " + i.ToString();
                 pool.Enqueue(hold);
             }
         }

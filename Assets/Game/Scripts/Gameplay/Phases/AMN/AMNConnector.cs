@@ -50,8 +50,17 @@ public class AMNConnector : MonoBehaviour{
     //https://forum.unity.com/threads/look-rotation-2d-equivalent.611044/
     private void LookAtFormula(RectTransform target){
         //Vector2 direction = transform.TransformPoint(target.position)
-        // - transform.TransformPoint(fatherRect.position);
-        Vector2 direction = target.anchoredPosition - fatherRect.anchoredPosition;
+        // - transform.TransformPoint(fatherRect.position))
+        //print("TRANSFORM" + transform.TransformPoint(target.position) + " " + transform.TransformPoint(fatherRect.position));
+        //Vector2 positionTarget = Camera.main.ScreenToWorldPoint(target.position);
+        //Vector2 positionAMN = Camera.main.ScreenToWorldPoint(fatherRect.position);
+        Vector3 newPosition = target.position;
+        Vector3 objectPosition = fatherRect.position;
+
+        print("TARGET" + newPosition);
+        print("POS" + objectPosition);
+        //Vector2 direction = target.anchoredPosition - fatherRect.anchoredPosition;
+        Vector2 direction = newPosition - objectPosition;
 
         thisRect.rotation = Quaternion.FromToRotation(Vector3.down, direction);
 

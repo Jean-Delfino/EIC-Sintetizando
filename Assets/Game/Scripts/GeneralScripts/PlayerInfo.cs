@@ -9,15 +9,12 @@ namespace GameGeneralScripts.Player{
     public class PlayerInfo : GeneralGetter{
 
         private string actualProtein;
-        private string namePlayer;
+        private string namePlayer = "Unknown";
         private float maxScore;
         private float lastScore;
         private float actualScore;
 
         [SerializeField] UnityEvent onAwakeEvents;
-
-
-        //private string textTeste = "Al";
 
         //private float maxTime;
         //private float actualBestTime;

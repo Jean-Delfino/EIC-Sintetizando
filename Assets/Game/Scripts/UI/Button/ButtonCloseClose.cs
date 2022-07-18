@@ -19,7 +19,7 @@ namespace GameUserInterface.Button{
         bool clicked = true; //See the beginning of the OnClickButton, it turn to be false actually
 
         public void OnClickButton(){
-            clicked = !clicked;
+            ChangeState();
             
             if(clicked){
                 afterClick.Invoke();
@@ -27,6 +27,10 @@ namespace GameUserInterface.Button{
             }
 
             click.Invoke();
+        }
+
+        public void ChangeState(){
+            clicked = !clicked;
         }
 
     }

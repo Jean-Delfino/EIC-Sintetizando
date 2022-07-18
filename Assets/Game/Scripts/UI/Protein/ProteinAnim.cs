@@ -6,7 +6,7 @@ using UnityEngine;
     Control the Protein so it don't rotate at the start of the game
 */
 
-namespace ProteinPart{
+namespace ProteinPart.InfoProtein{
     public class ProteinAnim : MonoBehaviour{
         Animator anim;
 

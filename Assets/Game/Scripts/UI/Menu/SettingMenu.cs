@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -7,7 +5,6 @@ namespace Menu{
     public class SettingMenu : MonoBehaviour{
         [SerializeField] AudioMixer mainMixer = default;
         [SerializeField] GameObject pauseMenuRef = default;
-        // Start is called before the first frame update
         public void ChangeFullScreen(bool screenMode){
             Screen.fullScreen = screenMode;
         }

@@ -2,13 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
-using UnityEngine.UI;
-
-using System;
-using System.Threading;
 using System.Threading.Tasks;
 
 using GameUserInterface.Animation;
+using ProteinPart.InfoProtein;
 
 /*
     This code pick one VideoChoice and set a videoPlayer, its also set some video options
@@ -31,13 +28,6 @@ namespace ProteinPart{
         private void Start(){
             Protein.Setup(this);
             videoPlayer = GetComponent<VideoPlayer>();
-            /*
-            Action<object> action = (object obj) =>
-                                    {
-                                        FinishCheck();
-                                    };
-
-            videoTask = new Task(action, null);*/
         }
 
         public void ChooseProtein(int index){

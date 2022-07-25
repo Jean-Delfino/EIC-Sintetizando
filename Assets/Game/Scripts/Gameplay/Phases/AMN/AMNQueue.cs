@@ -80,6 +80,7 @@ namespace PhasePart.AMN{
             Transform newAMN = sinthetizing.GetChild(sinthetizing.childCount - 1);
 
             SetVisibleGroupName(newAMN.GetComponent<AMNLetter>(), amnName, animationTime);
+            await Task.Yield();
         }
 
         private void SetVisibleGroupName(AMNLetter amnLetter, string amnName, float time){

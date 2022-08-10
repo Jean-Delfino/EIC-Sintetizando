@@ -3447,7 +3447,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3496170284787983080, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_text
-      value: Background
+      value: "Ret\xEDculo \nendoplasm\xE1tico liso"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3496170284787983080, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
+      propertyPath: m_fontSize
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3496170284787983080, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759382456531320750, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759382456531320750, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3979995372239752373, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -3635,7 +3651,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9199902675217693100, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_Name
-      value: Info-Background
+      value: Info-Liso
       objectReference: {fileID: 0}
     - target: {fileID: 9199902675217693100, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_IsActive
@@ -3662,7 +3678,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3496170284787983080, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_text
-      value: Ribossomo
+      value: Lisossomo
       objectReference: {fileID: 0}
     - target: {fileID: 3979995372239752373, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -3822,7 +3838,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6239238584934987847, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 82.3
+      value: 73.16
       objectReference: {fileID: 0}
     - target: {fileID: 6239238584934987847, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3850,7 +3866,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9199902675217693100, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_Name
-      value: Info-Rb
+      value: Info-Ls
       objectReference: {fileID: 0}
     - target: {fileID: 9199902675217693100, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_IsActive
@@ -3877,7 +3893,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3496170284787983080, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_text
-      value: Pequena
+      value: "Centr\xEDolos"
       objectReference: {fileID: 0}
     - target: {fileID: 3979995372239752373, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -4037,7 +4053,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6239238584934987847, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 123.45
+      value: 109.73
       objectReference: {fileID: 0}
     - target: {fileID: 6239238584934987847, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4065,7 +4081,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9199902675217693100, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_Name
-      value: Info-Small
+      value: Info-Centri
       objectReference: {fileID: 0}
     - target: {fileID: 9199902675217693100, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_IsActive
@@ -4092,7 +4108,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3496170284787983080, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_text
-      value: Coisinha 2
+      value: Complexo de Golgi
+      objectReference: {fileID: 0}
+    - target: {fileID: 3496170284787983080, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
+      propertyPath: m_fontSize
+      value: 27.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759382456531320750, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759382456531320750, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3979995372239752373, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -4252,7 +4280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6239238584934987847, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 164.6
+      value: 109.73
       objectReference: {fileID: 0}
     - target: {fileID: 6239238584934987847, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4280,7 +4308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9199902675217693100, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_Name
-      value: Info-Waves
+      value: Info-Golgi
       objectReference: {fileID: 0}
     - target: {fileID: 9199902675217693100, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_IsActive
@@ -5605,7 +5633,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3496170284787983080, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_text
-      value: Azul
+      value: "Mitoc\xF4ndria"
       objectReference: {fileID: 0}
     - target: {fileID: 3979995372239752373, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -5813,7 +5841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6239238584934987847, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 82.3
+      value: 73.16
       objectReference: {fileID: 0}
     - target: {fileID: 6239238584934987847, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5841,7 +5869,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9199902675217693100, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_Name
-      value: Info-Blue
+      value: Info-Condria
       objectReference: {fileID: 0}
     - target: {fileID: 9199902675217693100, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_IsActive
@@ -5868,7 +5896,39 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3496170284787983080, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_text
-      value: "Perto do n\xFAcleo"
+      value: "Ret\xEDculo \nendoplasm\xE1tico rugoso"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3496170284787983080, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
+      propertyPath: m_fontSize
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3496170284787983080, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3496170284787983080, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3496170284787983080, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759382456531320750, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759382456531320750, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759382456531320750, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759382456531320750, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3979995372239752373, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -6052,7 +6112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9199902675217693100, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_Name
-      value: Info-ClosestToNucleus
+      value: Info-Rugoso
       objectReference: {fileID: 0}
     - target: {fileID: 9199902675217693100, guid: 8759a64bd7e32114fb19f18a8a489dea, type: 3}
       propertyPath: m_IsActive

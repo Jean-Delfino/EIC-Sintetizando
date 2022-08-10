@@ -8,7 +8,7 @@ namespace Menu.Settings{
 
         private float actualVolume;
 
-        private void Start() {
+        private void Awake() {
             mainMixer.GetFloat("VolumeMixer", out actualVolume);
         }     
         

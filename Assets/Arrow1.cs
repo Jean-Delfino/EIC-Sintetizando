@@ -8,7 +8,7 @@ using PhasePart.Bow;
     Bow projectile for the minigame
 */
 
-public class Arrow : MonoBehaviour{
+public class Arrow1 : MonoBehaviour{
     Rigidbody rb;
 
     void Start(){
@@ -24,7 +24,7 @@ public class Arrow : MonoBehaviour{
         rb.constraints = RigidbodyConstraints.None;
         rb.useGravity = true;
 
-        rb.AddRelativeForce(force, ForceMode.Impulse);//"RelativeForce faz a flecha mover na direção certa mas atrapalha a cena do Jean"
+        rb.AddForce(force, ForceMode.Impulse);
     }
 
     void OnCollisionEnter(Collision other){
@@ -54,3 +54,4 @@ public class Arrow : MonoBehaviour{
        rb.useGravity = state;
     }
 }
+

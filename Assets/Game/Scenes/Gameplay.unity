@@ -6121,6 +6121,10 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 1961326859}
+    - target: {fileID: 1415611687192513185, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1595428208218147696, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -6331,15 +6335,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4224349540430482250, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4224349540430482250, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4224349540430482250, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 73.16
       objectReference: {fileID: 0}
     - target: {fileID: 4224349540430482250, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -6353,6 +6357,26 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 1961326859}
+    - target: {fileID: 4459494184077701753, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459494184077701753, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459494184077701753, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459494184077701753, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9.547363
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459494184077701753, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 43.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5542015587443750423, guid: e492b05009ff9db438214b3ae00ad5d3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

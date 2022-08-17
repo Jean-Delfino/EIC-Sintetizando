@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 95690255866123454}
   - component: {fileID: 858487878905933051}
   - component: {fileID: 3871936373952081085}
+  - component: {fileID: -5244185073695130018}
   m_Layer: 0
   m_Name: bow_arrow
   m_TagString: Untagged
@@ -134,3 +135,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3378fafe270074747b370733b88e9ea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &-5244185073695130018
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916999067809332}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.04944, y: 0.048763044, z: 0.32568595}
+  m_Center: {x: 0.0005925372, y: 0.0002553938, z: -0.14871563}

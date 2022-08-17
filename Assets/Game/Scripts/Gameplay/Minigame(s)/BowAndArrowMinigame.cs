@@ -124,5 +124,10 @@ namespace PhasePart.Bow{
             RechargeBow(new Vector3(0,0,0), new Quaternion());
             return false;
         }
+
+        void Update(){
+        bow.transform.Rotate(Vector3.left*Input.GetAxis("Horizontal")*Time.deltaTime*100);
+        //Rotaciona o arco e flecha.
+    }
     }
 }

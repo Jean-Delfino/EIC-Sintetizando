@@ -18,6 +18,11 @@ namespace PhasePart.Bow{
 
         [SerializeField] GameObject bow = default; //Reference to the bow, so this object didn't need to be fixed on the bow
         [SerializeField] Vector3 thrownSpeed = default; //Speed that the arrow will be thrown
+
+        [SerializeField] float speedBowRotationHorizontal = default;
+
+        [SerializeField] float bowLeftRotationLimit = default;
+        [SerializeField] float bowRightRotationLimit = default;
         
         [SerializeField] Arrow arrowPrefab = default; //The prefab that will be used after the first shot
         [SerializeField] int quiverCapacity = default;
@@ -38,6 +43,9 @@ namespace PhasePart.Bow{
             StarQuiver();
             reference = RechargeBow(new Vector3(0, 0, 0), new Quaternion());
             BeginGame();
+
+            print("ROTACAO = " + bow.transform.rotation.eulerAngles.y);
+
         }
 
         private void StarQuiver(){
@@ -87,17 +95,31 @@ namespace PhasePart.Bow{
 
         private async Task OnDragAiming(){
             //play animatiom
+            Quaternion myRotation = Quaternion.identity;
+            Quaternion copyRotation;
+
 
             while(Input.GetMouseButton(0)){
                 print("While");
                 //Rotate object
+                bow.transform.Rotate(Vector3.left * Input.GetAxis("Mouse X") * Time.deltaTime * speedBowRotationHorizontal);
+
+                copyRotation = bow.transform.rotation;
+
+                print(copyRotation.eulerAngles.y);
+                
+                myRotation.eulerAngles = new Vector3(copyRotation.eulerAngles.x, 
+                                                    Mathf.Clamp(copyRotation.eulerAngles.y, bowLeftRotationLimit, bowRightRotationLimit), 
+                                                    copyRotation.eulerAngles.z);
+
+                bow.transform.rotation = myRotation;
+
                 await Task.Yield();
             }
 
             //if(!animation.isPlaying) ShootArow();
             ShootArrow();
         }
-
         private async Task<bool> WaitForArrow(){
             while(arrowFlying){
                 await Task.Yield();
@@ -125,9 +147,9 @@ namespace PhasePart.Bow{
             return false;
         }
 
-        void Update(){
-        bow.transform.Rotate(Vector3.left*Input.GetAxis("Horizontal")*Time.deltaTime*50);
+        //void Update(){
+        //bow.transform.Rotate(Vector3.left*Input.GetAxis("Horizontal")*Time.deltaTime*100);
         //Rotaciona o arco e flecha.
-    }
+    //}
     }
 }

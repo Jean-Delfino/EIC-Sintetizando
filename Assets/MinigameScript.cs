@@ -20,9 +20,13 @@ namespace PhasePart.Bow{
         [SerializeField] Vector3 thrownSpeed = default; //Speed that the arrow will be thrown
 
         [SerializeField] float speedBowRotationHorizontal = default;
+        [SerializeField] float speedBowRotationVertical = default;
 
         [SerializeField] float bowLeftRotationLimit = default;
         [SerializeField] float bowRightRotationLimit = default;
+
+        [SerializeField] float bowUpRotationLimit = default;
+        [SerializeField] float bowDownRotationLimit = default;
         
         [SerializeField] Arrow arrowPrefab = default; //The prefab that will be used after the first shot
         [SerializeField] int quiverCapacity = default;
@@ -59,15 +63,12 @@ namespace PhasePart.Bow{
             }
         }
 
-        private Arrow RechargeBow(Vector3 position, Quaternion rotation){
+        private Arrow  RechargeBow(Vector3 position, Quaternion rotation){
             Arrow newObj = quiver.Dequeue();
-
             newObj.gameObject.SetActive(true);
             newObj.gameObject.transform.position = position;
             //newObj.gameObject.transform.rotation = rotation;
-
             quiver.Enqueue(newObj);
-
             return newObj;
         }
 
@@ -103,14 +104,18 @@ namespace PhasePart.Bow{
                 print("While");
                 //Rotate object
                 bow.transform.Rotate(Vector3.left * Input.GetAxis("Mouse X") * Time.deltaTime * speedBowRotationHorizontal);
+                //bow.transform.Rotate(Vector3.down * Input.GetAxis("Mouse X") * Time.deltaTime * speedBowRotationVertical);
 
                 copyRotation = bow.transform.rotation;
-
-                print(copyRotation.eulerAngles.y);
+                
+                print(copyRotation.eulerAngles.x);
                 
                 myRotation.eulerAngles = new Vector3(copyRotation.eulerAngles.x, 
-                                                    Mathf.Clamp(copyRotation.eulerAngles.y, bowLeftRotationLimit, bowRightRotationLimit), 
-                                                    copyRotation.eulerAngles.z);
+                                                   Mathf.Clamp(copyRotation.eulerAngles.y, bowLeftRotationLimit, bowRightRotationLimit), 
+                                                   copyRotation.eulerAngles.z);
+
+                //myRotation.eulerAngles = new Vector3(Mathf.Clamp(copyRotation.eulerAngles.x, bowUpRotationLimit, bowDownRotationLimit), copyRotation.eulerAngles.y,  
+                                                   // copyRotation.eulerAngles.z);
 
                 bow.transform.rotation = myRotation;
 
@@ -124,13 +129,11 @@ namespace PhasePart.Bow{
             while(arrowFlying){
                 await Task.Yield();
             }
-            
             return !endPhase;
         }
 
         private void ShootArrow(){
             arrowFlying = true;
-            
             reference.Shoot(thrownSpeed);
         }
 
@@ -142,14 +145,8 @@ namespace PhasePart.Bow{
                 endPhase = true;
                 return true;
             }
-
             RechargeBow(new Vector3(0,0,0), new Quaternion());
             return false;
         }
-
-        //void Update(){
-        //bow.transform.Rotate(Vector3.left*Input.GetAxis("Horizontal")*Time.deltaTime*100);
-        //Rotaciona o arco e flecha.
-    //}
     }
 }

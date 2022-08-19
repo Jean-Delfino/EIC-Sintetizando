@@ -104,27 +104,34 @@ namespace PhasePart.Bow{
                 print("While");
                 //Rotate object
                 bow.transform.Rotate(Vector3.left * Input.GetAxis("Mouse X") * Time.deltaTime * speedBowRotationHorizontal);
-                //bow.transform.Rotate(Vector3.down * Input.GetAxis("Mouse X") * Time.deltaTime * speedBowRotationVertical);
+                //bow.transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * speedBowRotationVertical);
 
                 copyRotation = bow.transform.rotation;
                 
-                print(copyRotation.eulerAngles.x);
+                print(copyRotation.eulerAngles.y);
                 
                 myRotation.eulerAngles = new Vector3(copyRotation.eulerAngles.x, 
                                                    Mathf.Clamp(copyRotation.eulerAngles.y, bowLeftRotationLimit, bowRightRotationLimit), 
                                                    copyRotation.eulerAngles.z);
 
                 //myRotation.eulerAngles = new Vector3(Mathf.Clamp(copyRotation.eulerAngles.x, bowUpRotationLimit, bowDownRotationLimit), copyRotation.eulerAngles.y,  
-                                                   // copyRotation.eulerAngles.z);
+                                                   //copyRotation.eulerAngles.z);
 
                 bow.transform.rotation = myRotation;
 
                 await Task.Yield();
             }
-
-            //if(!animation.isPlaying) ShootArow();
             ShootArrow();
+            //if(!animation.isPlaying) ShootArrow();
+        } 
+
+        private void Update()
+        {
+          if(Input.GetMouseButton(0)){
+            RechargeBow(new Vector3(0,0,0), new Quaternion());
+            } 
         }
+        
         private async Task<bool> WaitForArrow(){
             while(arrowFlying){
                 await Task.Yield();

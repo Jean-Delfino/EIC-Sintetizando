@@ -17,7 +17,7 @@ public class Arrow : MonoBehaviour{
         ChangeGravityRigidbody(false);
     }
     void VerifyHit(int value, GameObject hitted){
-        FindObjectOfType<BowAndArrowMinigame>().SetHit(value, hitted);
+        FindObjectOfType<MinigameScript>().SetHit(value, hitted);
     }
 
     public void Shoot(Vector3 force){
@@ -39,8 +39,9 @@ public class Arrow : MonoBehaviour{
             this.gameObject.SetActive(false); //Needed for the pooling
             other.gameObject.SetActive(false); //Will be used later in the pooling
        }else{
+             this.rb.constraints = RigidbodyConstraints.FreezeAll;
             //print("UE");
-            this.rb.constraints = RigidbodyConstraints.FreezeAll; //Locks the arrow in the wall
+             //Locks the arrow in the wall
        }
 
         ChangeGravityRigidbody(false);

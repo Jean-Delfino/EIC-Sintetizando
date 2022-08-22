@@ -110,9 +110,9 @@ namespace PhasePart.Bow{
                 
                 print(copyRotation.eulerAngles.y);
                 
-                myRotation.eulerAngles = new Vector3(copyRotation.eulerAngles.x, 
+                myRotation.eulerAngles = new Vector3(Mathf.Clamp(copyRotation.eulerAngles.x, bowUpRotationLimit, bowDownRotationLimit),
                                                    Mathf.Clamp(copyRotation.eulerAngles.y, bowLeftRotationLimit, bowRightRotationLimit), 
-                                                   copyRotation.eulerAngles.z);
+                                                   90);
 
                 //myRotation.eulerAngles = new Vector3(Mathf.Clamp(copyRotation.eulerAngles.x, bowUpRotationLimit, bowDownRotationLimit), copyRotation.eulerAngles.y,  
                                                    //copyRotation.eulerAngles.z);
@@ -125,12 +125,7 @@ namespace PhasePart.Bow{
             //if(!animation.isPlaying) ShootArrow();
         } 
 
-        private void Update()
-        {
-          if(Input.GetMouseButton(0)){
-            RechargeBow(new Vector3(0,0,0), new Quaternion());
-            } 
-        }
+       
         
         private async Task<bool> WaitForArrow(){
             while(arrowFlying){
@@ -152,7 +147,10 @@ namespace PhasePart.Bow{
                 endPhase = true;
                 return true;
             }
+            else{
+
             RechargeBow(new Vector3(0,0,0), new Quaternion());
+            }
             return false;
         }
     }

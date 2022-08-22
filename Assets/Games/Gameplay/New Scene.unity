@@ -588,9 +588,9 @@ MonoBehaviour:
   speedBowRotationHorizontal: 1000
   speedBowRotationVertical: 1000
   bowLeftRotationLimit: 95
-  bowRightRotationLimit: 185
-  bowUpRotationLimit: -1
-  bowDownRotationLimit: 10
+  bowRightRotationLimit: 220
+  bowUpRotationLimit: 0
+  bowDownRotationLimit: 0
   arrowPrefab: {fileID: 3871936373952081085, guid: 7bf79c06024c1604f9b1f116afc2767c, type: 3}
   quiverCapacity: 5
   arrowSpawn: {fileID: 1250676875}
@@ -919,6 +919,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 762335387406785802, guid: c3a72c51a704e514891bc452c522f0cc, type: 3}
+      propertyPath: numberPhase
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3667242589650680530, guid: c3a72c51a704e514891bc452c522f0cc, type: 3}
+      propertyPath: numberPhase
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3667242589760367266, guid: c3a72c51a704e514891bc452c522f0cc, type: 3}
       propertyPath: numberPhase
       value: 0
       objectReference: {fileID: 0}

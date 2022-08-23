@@ -16,6 +16,7 @@ namespace PhasePart.Bow{
     public class MinigameScript : PhaseManagerMono{
         [SerializeField] GameObject originalScene; //It will make the original scene active or inactive
 
+        [SerializeField] GameObject target = default;
         [SerializeField] GameObject bow = default; //Reference to the bow, so this object didn't need to be fixed on the bow
         [SerializeField] Vector3 thrownSpeed = default; //Speed that the arrow will be thrown
 
@@ -49,7 +50,6 @@ namespace PhasePart.Bow{
             BeginGame();
 
             print("ROTACAO = " + bow.transform.rotation.eulerAngles.y);
-
         }
 
         private void StarQuiver(){
@@ -148,8 +148,7 @@ namespace PhasePart.Bow{
                 return true;
             }
             else{
-
-            RechargeBow(new Vector3(0,0,0), new Quaternion());
+                RechargeBow(new Vector3(0,0,0), new Quaternion());
             }
             return false;
         }

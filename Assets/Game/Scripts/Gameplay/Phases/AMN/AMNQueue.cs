@@ -46,18 +46,16 @@ namespace PhasePart.AMN{
 
             actualAMNNumber++;
             actualColor = Util.CreateNewDifferentColor(actualColor);
-
-            if(actualAMNNumber == 1){
-                await transporterList.RibossomeEnter(actualColor, actualAMNNumber + 1.ToString(), false);
-                return;
-            }
             
-            await transporterList.RibossomeExit(!lastOnes, actualColor, actualAMNNumber + 1, moveAction);
+            await transporterList.RibossomeExit(!lastOnes, actualColor, (actualAMNNumber + 1), moveAction);
         }
 
         public async Task SetAllRibossomeEnter(int ribossomeMaxNumber){
-            transporterList.SetPool(ribossomeMaxNumber);
             transporterList.SetChildPrefab(amnPrefab.gameObject);
+            transporterList.SetPool(ribossomeMaxNumber);
+
+            actualColor = Util.CreateNewDifferentColor(actualColor);
+            await transporterList.RibossomeEnter(actualColor, (actualAMNNumber + 1).ToString(), false);
 
             await Task.Yield();
         }

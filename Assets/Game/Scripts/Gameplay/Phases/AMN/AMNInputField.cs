@@ -22,11 +22,13 @@ namespace PhasePart.AMN{
             print(wait + " O K " + thisInput.text);
             if(!wait && amnM.VerifyAMN(thisInput.text)){
                 string auxTextAMN = thisInput.text;
-                wait = true;
                 thisInput.text = "";
+
+                wait = true;
                 await amnM.PushNewAMN(auxTextAMN);
                 wait = false;
-                thisInput.text = "";
+
+                ValueChangeCheck();
             }
         }
 

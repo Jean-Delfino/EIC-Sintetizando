@@ -136,10 +136,9 @@ namespace PhasePart.AMN{
             animationPause = true;
             Task[] taskAnimation = new Task[2]; //All animation of the object
 
-            print("CHAMOU O NEW AMN IN LINE");
             taskAnimation[0] = completedAMNQueue.NewAMNInLine(
-                (actualCompleted) < (numberOfAMN + 1), 
-                (actualCompleted + ribossomeMaxNumber - 1 ) <= (numberOfAMN + 1),
+                (actualCompleted) >= (numberOfAMN), 
+                (actualCompleted) < (numberOfAMN + 1),
                 (actualCompleted + ribossomeMaxNumber - 1).ToString(), amnName);
             
             //Move the string to the left
@@ -162,11 +161,19 @@ namespace PhasePart.AMN{
 
         public new bool EndPhase(){
             if(actualCompleted == numberOfAMN + 1){
+                ThrownLastRibossome();
                 base.EndPhase();
                 return true;
             }
 
             return false;
+        }
+
+        private async void ThrownLastRibossome(){
+            await completedAMNQueue.NewAMNInLine(
+                (actualCompleted) >= (numberOfAMN), 
+                (actualCompleted) < (numberOfAMN + 1),
+                (actualCompleted + ribossomeMaxNumber - 1).ToString(), "None");
         }
 
         public static int GetSizeAMN(){

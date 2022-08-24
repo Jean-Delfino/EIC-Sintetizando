@@ -90,6 +90,7 @@ namespace PhasePart.AMN{
             await RibossomeExit(true, Util.RandomSolidColor(), 5, actionOnItem);
             await RibossomeExit(true, Util.RandomSolidColor(), 6, actionOnItem);
             await RibossomeExit(true, Util.RandomSolidColor(), 7, actionOnItem);
+
             await RibossomeExit(false, Util.RandomSolidColor(), 8, actionOnItem); 
             
             await RibossomeExit(false, Util.RandomSolidColor(), 9, nullAMN);

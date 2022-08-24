@@ -29,16 +29,23 @@ namespace PhasePart.AMN{
         //private int actualAMNNumber = 0; //Correct one
         private int actualAMNNumber = 1;
 
+        Func<int, Task> moveAction;
 
-        public async Task NewAMNInLine(bool lastOne, bool newRb, string amnNumber, string amnName){
-            Func<int, Task> moveAction = async act => {
-                await PushNewAMN(transporterList.GetSinthetizingFromQueue(), amnName);
-            };
+        public async Task NewAMNInLine(bool lastOnes, bool newRb, string amnNumber, string amnName){
+            if(newRb){
+               moveAction = async act => {
+                    await PushNewAMN(transporterList.GetSinthetizingFromQueue(), amnName);
+                }; 
+            }else{
+                moveAction = async act => {
+                    await Task.Yield();
+                };
+            }
 
             actualAMNNumber++;
             actualColor = Util.CreateNewDifferentColor(actualColor);
 
-            await transporterList.RibossomeExit(!lastOne, actualColor, actualAMNNumber + 1, moveAction);
+            await transporterList.RibossomeExit(!lastOnes, actualColor, actualAMNNumber + 1, moveAction);
         }
 
         public async Task SetAllRibossomeEnter(int ribossomeMaxNumber){
@@ -70,31 +77,11 @@ namespace PhasePart.AMN{
             await Task.Delay(Util.ConvertToMili(animationTime));    
         }
 
-        public async Task ConnectTwoAMN(Transform sinthetizing, string amnName){
-            if(toConnect == null){
-                toConnect = sinthetizing;
-                return;
-            }
-
-            float animationTime = transporterList.GetAnimationsTime();
-            Transform newAMN = sinthetizing.GetChild(sinthetizing.childCount - 1);
-
-            SetVisibleGroupName(newAMN.GetComponent<AMNLetter>(), amnName, animationTime);
-        }
-
         private void SetVisibleGroupName(AMNLetter amnLetter, string amnName, float time){
             CanvasGroup cG = amnLetter.GetAMNGroupName();
             amnLetter.SetupAMNName(amnName);            
 
             Util.ChangeAlphaCanvasImageAnimation(cG, 1f, time);
-        }
-
-        public void PushAMN(string amnName){ //Old, not needed anymore, see RibossomeExit
-            Letter hold;
-
-            hold = Instantiate<Letter>(amnPrefab, this.transform);
-            hold.gameObject.GetComponent<Image>().color = actualColor;
-            hold.Setup(amnName);
         }
 
         public void SetFirstOne(bool state){

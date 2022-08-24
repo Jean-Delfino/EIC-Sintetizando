@@ -80,6 +80,7 @@ namespace PhasePart.AMN{
             childPrefab = amnPrefab;
 
             await RibossomeEnter(firstColor, "1", false);
+            
             await RibossomeExit(true, Util.RandomSolidColor(), 2, actionOnItem);
             await RibossomeExit(true, Util.RandomSolidColor(), 3, actionOnItem);
             
@@ -92,6 +93,7 @@ namespace PhasePart.AMN{
             print("ENDING");
             await RibossomeExit(false, Util.RandomSolidColor(), 9, nullAMN);
             await RibossomeExit(false, Util.RandomSolidColor(), 10, nullAMN);
+            
         }
 
         //Second part of pooling, the reset of a pooled object
@@ -165,6 +167,7 @@ namespace PhasePart.AMN{
             
             await ribossomeQueue.MoveNewRibossome(move, rl, 
                 new Vector3(0, 0, 0), 2.5f, animationsTime, animationCurve);
+            await Task.Delay(500);
         }
 
         private void RibossomeSetup(RibossomeLetter rl, Color newRibossomeColor, string numberAMN){

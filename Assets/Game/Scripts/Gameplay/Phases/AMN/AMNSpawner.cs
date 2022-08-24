@@ -13,7 +13,7 @@ namespace PhasePart.AMN{
         [SerializeField] Letter letterPrefab = default;
         [SerializeField] Transform letterSpawn = default; //Could be this.transform though
         
-        [SerializeField] float AMNPrefabWidth = 65f;
+        [SerializeField] float AMNPrefabWidth = 65f; 
         private float spaceBetween;
 
         
@@ -33,8 +33,6 @@ namespace PhasePart.AMN{
         }
 
         public float NextAMN(bool lastOne){
-            print(lastOne + " Boom");
-
             RectTransform rT = letterSpawn.GetComponent<RectTransform>();
             float moveDistance = (AMNPrefabWidth + spaceBetween) * 3;
 

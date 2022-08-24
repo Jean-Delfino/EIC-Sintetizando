@@ -5,8 +5,6 @@ using TMPro;
 
 namespace GameUserInterface.Text{
     public class TextShow : MonoBehaviour{
-        // Start is called before the first frame update
-        
         [SerializeField] TextMeshProUGUI title = default;
         [SerializeField] TextMeshProUGUI description = default;
         bool activeObject = false;

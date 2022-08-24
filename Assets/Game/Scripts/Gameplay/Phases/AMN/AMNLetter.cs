@@ -15,8 +15,6 @@ namespace PhasePart.AMN{
         [SerializeField] Image AMNcolor = default;
         [SerializeField] TextMeshProUGUI amnName = default;
         [SerializeField] CanvasGroup cg = default;
-
-        [SerializeField] AMNConnector amnBridge = default;
         
         public void SetAMNColor(Color newColor){
             AMNcolor.color = newColor;

@@ -45,13 +45,12 @@ namespace PhasePart.AMN{
         [SerializeField] AMNSpawner amnLetterQueue = default;
 
         private void Start() {
-            //FindObjectOfType<DNAManager>(true).DNANucleusVisibility(false); It shrink it the DNAManager already
             visualAMN.SetActive(true);
             Util.ChangeAlphaCanvasImageAnimation(visualAMN.GetComponent<CanvasGroup>(), 1f, 1f);
+            SetAllRibossome();
 
             SpawnAMN();
             SetSearchAMN();
-            SetAllRibossome();
         }
 
         private void SpawnAMN(){
@@ -115,15 +114,12 @@ namespace PhasePart.AMN{
 
             nameAMN = perc.GetAMN(0).GetValue().ToUpper();
             print(nameAMN);
-            //ShowAMN(RNAstring); Test
         }
 
         public bool VerifyAMN(string AMN){
-            print("ENTROU AQUI AMNManager");
             if(AMN.ToUpper() == nameAMN.ToUpper()){
                 return true;
             }
-            print("DEU RUIM");
             return false;
         }
 
@@ -138,18 +134,15 @@ namespace PhasePart.AMN{
 
         private async Task QueueNewAMN(string amnName){
             animationPause = true;
-            //Test if it's actualCompleted == numberOfAMN or numberOfAMN - 1, it change the animation
-            //print("Completed = " + actualCompleted);
             Task[] taskAnimation = new Task[2]; //All animation of the object
 
             taskAnimation[0] = completedAMNQueue.NewAMNInLine(
-                (actualCompleted) == (numberOfAMN + 1), 
-                (actualCompleted + ribossomeMaxNumber -1 ) < (numberOfAMN + 1),
+                (actualCompleted) >= (numberOfAMN), 
+                (actualCompleted) < (numberOfAMN + 1),
                 (actualCompleted + ribossomeMaxNumber - 1).ToString(), amnName);
             
             //Move the string to the left
             if(actualCompleted <= numberOfAMN){
-                //print("Actual " + actualCompleted);
                 taskAnimation[1] = Task.Delay(Util.ConvertToMili(SetAMN(actualCompleted == numberOfAMN)));
             }else{
                 taskAnimation[1] = Task.Delay(0);
@@ -168,13 +161,19 @@ namespace PhasePart.AMN{
 
         public new bool EndPhase(){
             if(actualCompleted == numberOfAMN + 1){
-                //Here its change phases
-                //print("ENTROU");
+                ThrownLastRibossome();
                 base.EndPhase();
                 return true;
             }
 
             return false;
+        }
+
+        private async void ThrownLastRibossome(){
+            await completedAMNQueue.NewAMNInLine(
+                (actualCompleted) >= (numberOfAMN), 
+                (actualCompleted) < (numberOfAMN + 1),
+                (actualCompleted + ribossomeMaxNumber - 1).ToString(), "None");
         }
 
         public static int GetSizeAMN(){

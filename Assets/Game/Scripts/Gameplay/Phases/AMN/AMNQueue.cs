@@ -16,6 +16,8 @@ namespace PhasePart.AMN{
     public class AMNQueue : MonoBehaviour{
         private Color actualColor = new Color(0f, 0f, 0f);
         [SerializeField] Letter amnPrefab = default;
+        [SerializeField] float movementYDistance = 65f;
+
         bool firstOne = true;
 
         [Space]
@@ -26,32 +28,34 @@ namespace PhasePart.AMN{
 
         Transform toConnect = null;
 
-        //private int actualAMNNumber = 0; //Correct one
-        private int actualAMNNumber = 1;
+        private int actualAMNNumber = 0; //Correct one
+        //private int actualAMNNumber = 1;
 
+        Func<int, Task> moveAction;
 
-        public async Task NewAMNInLine(bool lastOne, bool newRb, string amnNumber, string amnName){
-            Func<int, Task> moveAction = async act => {
-                await PushNewAMN(transporterList.GetSinthetizingFromQueue(), amnName);
-            };
+        public async Task NewAMNInLine(bool lastOnes, bool newRb, string amnNumber, string amnName){
+            if(newRb){
+               moveAction = async act => {
+                    await PushNewAMN(transporterList.GetSinthetizingFromQueue(), amnName);
+                }; 
+            }else{
+                moveAction = async act => {
+                    await Task.Yield();
+                };
+            }
 
             actualAMNNumber++;
             actualColor = Util.CreateNewDifferentColor(actualColor);
-
-            await transporterList.RibossomeExit(!lastOne, actualColor, actualAMNNumber + 1, moveAction);
+            
+            await transporterList.RibossomeExit(!lastOnes, actualColor, (actualAMNNumber + 1), moveAction);
         }
 
         public async Task SetAllRibossomeEnter(int ribossomeMaxNumber){
-            int i;
-
+            transporterList.SetChildPrefab(amnPrefab.gameObject);
             transporterList.SetPool(ribossomeMaxNumber);
 
-            for(i = 0; i < ribossomeMaxNumber - 1; i++){ //Set the max, but in the begginning only two will be spawned
-                actualColor = Util.CreateNewDifferentColor(actualColor);
-                await transporterList.RibossomeEnter(actualColor, (i+1).ToString(), false);
-            }
-
-            transporterList.SetChildPrefab(amnPrefab.gameObject);
+            actualColor = Util.CreateNewDifferentColor(actualColor);
+            await transporterList.RibossomeEnter(actualColor, (actualAMNNumber + 1).ToString(), false);
 
             await Task.Yield();
         }
@@ -62,6 +66,13 @@ namespace PhasePart.AMN{
             RectTransform fatherPosition = this.transform.parent.GetComponent<RectTransform>();
             Vector3 saveInitial = fatherPosition.anchoredPosition;
             Transform newAMN = sinthetizing.GetChild(sinthetizing.childCount - 1);
+
+            Vector3 newPosition = new Vector3(
+                saveInitial.x,
+                saveInitial.y + movementYDistance, 
+                saveInitial.z);
+
+            LeanTween.move(fatherPosition, newPosition , 1f);
             
             SetVisibleGroupName(newAMN.GetComponent<AMNLetter>(), amnName, animationTime);
             
@@ -70,32 +81,11 @@ namespace PhasePart.AMN{
             await Task.Delay(Util.ConvertToMili(animationTime));    
         }
 
-        public async Task ConnectTwoAMN(Transform sinthetizing, string amnName){
-            if(toConnect == null){
-                toConnect = sinthetizing;
-                return;
-            }
-
-            float animationTime = transporterList.GetAnimationsTime();
-            Transform newAMN = sinthetizing.GetChild(sinthetizing.childCount - 1);
-
-            SetVisibleGroupName(newAMN.GetComponent<AMNLetter>(), amnName, animationTime);
-            await Task.Yield();
-        }
-
         private void SetVisibleGroupName(AMNLetter amnLetter, string amnName, float time){
             CanvasGroup cG = amnLetter.GetAMNGroupName();
             amnLetter.SetupAMNName(amnName);            
 
             Util.ChangeAlphaCanvasImageAnimation(cG, 1f, time);
-        }
-
-        public void PushAMN(string amnName){ //Old, not needed anymore, see RibossomeExit
-            Letter hold;
-
-            hold = Instantiate<Letter>(amnPrefab, this.transform);
-            hold.gameObject.GetComponent<Image>().color = actualColor;
-            hold.Setup(amnName);
         }
 
         public void SetFirstOne(bool state){

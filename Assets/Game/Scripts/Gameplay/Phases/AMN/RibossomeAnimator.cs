@@ -57,11 +57,13 @@ namespace PhasePart.AMN{
         private Queue<GameObject> pool = new Queue<GameObject>();
         [SerializeField] RectTransform rectTransformValuesReference;
         
-        [SerializeField] Transform amnQueue = default;
-        [SerializeField] GameObject amnPrefab = default;
-
         private GameObject childPrefab;
         
+        //Only use for tests, nothing more, don't delete
+        /*
+        //[SerializeField] Transform amnQueue = default;
+        //[SerializeField] GameObject amnPrefab = default;
+
         private void Start() {
             SetPool(3);
             Tests();
@@ -90,11 +92,10 @@ namespace PhasePart.AMN{
             await RibossomeExit(true, Util.RandomSolidColor(), 7, actionOnItem);
             await RibossomeExit(false, Util.RandomSolidColor(), 8, actionOnItem); 
             
-            print("ENDING");
             await RibossomeExit(false, Util.RandomSolidColor(), 9, nullAMN);
             await RibossomeExit(false, Util.RandomSolidColor(), 10, nullAMN);
             
-        }
+        }*/
 
         //Second part of pooling, the reset of a pooled object
         private void PoolObjectReset(Transform newElement, GameObject childZero){
@@ -113,7 +114,6 @@ namespace PhasePart.AMN{
             for(i = 0; i < poolCapacity; i++){
                 hold = Instantiate<GameObject>(ribossomePrefab, holdRibossome);
                 hold.SetActive(false);
-                //hold.name = "Ribossome " + i.ToString();
                 pool.Enqueue(hold);
             }
         }

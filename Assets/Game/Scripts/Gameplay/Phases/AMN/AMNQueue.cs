@@ -16,6 +16,8 @@ namespace PhasePart.AMN{
     public class AMNQueue : MonoBehaviour{
         private Color actualColor = new Color(0f, 0f, 0f);
         [SerializeField] Letter amnPrefab = default;
+        [SerializeField] float movementYDistance = 65f;
+
         bool firstOne = true;
 
         [Space]
@@ -26,8 +28,8 @@ namespace PhasePart.AMN{
 
         Transform toConnect = null;
 
-        //private int actualAMNNumber = 0; //Correct one
-        private int actualAMNNumber = 1;
+        private int actualAMNNumber = 0; //Correct one
+        //private int actualAMNNumber = 1;
 
         Func<int, Task> moveAction;
 
@@ -45,19 +47,16 @@ namespace PhasePart.AMN{
             actualAMNNumber++;
             actualColor = Util.CreateNewDifferentColor(actualColor);
 
+            if(actualAMNNumber == 1){
+                await transporterList.RibossomeEnter(actualColor, actualAMNNumber + 1.ToString(), false);
+                return;
+            }
+            
             await transporterList.RibossomeExit(!lastOnes, actualColor, actualAMNNumber + 1, moveAction);
         }
 
         public async Task SetAllRibossomeEnter(int ribossomeMaxNumber){
-            int i;
-
             transporterList.SetPool(ribossomeMaxNumber);
-
-            for(i = 0; i < ribossomeMaxNumber - 1; i++){ //Set the max, but in the begginning only two will be spawned
-                actualColor = Util.CreateNewDifferentColor(actualColor);
-                await transporterList.RibossomeEnter(actualColor, (i+1).ToString(), false);
-            }
-
             transporterList.SetChildPrefab(amnPrefab.gameObject);
 
             await Task.Yield();
@@ -69,6 +68,13 @@ namespace PhasePart.AMN{
             RectTransform fatherPosition = this.transform.parent.GetComponent<RectTransform>();
             Vector3 saveInitial = fatherPosition.anchoredPosition;
             Transform newAMN = sinthetizing.GetChild(sinthetizing.childCount - 1);
+
+            Vector3 newPosition = new Vector3(
+                saveInitial.x,
+                saveInitial.y + movementYDistance, 
+                saveInitial.z);
+
+            LeanTween.move(fatherPosition, newPosition , 1f);
             
             SetVisibleGroupName(newAMN.GetComponent<AMNLetter>(), amnName, animationTime);
             

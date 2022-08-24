@@ -45,13 +45,12 @@ namespace PhasePart.AMN{
         [SerializeField] AMNSpawner amnLetterQueue = default;
 
         private void Start() {
-            //FindObjectOfType<DNAManager>(true).DNANucleusVisibility(false); It shrink it the DNAManager already
             visualAMN.SetActive(true);
             Util.ChangeAlphaCanvasImageAnimation(visualAMN.GetComponent<CanvasGroup>(), 1f, 1f);
+            SetAllRibossome();
 
             SpawnAMN();
             SetSearchAMN();
-            SetAllRibossome();
         }
 
         private void SpawnAMN(){
@@ -137,6 +136,7 @@ namespace PhasePart.AMN{
             animationPause = true;
             Task[] taskAnimation = new Task[2]; //All animation of the object
 
+            print("CHAMOU O NEW AMN IN LINE");
             taskAnimation[0] = completedAMNQueue.NewAMNInLine(
                 (actualCompleted) < (numberOfAMN + 1), 
                 (actualCompleted + ribossomeMaxNumber - 1 ) <= (numberOfAMN + 1),

@@ -63,7 +63,6 @@ namespace PhasePart.AMN{
             removeRb = false;
             
             for(i = 0; i < inRibossomeQueue.Count; i++){
-                //print("MOVE RIBOSSOME " + i);
                 toMove.Add(MoveRibossome(inRibossomeQueue[i],rotation, 1f, 
                     animationTime, animationCurve));
             }

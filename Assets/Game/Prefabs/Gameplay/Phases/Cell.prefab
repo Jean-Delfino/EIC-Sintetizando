@@ -283,6 +283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amnPrefab: {fileID: 5540979850136439004, guid: 10b8402b3913caf43a5de668edfec826, type: 3}
+  movementYDistance: 65
   transporterList: {fileID: 1297269406}
 --- !u!114 &1190813666
 MonoBehaviour:
@@ -291,7 +292,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1190813663}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
@@ -447,7 +448,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  animationsTime: 1.5
+  animationsTime: 2
   ribossomePrefab: {fileID: 8651739193420691894, guid: edbc0e85abc34684885d6b4a12986591, type: 3}
   rectTransformValuesReference: {fileID: 6219348681275945846}
   amnQueue: {fileID: 1190813664}
@@ -498,7 +499,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -289.6, y: -25}
+  m_AnchoredPosition: {x: -628, y: -102}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &1867865561
@@ -2620,7 +2621,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6792064276605649700, guid: 10b8402b3913caf43a5de668edfec826, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -85
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 6792064276605649700, guid: 10b8402b3913caf43a5de668edfec826, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

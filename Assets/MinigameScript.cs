@@ -39,14 +39,14 @@ namespace PhasePart.Bow{
         private int phaseNumber = -1;
         private bool arrowFlying = false;
         private bool endPhase = false;
-
+        Vector3 positionp = new Vector3(32f,0,-1f);
+ 
         void OnEnable(){
             originalScene.SetActive(false); //"Takes control" of the actual scene of the game, visually
         }
-        
         void Start(){
             StarQuiver();
-            reference = RechargeBow(new Vector3(0, 0, 0), new Quaternion());
+            reference = RechargeBow (new Vector3(30f,0,-1f), new Quaternion());
             BeginGame();
 
             print("ROTACAO = " + bow.transform.rotation.eulerAngles.y);
@@ -63,10 +63,10 @@ namespace PhasePart.Bow{
             }
         }
 
-        private Arrow  RechargeBow(Vector3 position, Quaternion rotation){
+        private Arrow  RechargeBow(Vector3 positionp, Quaternion rotation){
             Arrow newObj = quiver.Dequeue();
             newObj.gameObject.SetActive(true);
-            newObj.gameObject.transform.position = position;
+            newObj.gameObject.transform.position = positionp;
             //newObj.gameObject.transform.rotation = rotation;
             quiver.Enqueue(newObj);
             return newObj;
@@ -122,6 +122,7 @@ namespace PhasePart.Bow{
                 await Task.Yield();
             }
             ShootArrow();
+            //await ShootingStance();
             //if(!animation.isPlaying) ShootArrow();
         } 
 
@@ -148,7 +149,7 @@ namespace PhasePart.Bow{
                 return true;
             }
             else{
-                RechargeBow(new Vector3(0,0,0), new Quaternion());
+                RechargeBow(positionp, new Quaternion());
             }
             return false;
         }

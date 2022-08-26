@@ -28,7 +28,8 @@ public class Arrow : MonoBehaviour{
     }
 
     void OnCollisionEnter(Collision other){
-       Card3D cardVerify = other.transform.GetComponent<Card3D>();
+        Card3D cardVerify = FindObjectOfType<Card3D>();
+        cardVerify = other.transform.GetComponent<Card3D>();
 
        print("Collidiu");
        

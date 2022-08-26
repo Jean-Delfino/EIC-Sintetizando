@@ -33,7 +33,7 @@ public class Card3D : MonoBehaviour{
         System.Random rnd = new System.Random();
         System.Random rnd1 = new System.Random();
         if(transform.position.x < -100){
-            transform.position = new Vector3(150,rnd.Next(-17,17)+transform.position.y,rnd1.Next(-10,10)+transform.position.z);
+            transform.position = new Vector3(150,rnd.Next(-16,18)+transform.position.y,rnd1.Next(-10,10)+transform.position.z);
         }
     }
 }

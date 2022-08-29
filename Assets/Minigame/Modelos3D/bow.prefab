@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 95732685192002394}
   - component: {fileID: 5269309636811145542}
   - component: {fileID: -561057182066238218}
+  - component: {fileID: 2406942701763522755}
   m_Layer: 0
   m_Name: bow
   m_TagString: Untagged
@@ -131,3 +132,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 767fadd81bb1e6c48bce37b392941b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bowUpRotationLimit: 0
+  bowDownRotationLimit: 0
+  bowLeftRotationLimit: 0
+  bowRightRotationLimit: 0
+  angularSpeed: 0
+--- !u!54 &2406942701763522755
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986020875623830}
+  serializedVersion: 2
+  m_Mass: 0.1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 64
+  m_CollisionDetection: 0

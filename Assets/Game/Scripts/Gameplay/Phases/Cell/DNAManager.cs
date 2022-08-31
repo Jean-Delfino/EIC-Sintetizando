@@ -1,10 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
 
 using UnityEngine;
 
+/*
+    It has the responsability over the DNA in the cell
+    It changes the DNA based on the RNA too.
+
+    It has the responsability of controlling the animation of the DNA/RNA
+*/
 
 namespace PhasePart.RNA.DNA{
     public class DNAManager : PhaseManagerMono{
@@ -24,7 +30,6 @@ namespace PhasePart.RNA.DNA{
         private string finiteDNAString; //Gets it from the RNASpawner
 
         private void Start() {
-            //print("ENTROU AQUI");
             ChangeSecondHalf();
             dnaSetupReference.ChangeVisibilitySecondHalfDNA(true);
 
@@ -46,7 +51,6 @@ namespace PhasePart.RNA.DNA{
             this.finiteDNAString = finiteDNAString;
         }
 
-
         //Dna setup settings
         public void SetupStructure(int quantity, string firstCut){
             dnaSetupReference.SetupStructure(quantity, firstCut);
@@ -64,7 +68,7 @@ namespace PhasePart.RNA.DNA{
 
         public void ChangeSecondHalf(string additionalString){
             finiteDNAString += additionalString;
-            //print(additionalString);
+
             //Create the complement of the DNA
             dnaSetupReference.ChangeAllSecondHalf(CreateComplementarDNA());
         }

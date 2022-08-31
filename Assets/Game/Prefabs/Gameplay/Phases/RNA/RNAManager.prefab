@@ -680,7 +680,7 @@ GameObject:
   - component: {fileID: 879858434081867698}
   - component: {fileID: 2150727858388405904}
   m_Layer: 5
-  m_Name: RNA-Manager
+  m_Name: RNAManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

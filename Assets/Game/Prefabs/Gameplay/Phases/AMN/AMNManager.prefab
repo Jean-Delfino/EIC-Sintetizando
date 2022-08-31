@@ -415,8 +415,8 @@ MonoBehaviour:
   m_Spacing: 10
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
@@ -432,9 +432,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191d6b26e9f35b4438f738d77c9f59bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationsTime: 1
+  animationsTime: 2
   letterPrefab: {fileID: 5257269735387090396, guid: a1d271c0ebed66e43a3e9ce640e805cb, type: 3}
   letterSpawn: {fileID: 8451967631731879343}
+  AMNPrefabWidth: 65
 --- !u!114 &1328596691794183179
 MonoBehaviour:
   m_ObjectHideFlags: 0

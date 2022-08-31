@@ -10,6 +10,8 @@ using GameUserInterface.Text;
 
 /*
     Manages the AMNQueue and all its animations
+
+    Changes the Action depending on the actual stage of the cell
 */
 
 namespace PhasePart.AMN{
@@ -26,10 +28,8 @@ namespace PhasePart.AMN{
 
         [SerializeField] RibossomeAnimator transporterList = default;
 
-        Transform toConnect = null;
-
         private int actualAMNNumber = 0; //Correct one
-        //private int actualAMNNumber = 1;
+        //private int actualAMNNumber = 1; //Used in tests
 
         Func<int, Task> moveAction;
 
@@ -60,7 +60,7 @@ namespace PhasePart.AMN{
             await Task.Yield();
         }
 
-        public async Task PushNewAMN(Transform sinthetizing, string amnName){ //Name is close to the other on purpose
+        public async Task PushNewAMN(Transform sinthetizing, string amnName){
             float animationTime = transporterList.GetAnimationsTime();
 
             RectTransform fatherPosition = this.transform.parent.GetComponent<RectTransform>();

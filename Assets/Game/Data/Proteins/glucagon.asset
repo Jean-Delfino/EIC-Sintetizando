@@ -23,3 +23,5 @@ MonoBehaviour:
       descriptionExtra: Quantidade grande de bom
     - nameExtra: LINK
       descriptionExtra: "informa\xE7\xE3o util"
+  destinationOrganelle: 0
+  transformedProtein: {fileID: 8601743136619411814, guid: 1502d94798dceb84cb7d8eb6ea31574d, type: 3}

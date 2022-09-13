@@ -39,7 +39,7 @@ namespace PhasePart.RNA.DNA{
 
         private async void RNAEscapeAnimation(){
             await Task.Delay(Util.ConvertToMili(cellReference.RNAEscapeNucleus()));
-
+            cellReference.SetAnimatorStatus(false);
             base.EndPhase();
         }
 

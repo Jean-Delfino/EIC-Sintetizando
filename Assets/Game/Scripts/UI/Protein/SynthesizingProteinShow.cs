@@ -6,18 +6,16 @@ using UnityEngine.EventSystems;
 using TMPro;
 
 namespace ProteinPart.InfoProtein{
-    public class SynthesizingProteinShow : MonoBehaviour, IPointerClickHandler{
-        private static SynthesizingProtein toShow = default;
-
-        [Space]
-        [Header("Box Description of the actual synthesizing protein")]
-        [Space]
+    public class SynthesizingProteinShow : MonoBehaviour{
+        private static ProteinDescription toShow = default;
+        
+        //SynthesizingProtein
+        
+        [Space] [Header("Box Description of the actual synthesizing protein")] [Space]
 
         [SerializeField] TextMeshProUGUI descriptionProtein = default;
 
-        [Space]
-        [Header("Box Description of Extra")]
-        [Space]
+        [Space] [Header("Box Description of Extra")] [Space]
 
         [SerializeField] GameObject boxTextExtraDescription = default;
 
@@ -25,17 +23,22 @@ namespace ProteinPart.InfoProtein{
         [SerializeField] TextMeshProUGUI textDescriptionExtraData = default;
 
         private int lastExtra = -1;
+        
+        [Space] [Header("Destination Description")] [Space] [SerializeField]
+        
+        private Transform positionOfTransformedProtein;
 
         private void Start(){
-            descriptionProtein.text = toShow.GetDescriptionProtein();
+            descriptionProtein.text = toShow.sp.GetDescriptionProtein();
+            Instantiate<GameObject>(toShow.transformedProtein, positionOfTransformedProtein);
         }
 
-        public static void SetProtein(SynthesizingProtein sint){
+        public static void SetProtein(ProteinDescription sint){
             toShow = sint;
         }
 
         public void ShowDescriptionExtraData(int index){
-            if(index < 0 || index > toShow.GetQtdOfExtras() - 1) return;
+            if(index < 0 || index > toShow.sp.GetQtdOfExtras() - 1) return;
 
             if(index == lastExtra && boxTextExtraDescription.activeSelf){
                 lastExtra = -1;
@@ -46,16 +49,13 @@ namespace ProteinPart.InfoProtein{
             lastExtra = index;
             boxTextExtraDescription.SetActive(true);
 
-            nameExtraData.text = toShow.GetNameExtra(index);
-            textDescriptionExtraData.text = toShow.GetDescriptionTextExtra(index);
+            nameExtraData.text = toShow.sp.GetNameExtra(index);
+            textDescriptionExtraData.text = toShow.sp.GetDescriptionTextExtra(index);
         }
-        
-        public void OnPointerClick(PointerEventData eventData){
-            int index = TMP_TextUtilities.FindIntersectingLink(descriptionProtein, Input.mousePosition, Camera.main);
 
-            if(index > -1){
-                ShowDescriptionExtraData(index);
-            }
+        public TextMeshProUGUI GetDescriptionProtein()
+        {
+            return descriptionProtein;
         }
     }
 }

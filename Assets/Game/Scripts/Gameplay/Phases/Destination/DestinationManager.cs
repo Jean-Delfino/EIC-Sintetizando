@@ -10,17 +10,24 @@ namespace PhasePart.Destination{
     public class DestinationManager : PhaseManagerMono
     {
         [SerializeField] CellAnimator cellReference = default; //Used for the single purpose of animation
+
+        private bool animationWasPlayed = false;
         
         void Start(){
+            cellReference.SetAnimatorStatus(true);
             PlayAMNQueueTransformation();
         }
 
         private async void PlayAMNQueueTransformation(){
             float time = cellReference.AMNTransformation();
 
-            await Task.Delay(Util.ConvertToMili(time));
+            await Task.Delay(Util.ConvertToMili(time/ 0.5f));
+            animationWasPlayed = true;
+        }
 
-            base.EndPhase();
+        public new void EndPhase()
+        {
+            if(animationWasPlayed) base.EndPhase();
         }
 
     }

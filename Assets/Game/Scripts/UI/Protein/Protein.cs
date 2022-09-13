@@ -50,7 +50,7 @@ namespace ProteinPart.InfoProtein{
 
             FindObjectOfType<PlayerInfo>().SetProteinName(synthesizedProteinName); 
 
-            SynthesizingProteinShow.SetProtein(proteinDescription.sp); //Send the info to be seen in the gameplay
+            SynthesizingProteinShow.SetProtein(proteinDescription); //Send the info to be seen in the gameplay
         }
 
 

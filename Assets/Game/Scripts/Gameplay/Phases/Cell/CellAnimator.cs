@@ -77,5 +77,10 @@ namespace PhasePart.RNA.DNA{
             
             notNuclues.SetActive(!notNuclues.activeSelf);
         }
+
+        public void SetAnimatorStatus(bool state)
+        {
+            myAnimator.enabled = state;
+        }
     }
 }

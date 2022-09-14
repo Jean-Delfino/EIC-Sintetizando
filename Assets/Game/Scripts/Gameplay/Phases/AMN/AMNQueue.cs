@@ -75,10 +75,9 @@ namespace PhasePart.AMN{
             LeanTween.move(fatherPosition, newPosition , 1f);
             
             SetVisibleGroupName(newAMN.GetComponent<AMNLetter>(), amnName, animationTime);
+            await Task.Delay(Util.ConvertToMili(animationTime));    
             
             newAMN.SetParent(this.transform);
-            
-            await Task.Delay(Util.ConvertToMili(animationTime));    
         }
 
         private void SetVisibleGroupName(AMNLetter amnLetter, string amnName, float time){

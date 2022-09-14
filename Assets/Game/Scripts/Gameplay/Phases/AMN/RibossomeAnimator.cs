@@ -136,12 +136,16 @@ namespace PhasePart.AMN{
         }
 
         private async Task RibossomeExit(Func<int,Task> externalActions, RibossomeLetter rlSint){
-            await ribossomeQueue.MoveAllRibossome(new Vector3(0, 0, 0), animationsTime, animationCurve);
+            Task[] taskAnimation = new Task[2];
+
+            taskAnimation[0] = ribossomeQueue.MoveAllRibossome(new Vector3(0, 0, 0), animationsTime, animationCurve);
 
             saveColor = rlSint.GetRibossomeColor();
             rlSint.SetAMNPresence(false);
 
-            await externalActions(0);
+            taskAnimation[1] = externalActions(0);
+
+            await Task.WhenAll(taskAnimation);
         }
 
         public async Task RibossomeEnter(Color newRibossomeColor, string numberAMN, bool move){

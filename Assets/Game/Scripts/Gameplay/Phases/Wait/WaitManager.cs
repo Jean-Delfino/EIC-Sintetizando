@@ -12,13 +12,18 @@ using System.Threading.Tasks;
 namespace PhasePart.Wait{
     public class WaitManager : MonoBehaviour{
         private int numberPhase;
+        private GameplayManager gameplayManager;
 
         protected void SetNumberPhase(int numberPhase){
             this.numberPhase = numberPhase;
         }
 
+        public void Setup(GameplayManager gameplayManager){
+            this.gameplayManager = gameplayManager;
+        }
+
         protected async Task<bool> WaitCheck(){
-            bool number = (bool) await FindObjectOfType<GameplayManager>().Check(numberPhase);
+            bool number = (bool) await gameplayManager.Check(numberPhase);
             return number;
         }
     } 

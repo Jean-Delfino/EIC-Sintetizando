@@ -47,6 +47,7 @@ public sealed class GameplayManager : MonoBehaviour{
 
     private void Start(){
         //iM.SetInstructionReminder(ShowInstruction);
+        waitManager.GetComponent<WaitManager>().Setup(this);
         SpawnAllGoals(); //Spawn the information in the PhaseManager
     }
 
@@ -63,20 +64,34 @@ public sealed class GameplayManager : MonoBehaviour{
             print("Jogo acabou");
             return;
         }
-        //In the beggining it have no instance
 
+        //In the beggining it has no instance
         PoolObject(objRef); //Just setting the object to true or false, not actually a entire poll
         
         ManagerWait(); //This will make something that wait for the player interaction
         WaitFor(); //Wait until 
     }
 
+    public async void InputCloseWaitManager(){
+        while(!Input.GetKeyDown(KeyCode.Return)){
+            if(!onAwait){
+                return;
+            }
+            await Check(actualPhase);
+        }
+
+        await Task.Yield();
+    }
+
     private void ManagerWait(){
         objRef = waitManager; //The first object objRef gets is waitManager, always
         PoolObject(objRef); //Set it to active
+
         //Make the WaitManager visible
         Util.ChangeAlphaCanvasImageAnimation(objRef.GetComponent<CanvasGroup>(),
             1f, 0.75f);
+            
+        InputCloseWaitManager();
 
         PhaseDescription aux = gamePhases[actualPhase].manager.GetPhaseDescription();
         objRef.GetComponent<MissionManager>().Setup(actualPhase, aux.GetName(), 

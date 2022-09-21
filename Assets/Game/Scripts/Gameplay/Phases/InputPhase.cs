@@ -31,7 +31,7 @@ namespace PhasePart{
                 }
 
                 if(input != 0 && (actualInput + input < inputArea.childCount && actualInput + input > -1)){
-                    //Deactive the actual, so you can activate the next one
+                    //Deactivate the actual, so you can activate the next one
                     //Get the input based on the index of siblings
                     actual.DeactivateInput(); //Deactivates the actual
 

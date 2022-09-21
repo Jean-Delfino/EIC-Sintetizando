@@ -184,6 +184,10 @@ namespace PhasePart.AMN{
             return numberOfAMN;
         }
 
+        public static void SetNumberOfAMN(int newNumberOfAMN){
+            numberOfAMN = newNumberOfAMN;
+        }
+
     }
 }
 

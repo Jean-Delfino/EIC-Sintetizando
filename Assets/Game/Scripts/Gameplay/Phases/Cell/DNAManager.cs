@@ -52,8 +52,8 @@ namespace PhasePart.RNA.DNA{
         }
 
         //Dna setup settings
-        public void SetupStructure(int quantity, string firstCut){
-            dnaSetupReference.SetupStructure(quantity, firstCut);
+        public void SetupStructure(int quantity, string firstCut, bool add){
+            dnaSetupReference.SetupStructure(quantity, firstCut, add);
         }
 
         public void ChangeFirstHalf(string cut){
@@ -63,18 +63,15 @@ namespace PhasePart.RNA.DNA{
 
         public void ChangeSecondHalf(){
             //Create the complement of the DNA
-            dnaSetupReference.ChangeAllSecondHalf(CreateComplementarDNA()); 
-        }
-
-        public void ChangeSecondHalf(string additionalString){
-            finiteDNAString += additionalString;
-
-            //Create the complement of the DNA
-            dnaSetupReference.ChangeAllSecondHalf(CreateComplementarDNA());
+            dnaSetupReference.ChangeAllSecondHalf(CreateComplementaryDNA()); 
         }
 
         public void ChangeSecondHalf(int index, string text){
             dnaSetupReference.ChangeSecondHalf(index, text);
+        }
+
+        public void ChangeRNAinDNAStructureByChildPosition(int index, string text){
+            dnaSetupReference.ChangeRNAinDNAStructureByChildPosition(index, text);
         }
 
         public void ChangeRNAinDNAStructure(int index, string text){
@@ -82,11 +79,11 @@ namespace PhasePart.RNA.DNA{
         }
 
         //Uses the Validation table
-        private string CreateComplementarDNA(){
-            return CreateComplementarDNA(finiteDNAString);
+        private string CreateComplementaryDNA(){
+            return CreateComplementaryDNA(finiteDNAString);
         }
 
-        private string CreateComplementarDNA(string textDNA){
+        private string CreateComplementaryDNA(string textDNA){
             string complement = "";
             int i;
 
@@ -134,10 +131,12 @@ namespace PhasePart.RNA.DNA{
             return;
         }
 
-        public void SetSeparationInDNAStructure(int separation, string separationString, int firstQuantity){
+        public void SetSeparationInDNAStructure(int separation){
             dnaSetupReference.SetSeparation(separation);
-            dnaSetupReference.SetSeparationString(separationString);
-            dnaSetupReference.SetQuantity(firstQuantity);
+        }
+
+        public void SetQuantity(int quantity){
+            dnaSetupReference.SetQuantity(quantity);
         }
     }
 }

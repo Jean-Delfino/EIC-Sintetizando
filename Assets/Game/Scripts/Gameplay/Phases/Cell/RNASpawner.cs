@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,7 +27,6 @@ namespace PhasePart.RNA{
         [SerializeField] CellNucleusManager originalPlace; //Where the RNA starts (the nucleus)
 
         private int quantity; //Needs to be multiple of 3, and it will because of the AMN
-        private int originalQuantity; //Reference to make easy to work
 
         [SerializeField] RNA prefab = default;
         [SerializeField] TextWithInput middleRNA = default;
@@ -48,16 +48,11 @@ namespace PhasePart.RNA{
             {"G", "C"}
         }; //DNA to RNA Correspondence
 
-        private string[] anwsers; //Save of the anwsers of the RNA given by the player
+        private string[] answers; //Save of the answers of the RNA given by the player
         private int nextPhase = 0;
 
         private void Start(){
-            originalQuantity = quantity;
-
-            //The amount of dna + the ending string dna
-            quantity += (AMNManager.GetSizeAMN());
-
-            anwsers = new string[quantity];
+            answers = new string[quantity];
             SetInputOperation();
         }
 
@@ -79,22 +74,29 @@ namespace PhasePart.RNA{
         //Get the additional information
         public string InstantiateAllRNABasedOnDNA(string sub){
             string ending = originalPlace.GetAEndingString();
+            string beginning = originalPlace.GetBeginningString();
 
-            string additionalString = string.Concat(Enumerable.Repeat(
+            string separationString = string.Concat(Enumerable.Repeat(
                     nonUsableCharacter, CellNucleusManager.GetNumberOfCharacterToEnd()));
             
             SetInputData(RNASpawn); //Protected function of all the InputPhase manager
 
-            InstantiateRNAUsingString(0, sub, prefab);
+            InstantiateRNAUsingString(0, beginning, prefab);
 
-            //Instantiate 3 dots
+            //Instantiate beginning dot
             InstantiateRNAUsingString(-CellNucleusManager.GetNumberOfCharacterToEnd(), 
-                additionalString, middleRNA);
+                separationString, middleRNA);
+
+            InstantiateRNAUsingString(beginning.Length, sub, prefab);
+
+            //Instantiate end dot
+            InstantiateRNAUsingString(-CellNucleusManager.GetNumberOfCharacterToEnd(), 
+                separationString, middleRNA);
             
             //Instantiate one of the ending DNA string
-            InstantiateRNAUsingString(quantity,ending, prefab);
+            InstantiateRNAUsingString(quantity + beginning.Length,ending, prefab);
 
-            return additionalString + ending;
+            return ending;
         }
 
         public void InstantiateAllRNARandom(){
@@ -105,7 +107,7 @@ namespace PhasePart.RNA{
       
             for(i = 0 ; i < quantity ; i++){
                 hold = Instantiate<RNA>(prefab, RNASpawn);
-                hold.SetPosition(i); //Puts its original position, so i can build the "replic" vector
+                hold.SetPosition(i); //Puts its original position, so i can build the "replica" vector
                 hold.RandomStart();
             }
         }
@@ -127,35 +129,30 @@ namespace PhasePart.RNA{
             }
         }
 
-        public void ResetValuesInRNA(){
-            int i = 0;
-            int qtdNonUsable = CellNucleusManager.GetNumberOfCharacterToEnd();
+        // public void ResetValuesInRNA(){
+        //     int i = 0;
+        //     int qtdNonUsable = CellNucleusManager.GetNumberOfCharacterToEnd();
 
-            for(i = 0; i < originalQuantity; i++){
-                RNASpawn.GetChild(i).GetComponent<RNA>().SetValue("", defColor);
-                SetCorrespondentValidation(i, "");
-            }
+        //     for(i = 0; i < originalQuantity; i++){
+        //         RNASpawn.GetChild(i).GetComponent<RNA>().SetValue("", defColor);
+        //         SetCorrespondentValidation(i, "");
+        //     }
 
-            for(i = i + qtdNonUsable; i < RNASpawn.childCount; i++){
-                RNASpawn.GetChild(i).GetComponent<RNA>().SetValue("", defColor);
-                SetCorrespondentValidation(i-qtdNonUsable, "");
-            }
-        }
+        //     for(i = i + qtdNonUsable; i < RNASpawn.childCount; i++){
+        //         RNASpawn.GetChild(i).GetComponent<RNA>().SetValue("", defColor);
+        //         SetCorrespondentValidation(i-qtdNonUsable, "");
+        //     }
+        // }
 
-        public void ChangeQuantityToNextPhase(int increace){
-            nextPhase += increace;  
+        public void ChangeQuantityToNextPhase(int increase){
+            nextPhase += increase;  
             EndPhase(); //To end the game when the player filled everything
-            //print("Next phase = " + nextPhase);
         }
 
         public new void EndPhase(){
-            //print("Next phase = " + nextPhase);
-            //if(nextPhase == 1){ //Test only
-
             if(nextPhase == quantity){
-                //print("ENTROU AQUI END PHASE");
                 //Here its change phases
-                AMNManager.SetRNAtoAMNString(Util.ConvertToString(anwsers));
+                AMNManager.SetRNAtoAMNString(Util.ConvertToString(answers));
                 base.EndPhase();
             }
 
@@ -167,53 +164,33 @@ namespace PhasePart.RNA{
 
             foreach(Transform child in RNASpawn){
                 childComp = child.GetComponent<RNA>();
-                anwsers[childComp.GetOriginalPosition()] = childComp.GetValueInputText();
+                answers[childComp.GetOriginalPosition()] = childComp.GetValueInputText();
             }
 
             EndPhase();
         }
 
-        public void FilterCorrectRNA(){ //Remove RNA already correct, put them in the right position on the vector too
-            RNA childComp;
-            foreach(Transform child in RNASpawn){
-                childComp = child.GetComponent<RNA>();
-                if(childComp.GetValueInputValidation()){
-                    anwsers[childComp.GetOriginalPosition()] = childComp.GetValueInputText();
-                    Destroy(child.gameObject);
-                }
-            }
+        // public void StartNewWaveDNAString(){ //Here we don't have the problem of "destroying" the DNA
+        //     string sub = originalPlace.CutDNAString();
+        //     string ending = originalPlace.GetAEndingString();
 
-            EndPhase();
-        }
+        //     int qtdNonUsable = CellNucleusManager.GetNumberOfCharacterToEnd();
 
-        //NEED TO BE CHANGED
-        public void StartNewWaveDNAString(){ //Here we don't have the problem of "destroying" the DNA
-            string sub = originalPlace.CutDNAString();
-            string ending = originalPlace.GetAEndingString();
+        //     sub += ending;
 
-            int qtdNonUsable = CellNucleusManager.GetNumberOfCharacterToEnd();
+        //     int i = 0;
 
-            sub += ending;
+        //     ResetValuesInRNA();
+        //     originalPlace.ChangeDNAStructure(sub + ending);
 
-            int i = 0;
+        //     for(i = 0; i < originalQuantity; i++){
+        //         RNASpawn.GetChild(i).GetComponent<RNA>().RNASetup(sub[i].ToString());
+        //     }
 
-            ResetValuesInRNA();
-            //print("Next phase = " + nextPhase);
-            originalPlace.ChangeDNAStructure(sub + ending);
-            /*
-            foreach(Transform child in RNASpawn){
-                child.GetComponent<RNA>().RNASetup(sub[i].ToString());
-                i++;
-            }*/
-
-            for(i = 0; i < originalQuantity; i++){
-                RNASpawn.GetChild(i).GetComponent<RNA>().RNASetup(sub[i].ToString());
-            }
-
-            for(i = i + qtdNonUsable; i < RNASpawn.childCount; i++){
-                RNASpawn.GetChild(i).GetComponent<RNA>().RNASetup(sub[i - qtdNonUsable].ToString());
-            }
-        }
+        //     for(i = i + qtdNonUsable; i < RNASpawn.childCount; i++){
+        //         RNASpawn.GetChild(i).GetComponent<RNA>().RNASetup(sub[i - qtdNonUsable].ToString());
+        //     }
+        // }
 
         public void StartNewWave(){ //First version
             nextPhase = 0;
@@ -232,7 +209,6 @@ namespace PhasePart.RNA{
                 Instantiate<RNA>(prefab, RNASpawn);
             }
 
-            //FilterRNABasedOnLetter(actualLetter);
         }
 
         public void StartNewWaveDontDestroy(){ //ThirdVersion, random
@@ -246,14 +222,11 @@ namespace PhasePart.RNA{
         } //Best performance
 
         public void SetCorrespondentValidation(int index, string value){
-            anwsers[index] = value; //Because of original position in TextWithInput this work
-            //This change the CellNucleusManager
-            if(index > originalQuantity - 1){
-                index += CellNucleusManager.GetNumberOfCharacterToEnd();
-            }
+            answers[index] = value; //Look RNA original position
 
             originalPlace.ChangeRNAinDNAStructure(index, value);
         }
+
 
         public void SetQuantity(int quantity){
             this.quantity = quantity;
@@ -291,64 +264,3 @@ namespace PhasePart.RNA{
 
     }
 }
-
-/*
-    private Dictionary<string, string[]> validation = new Dictionary<string, string[]>(){
-        {"A", new string[] {"U", "T"}},
-        {"T", new string[] {"A"}},
-        {"C", new string[] {"G"}},
-        {"G", new string[] {"C"}}
-    };
-    */
-    /*
-    public void GenerateFilters(){ //Spawn all the letter filters
-        GameObject holder = Instantiate<GameObject>(letterPrefab , filterSpawn);
-        holder.GetComponent<Letter>().Setup(defaultFilter);
-
-        foreach(KeyValuePair<string, string> item in validation){
-            holder = Instantiate<GameObject>(letterPrefab , filterSpawn);
-            holder.GetComponent<Letter>().Setup(item.Key);
-        }
-    }
-
-    public void FilterRNABasedOnLetter(string chosen){ //Separate RNA based on their Letter
-        actualLetter = chosen;
-        if(chosen == defaultFilter){
-            foreach(Transform child in RNASpawn){
-                child.gameObject.SetActive(true);
-            }
-
-            return;
-        }
-
-        foreach(Transform child in RNASpawn){
-            if(child.GetComponent<RNA>().GetValueText() != chosen){
-                child.gameObject.SetActive(false);
-                continue;
-            }
-            child.gameObject.SetActive(true);
-        }
-    }*/
-
-    /*
-        private void Start() {
-            //actualLetter = defaultFilter;
-
-            quantity = AMNManager.GetNumberOfAMN() * AMNManager.GetSizeAMN();
-            anwsers = new string[quantity];
-
-            //GenerateFilters();
-            if(!random){
-                InstantiateAllRNABasedOnDNA();
-                return;
-            }
-
-            InstantiateAllRNARandom();
-        }*/
-
-        //Filters that make the gameEasier
-
-        //[SerializeField] string defaultFilter = default;
-        //[SerializeField] Transform filterSpawn = default;
-        //[SerializeField] GameObject letterPrefab = default;
-        //private string actualLetter;

@@ -25,7 +25,7 @@ namespace PhasePart.RNA{
         private const string DNAtranscriptionBeg = "TAC"; //Always the beg of the DNA
         private string[] DNAtranscriptionEnd = {"ATT", "ATC", "ACT"}; //The end of the DNA
 
-        private static int numberOfCharacterToEnd = 3;
+        private static int separationCharacters = 1;
 
         private static string DNAString; //Original DNA string of the protein
 
@@ -36,65 +36,65 @@ namespace PhasePart.RNA{
         private void Start(){
             quantity = AMNManager.GetNumberOfAMN() * AMNManager.GetSizeAMN();
 
-            rnaReference.SetQuantity(quantity); //Easier to work with
-
-            if(random){
-                rnaReference.InstantiateAllRNARandom();
-            }
-            
-            //dnaReference.TurnDNAOn(); //Turn visible all the DNA structure, visible now
+            dnaReference.SetQuantity(quantity);
 
             //Separate the DNA and Expand the nucleus 
             DNAAnimations();
+            AMNManager.SetNumberOfAMN(AMNManager.GetNumberOfAMN() + 1);
         }
 
         private async void DNAAnimations(){
             string firstCut = CutDNAString();
             string nonUsableCharacter = rnaReference.GetNonUsableCharacter();
-            int i;
 
-            dnaReference.SetFiniteDNAString(firstCut); //Puts cutted DNA on DNA
-            dnaReference.SetupStructure(quantity, firstCut); //Instantiate everything need in the visual DNAPart
+            rnaReference.SetQuantity(quantity);
+            string endingString = rnaReference.InstantiateAllRNABasedOnDNA(firstCut); //Just to set it first
+            dnaReference.SetSeparationInDNAStructure(separationCharacters);
+            rnaReference.SetQuantity(quantity + endingString.Length + DNAtranscriptionBeg.Length);
 
-            //The ending of the DNA that its used in the RNASpawner
-            string additional = rnaReference.InstantiateAllRNABasedOnDNA(firstCut); //Just to set it first
-            dnaReference.SetupStructure(additional.Length, additional);
+            dnaReference.SetFiniteDNAString(DNAtranscriptionBeg + firstCut + endingString);//Puts sliced DNA on DNA
+           
+            dnaReference.SetupStructure(DNAtranscriptionBeg.Length, DNAtranscriptionBeg, true); //Instantiate beginning
+            SpawnDot(DNAtranscriptionBeg.Length, nonUsableCharacter);
+            dnaReference.SetupStructure(quantity, firstCut, true); //Instantiate sliced part of the DNA
+            SpawnDot(DNAtranscriptionBeg.Length + quantity + separationCharacters, nonUsableCharacter);
+            dnaReference.SetupStructure(endingString.Length, endingString, true); //Instantiate ending
+
+            dnaReference.ChangeSecondHalf(); //Puts the initial correspondence of DNA
             
-            for(i = 0; i < numberOfCharacterToEnd; i++){ //Dots
-                ChangeRNAinDNAStructure(quantity + i, nonUsableCharacter);
-                ChangeDNAinDNAStructure(quantity + i, nonUsableCharacter);
-            }
-
-            SetSeparationInDNA(nonUsableCharacter, quantity);
-            dnaReference.ChangeSecondHalf(additional.Substring(numberOfCharacterToEnd)); //Complementar DNA
-            
-            await dnaReference.RNAVisibility(); //RNA visible
+            await dnaReference.RNAVisibility(); 
             await dnaReference.DNASeparation(); 
 
             await dnaReference.DNANucleusVisibility(true);
-
+            
             EndPhase();
         }
 
-        private void SetSeparationInDNA(string separationString, int firstQuantity){
-            dnaReference.SetSeparationInDNAStructure(numberOfCharacterToEnd, separationString, firstQuantity);
+        private void SpawnDot(int start, string nonUsableCharacter){
+            int i;
+
+            dnaReference.SetupStructure(separationCharacters, nonUsableCharacter, false);
+
+            for(i = 0; i < separationCharacters; i++){ //Dots
+                dnaReference.ChangeRNAinDNAStructureByChildPosition(start + i, nonUsableCharacter);
+                dnaReference.ChangeSecondHalf(start + i, nonUsableCharacter);
+            }
         }
-
-
-        public static int GetNumberOfCharacterToEnd(){
-            return numberOfCharacterToEnd;
-        }
-
-        public void ChangeDNAStructure(string cut){
-            dnaReference.ChangeFirstHalf(cut);
-        }
-
+        
         public void ChangeRNAinDNAStructure(int index, string text){
             dnaReference.ChangeRNAinDNAStructure(index, text);
         }
 
-        public void ChangeDNAinDNAStructure(int index, string text){
-            dnaReference.ChangeSecondHalf(index, text);
+        public static int GetNumberOfCharacterInBeginning(){
+            return separationCharacters;
+        }
+
+        public static int GetNumberOfCharacterToEnd(){
+            return separationCharacters;
+        }
+
+        public void ChangeDNAStructure(string cut){
+            dnaReference.ChangeFirstHalf(cut);
         }
 
         //Need to do all the animation of the game
@@ -120,6 +120,10 @@ namespace PhasePart.RNA{
             return DNAtranscriptionEnd[UnityEngine.Random.Range(0, DNAtranscriptionBeg.Length)];
         }
 
+        public string GetBeginningString(){
+            return DNAtranscriptionBeg;
+        }
+
         private bool DNAWithAllBases(string cut, int number){
             int i;
             List<char> bases = new List<char>();
@@ -139,6 +143,7 @@ namespace PhasePart.RNA{
         public void SetRandom(bool state){
             random = state;
         }
+
         public static void SetDNAString(string proteinDNA){
             DNAString = proteinDNA;
         }

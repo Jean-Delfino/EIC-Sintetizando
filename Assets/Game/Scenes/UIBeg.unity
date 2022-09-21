@@ -9210,6 +9210,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3132395532110401504, guid: e70fa009540ae144fbc31fccda056953, type: 3}
+      propertyPath: onAwakeEvents.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3132395532110401504, guid: e70fa009540ae144fbc31fccda056953, type: 3}
+      propertyPath: onAwakeEvents.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetProteinName
+      objectReference: {fileID: 0}
     - target: {fileID: 3132395532110401505, guid: e70fa009540ae144fbc31fccda056953, type: 3}
       propertyPath: m_RootOrder
       value: 6

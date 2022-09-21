@@ -99,19 +99,6 @@ namespace PhasePart.RNA{
             return ending;
         }
 
-        public void InstantiateAllRNARandom(){
-            int i;
-            RNA hold;
-
-            SetInputData(RNASpawn); //Protected function of all the InputPhase manager
-      
-            for(i = 0 ; i < quantity ; i++){
-                hold = Instantiate<RNA>(prefab, RNASpawn);
-                hold.SetPosition(i); //Puts its original position, so i can build the "replica" vector
-                hold.RandomStart();
-            }
-        }
-
         private void DestroyAllRNA(){
             foreach(Transform child in RNASpawn){
                 Destroy(child.gameObject);
@@ -129,21 +116,6 @@ namespace PhasePart.RNA{
             }
         }
 
-        // public void ResetValuesInRNA(){
-        //     int i = 0;
-        //     int qtdNonUsable = CellNucleusManager.GetNumberOfCharacterToEnd();
-
-        //     for(i = 0; i < originalQuantity; i++){
-        //         RNASpawn.GetChild(i).GetComponent<RNA>().SetValue("", defColor);
-        //         SetCorrespondentValidation(i, "");
-        //     }
-
-        //     for(i = i + qtdNonUsable; i < RNASpawn.childCount; i++){
-        //         RNASpawn.GetChild(i).GetComponent<RNA>().SetValue("", defColor);
-        //         SetCorrespondentValidation(i-qtdNonUsable, "");
-        //     }
-        // }
-
         public void ChangeQuantityToNextPhase(int increase){
             nextPhase += increase;  
             EndPhase(); //To end the game when the player filled everything
@@ -158,68 +130,6 @@ namespace PhasePart.RNA{
 
             return;
         }
-
-        public void ConfirmPhase(){ //Can be used, but don make much sense
-            RNA childComp;
-
-            foreach(Transform child in RNASpawn){
-                childComp = child.GetComponent<RNA>();
-                answers[childComp.GetOriginalPosition()] = childComp.GetValueInputText();
-            }
-
-            EndPhase();
-        }
-
-        // public void StartNewWaveDNAString(){ //Here we don't have the problem of "destroying" the DNA
-        //     string sub = originalPlace.CutDNAString();
-        //     string ending = originalPlace.GetAEndingString();
-
-        //     int qtdNonUsable = CellNucleusManager.GetNumberOfCharacterToEnd();
-
-        //     sub += ending;
-
-        //     int i = 0;
-
-        //     ResetValuesInRNA();
-        //     originalPlace.ChangeDNAStructure(sub + ending);
-
-        //     for(i = 0; i < originalQuantity; i++){
-        //         RNASpawn.GetChild(i).GetComponent<RNA>().RNASetup(sub[i].ToString());
-        //     }
-
-        //     for(i = i + qtdNonUsable; i < RNASpawn.childCount; i++){
-        //         RNASpawn.GetChild(i).GetComponent<RNA>().RNASetup(sub[i - qtdNonUsable].ToString());
-        //     }
-        // }
-
-        public void StartNewWave(){ //First version
-            nextPhase = 0;
-            DestroyAllRNA();
-            InstantiateAllRNARandom();
-        }
-
-        public void StartNewWaveByActualSize(){ //SecondVersion
-            ResetActualValuesInRNA();
-
-            int childCnt = RNASpawn.childCount; //Necessary reference
-            
-            DestroyAllRNA();
-
-            for(; childCnt > 0 ; childCnt--){
-                Instantiate<RNA>(prefab, RNASpawn);
-            }
-
-        }
-
-        public void StartNewWaveDontDestroy(){ //ThirdVersion, random
-            ResetActualValuesInRNA();
-
-            foreach(Transform child in RNASpawn){
-                child.GetComponent<RNA>().RandomStart();
-            }
-
-            //FilterRNABasedOnLetter(actualLetter);
-        } //Best performance
 
         public void SetCorrespondentValidation(int index, string value){
             answers[index] = value; //Look RNA original position

@@ -32,12 +32,6 @@ namespace GameGeneralScripts.Player{
             }
 
             onAwakeEvents.Invoke();
-
-            //print(this.gameObject.name);
-            //print(Instance.gameObject.name);
-
-            //print("1 : " + GetNamePlayer());
-            //print("2 : " + GetActualProtein());
         }
 
         public void SetNamePlayer(string namePlayer){Instance.namePlayer = namePlayer;}

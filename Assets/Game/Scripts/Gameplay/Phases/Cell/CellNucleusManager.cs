@@ -34,16 +34,26 @@ namespace PhasePart.RNA{
         private int quantity;
 
         private void Start(){
+            //Separate the DNA and Expand the nucleus 
+            DNAAnimations();
+        }
+
+        private async void DNAAnimations(){
+            dnaReference.ChangeSecondHalf(); //Puts the initial correspondence of DNA
+            
+            await dnaReference.RNAVisibility(); 
+            await dnaReference.DNASeparation(); 
+
+            await dnaReference.DNANucleusVisibility(true);
+            
+            EndPhase();
+        }
+
+        public void SetStructure(){
             quantity = AMNManager.GetNumberOfAMN() * AMNManager.GetSizeAMN();
 
             dnaReference.SetQuantity(quantity);
 
-            //Separate the DNA and Expand the nucleus 
-            DNAAnimations();
-            AMNManager.SetNumberOfAMN(AMNManager.GetNumberOfAMN() + 1);
-        }
-
-        private async void DNAAnimations(){
             string firstCut = CutDNAString();
             string nonUsableCharacter = rnaReference.GetNonUsableCharacter();
 
@@ -60,14 +70,9 @@ namespace PhasePart.RNA{
             SpawnDot(DNAtranscriptionBeg.Length + quantity + separationCharacters, nonUsableCharacter);
             dnaReference.SetupStructure(endingString.Length, endingString, true); //Instantiate ending
 
-            dnaReference.ChangeSecondHalf(); //Puts the initial correspondence of DNA
-            
-            await dnaReference.RNAVisibility(); 
-            await dnaReference.DNASeparation(); 
+            dnaReference.ChangeSecondHalf();
 
-            await dnaReference.DNANucleusVisibility(true);
-            
-            EndPhase();
+            AMNManager.SetNumberOfAMN(AMNManager.GetNumberOfAMN() + 1);
         }
 
         private void SpawnDot(int start, string nonUsableCharacter){

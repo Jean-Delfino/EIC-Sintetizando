@@ -112,7 +112,9 @@ MonoBehaviour:
     - AMINO
   - manager: {fileID: 3064069923981638695}
     messages:
-    - DESTINO
+    - "DESTINO, VOU COLOCAR UMA MENSAGEM BEM GRANDE PARA TESTAR A RESPONSABILIDADE
+      DESSA ATRIBUTO NA WEB, ENT\xC3O ESSE TEXTO EST\xC1 FICANDO MAIOR POR MOTIVOS
+      DE TESTES"
   marking: {fileID: 0}
   info: {fileID: 0}
   iM: {fileID: 0}
@@ -585,62 +587,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AMNManager
       objectReference: {fileID: 0}
-    - target: {fileID: 545324925275556234, guid: aa38f2fd4c37a384f8500e04b25c5d40, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5299369582291513307, guid: aa38f2fd4c37a384f8500e04b25c5d40, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5299369582291513307, guid: aa38f2fd4c37a384f8500e04b25c5d40, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5299369582291513307, guid: aa38f2fd4c37a384f8500e04b25c5d40, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 650
-      objectReference: {fileID: 0}
-    - target: {fileID: 5299369582291513307, guid: aa38f2fd4c37a384f8500e04b25c5d40, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5448459299272901709, guid: aa38f2fd4c37a384f8500e04b25c5d40, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5448459299272901709, guid: aa38f2fd4c37a384f8500e04b25c5d40, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5448459299272901709, guid: aa38f2fd4c37a384f8500e04b25c5d40, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 650
-      objectReference: {fileID: 0}
-    - target: {fileID: 5448459299272901709, guid: aa38f2fd4c37a384f8500e04b25c5d40, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -154.77225
-      objectReference: {fileID: 0}
-    - target: {fileID: 8451967631731879343, guid: aa38f2fd4c37a384f8500e04b25c5d40, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8451967631731879343, guid: aa38f2fd4c37a384f8500e04b25c5d40, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8451967631731879343, guid: aa38f2fd4c37a384f8500e04b25c5d40, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -50
-      objectReference: {fileID: 0}
-    - target: {fileID: 8784293614655489823, guid: aa38f2fd4c37a384f8500e04b25c5d40, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1300
-      objectReference: {fileID: 0}
-    - target: {fileID: 8784293614655489823, guid: aa38f2fd4c37a384f8500e04b25c5d40, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 199.5445
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa38f2fd4c37a384f8500e04b25c5d40, type: 3}
 --- !u!224 &1159113994 stripped
@@ -791,6 +737,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7295050311995265381}
     m_Modifications:
+    - target: {fileID: 4109233693545540135, guid: 185044b071efca449bba710f22277782, type: 3}
+      propertyPath: textInstructions.Array.data[0]
+      value: "Veja a anima\xE7\xE3o e fica tranquilinho. Essa tamb\xE9m ser\xE1 uma
+        grande mensagem de texto para teste, n\xE3o se preocupe, no jogo n\xE3o ficar\xE1
+        dessa forma, pois \xE9 simplesmente para teste"
+      objectReference: {fileID: 0}
     - target: {fileID: 8532263954113554886, guid: 185044b071efca449bba710f22277782, type: 3}
       propertyPath: m_Name
       value: DestinationManager

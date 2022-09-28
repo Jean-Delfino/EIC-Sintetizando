@@ -17,21 +17,21 @@ namespace PhasePart.AMN{
         [System.Serializable]
         private class AMNDescriber{
             public AMN value; //A,G,U,C
-            public GameObject table = null; //One quarter of the aminoacids circle
+            public Sprite table = null; //One quarter of the amino acids circle
         }
 
         [Space]
         [Header("AMN Manager Atributes")]
         [Space]
 
-        [SerializeField] List<AMNDescriber> basics; //The "tables" and their anwsers
-        private GameObject actualTable = null;
+        [SerializeField] List<AMNDescriber> basics; //The "tables" and their answers
+        [SerializeField] AMNTableHolder tableHolder = null;
 
         private static int numberOfAMN = 7; 
         private int actualCompleted = 0; 
 
         private static int sizeAMN = 3;
-        private const int ribossomeMaxNumber = 3; //Number of ribossome in the transcription
+        private const int ribossomeMaxNumber = 3; //Number of ribosome in the transcription
         private bool animationPause = false; //Used in the VerifyAMN to pause the game
 
         private static string RNAtoAMN; //Sub product of the RNASpawner completion
@@ -39,7 +39,7 @@ namespace PhasePart.AMN{
 
         private string nameAMN; //Change in every input
         
-        [SerializeField] GameObject visualAMN = default; //Where all the tables, the ribossome and the transporter will be
+        [SerializeField] GameObject visualAMN = default; //Where all the tables, the ribosome and the transporter will be
         
         [SerializeField] AMNQueue completedAMNQueue = default; //Push a AMN when its ends
         [SerializeField] AMNSpawner amnLetterQueue = default;
@@ -94,13 +94,14 @@ namespace PhasePart.AMN{
                 return x.value.GetValue() == RNAstring[i].ToString();
             }); 
 
-            if(actualTable != null){
-                actualTable.SetActive(false);
-            }  
-
             perc = hold.value;
-            actualTable = hold.table;
-            actualTable.SetActive(true);
+
+            if(hold == null || hold.table == null){
+                print("WTF AMN " + hold.value.GetValue());
+                return;
+            }
+
+            tableHolder.ChangeTable(hold.table);
 
             for(i = 1; i < sizeAMN; i++){
 
@@ -162,6 +163,7 @@ namespace PhasePart.AMN{
         public new bool EndPhase(){
             if(actualCompleted == numberOfAMN + 1){
                 ThrownLastRibossome();
+                tableHolder.gameObject.SetActive(false);
                 base.EndPhase();
                 return true;
             }

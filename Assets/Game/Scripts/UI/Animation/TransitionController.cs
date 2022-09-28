@@ -46,8 +46,6 @@ namespace GameUserInterface.Animation{
 
 
         public void DisableTransition(){
-            //myAnimator.SetBool("Expand", true);
-
             transitionScreen.gameObject.SetActive(false);
         }
 
@@ -55,19 +53,16 @@ namespace GameUserInterface.Animation{
             transitionScreen.gameObject.SetActive(true);
         }
 
-        /*
-            print(type);
-            print((int) type);
-        */
         public float PlayTransitionIn(TransitionType type){
-            myAnimator.SetBool(type.ToString(),true);
+            SetAnimationState(type.ToString(), true);
             painelClickBlock.SetActive(true);
 
             return videos[(int) type].animationTimeIn;
         }
 
         public float PlayTransitionOut(TransitionType type){
-            myAnimator.SetBool(type.ToString(), false);
+            SetAnimationState(type.ToString(), false);
+
             painelClickBlock.SetActive(false);
 
             return videos[(int) type].animationTimeOut;

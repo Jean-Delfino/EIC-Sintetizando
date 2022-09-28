@@ -9,9 +9,6 @@ namespace GameUserInterface.Animation{
         Queue<SpriteRenderer> sideSpriteRenderers = new();
 
         private bool flipAnimationState = true; //True to not change in the first "seek"
-
-        [SerializeField] SpriteRenderer[] sideSpriteRenderersSeri;
-
         protected override void Awake()
         {
             base.Awake();
@@ -20,10 +17,6 @@ namespace GameUserInterface.Animation{
             for(i = 0; i < qtdSides; i++){
                 sideSpriteRenderers.Enqueue(transform.GetChild(i).GetComponent<SpriteRenderer>());
             }
-
-            //SpriteRenderer defaultFrontRenderer = sideSpriteRenderers.Dequeue();
-            //sideSpriteRenderers.Enqueue(defaultFrontRenderer); //Always takes out the default side
-            sideSpriteRenderersSeri = sideSpriteRenderers.ToArray();
         }
 
         public new void DoSpriteChangeAnimation(Sprite sprite){
@@ -34,8 +27,6 @@ namespace GameUserInterface.Animation{
 
             flipAnimationState = !flipAnimationState;
             SetAnimationState("Flip", flipAnimationState);
-
-            sideSpriteRenderersSeri = sideSpriteRenderers.ToArray();
         }
     }
 }

@@ -163,7 +163,6 @@ namespace PhasePart.AMN{
         public new bool EndPhase(){
             if(actualCompleted == numberOfAMN + 1){
                 ThrownLastRibossome();
-                tableHolder.gameObject.SetActive(false);
                 base.EndPhase();
                 return true;
             }

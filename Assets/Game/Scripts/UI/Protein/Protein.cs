@@ -16,17 +16,17 @@ using GameGeneralScripts.Player;
     After all its used the proteinName to get the DNA string from a json that holds all the DNA strings
 */
 
-namespace ProteinPart{
+namespace ProteinPart.InfoProtein{
     public class Protein : MonoBehaviour{
 
         [SerializeField] Transform maxParent = default;
 
         private static VideoChoice videoChoice;
-        static string path = "Assets/Game/Data/Proteinas.json"; 
+
+        [SerializeField] ProteinDescription proteinDescription; //Using it instead of JSON
 
         [SerializeField] string proteinName; //Could use the name of the gameObject, used in json
-        [SerializeField] string synthesizedProteinName; //Diferent from the protein name
-        private string proteinValue; //Could use ProteinDeclaration, but them everything would be public
+        [SerializeField] string synthesizedProteinName; //Different from the protein name
 
         [System.Serializable]
         public class ProteinDeclaration {
@@ -39,39 +39,21 @@ namespace ProteinPart{
             public List<ProteinDeclaration> proteinValues;
         }
 
-        void Start() {
-            GetDNAString();
-        }
-
         public static void Setup(VideoChoice vc){
             videoChoice = vc;
-        }
-
-        private void PathCorrection(){
-            if (Application.platform == RuntimePlatform.WebGLPlayer){
-                //Change the path string
-            }
         }
         
         public void OnClickSendVideo(){
             videoChoice.ChooseProtein(maxParent.GetSiblingIndex());
-            //RNASpawner.SetDNAString(proteinValue);
-            CellNucleusManager.SetDNAString(proteinValue); //Sends the protein to the gameplay
 
-            FindObjectOfType<PlayerInfo>().SetProteinName(synthesizedProteinName);
+            CellNucleusManager.SetDNAString(proteinDescription.proteinDNA); //Sends the protein to the gameplay
+
+            FindObjectOfType<PlayerInfo>().SetProteinName(synthesizedProteinName); 
+
+            SynthesizingProteinShow.SetProtein(proteinDescription); //Send the info to be seen in the gameplay
         }
 
-        //Get all the protein
-        //Choose only the needed
-        //Could this part be in a singleton
-        public void GetDNAString(){
-            string content = File.ReadAllText(path);
 
-            PD myPD = JsonUtility.FromJson<PD>(content);
-            
-            proteinValue = (myPD.proteinValues.Find(x => {
-                return x.name == proteinName;
-            }).value); 
-        }
     }
 }
+

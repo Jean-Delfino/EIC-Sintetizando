@@ -27,7 +27,6 @@ public class TextSend : MonoBehaviour{
         SendAllText();
     }
 
-    
     public void SendAllText(){
         int i;
         object myGetter;
@@ -42,8 +41,6 @@ public class TextSend : MonoBehaviour{
             
             gg = (AbstractGetter) myGetter;
             gg.SetReceptorField(this, "actualText");   
-
-            print(actualText);
 
             textLis[i].textField.text = textLis[i].textField.text + actualText;
         }

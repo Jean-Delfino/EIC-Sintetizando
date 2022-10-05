@@ -37,10 +37,14 @@ namespace GameGeneralScripts.Reflection{
             Type typeThisClass = this.GetType();
             Type typeReceptor = receptor.GetType();
 
-            PropertyInfo thisProperty = typeThisClass.GetProperty(nameProperty);
-            PropertyInfo receptorProperty = typeReceptor.GetProperty(namePropertyReceptor);
+            PropertyInfo thisProperty = typeThisClass.GetProperty(nameProperty, BindingFlags.NonPublic | BindingFlags.Instance);
+            PropertyInfo receptorProperty = typeReceptor.GetProperty(namePropertyReceptor, BindingFlags.NonPublic | BindingFlags.Instance);
 
             receptorProperty.SetValue(receptor, thisProperty.GetValue(this, null));
+        }
+
+        public override object SetFunctionCall(object receptor, string nameFunction){
+            return null;
         }
     }
 }

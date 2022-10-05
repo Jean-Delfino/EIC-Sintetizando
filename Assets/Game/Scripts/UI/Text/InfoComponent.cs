@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameUserInterface.Text{
     public class InfoComponent : MonoBehaviour{
-        [SerializeField] Transform childRef = null;
+        [SerializeField] Transform childRef = null; //Where the information is
         private bool visibility = false;
 
         void Start(){
@@ -13,11 +13,18 @@ namespace GameUserInterface.Text{
             }
         }
 
-        public void OnMouseInfoVisibility(){ //this is also mouse exit
+        public void SetAllVisible(){
             visibility = !visibility;
+
             foreach(Transform child in childRef){
-                child.gameObject.SetActive(!child.gameObject.activeSelf);
+                child.gameObject.SetActive(visibility);
             }
+        }
+
+        public void SingleObjectVisibility(){
+            visibility = !visibility;
+            
+            childRef.gameObject.SetActive(visibility);
         }
     }
 }

@@ -8,12 +8,22 @@ using TMPro;
 
 namespace GameUserInterface.Text{
     public class Letter : MonoBehaviour{
+        [SerializeField] TextMeshProUGUI letterText = null;
         public void Setup(string value){
-            this.transform.GetComponentInChildren<TextMeshProUGUI>().text = value;
+            if(letterText == null){
+                this.transform.GetComponentInChildren<TextMeshProUGUI>().text = value;
+                return;
+            }
+
+            letterText.text = value;
         }
 
         public string GetValue(){
-            return this.transform.GetComponentInChildren<TextMeshProUGUI>().text;
+            if(letterText == null){
+                return this.transform.GetComponentInChildren<TextMeshProUGUI>().text;
+            }
+
+            return letterText.text;
         }
     }
 }

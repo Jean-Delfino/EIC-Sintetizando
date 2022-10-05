@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+
 using UnityEngine;
 using UnityEngine.Events;
 
 using TMPro;
-using System;
 
 /*
     Gets a list of UnityEvents and for each it give the input of the TMProInput
-    The field or the function of the UnityEvent are unknow
+    The field or the function of the UnityEvent are unknown
 
     Used for SetNamePlayer
 */

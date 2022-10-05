@@ -20,6 +20,7 @@ namespace GameUserInterface.Text{
 
         private void Start(){
             messages = new List<string>();
+            actualMessageIndex = 0;
         }
         
         public void SetMessages(List<string> messages){
@@ -40,7 +41,7 @@ namespace GameUserInterface.Text{
             messageContent.text = messages[actualMessageIndex];
         }
         public void IncreaceMessage(int increace){
-            if(actualMessageIndex == messages.Count - 1){
+            if(messages == null || actualMessageIndex >= messages.Count - 1){
                 return;
             }
 
@@ -48,7 +49,7 @@ namespace GameUserInterface.Text{
             ShowText();
         }
         public void DecreaceMessage(int increace){
-            if(actualMessageIndex == 0){
+            if(actualMessageIndex <= 0){
                 return;
             }
 

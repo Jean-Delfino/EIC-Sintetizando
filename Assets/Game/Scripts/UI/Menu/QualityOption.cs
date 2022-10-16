@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-
-using UnityEngine;
-using UnityEngine.UI;
-
+using Menu.Settings;
 using TMPro;
+using UnityEngine;
 
-namespace Menu.Settings{
+namespace Game.Scripts.UI.Menu{
     public class QualityOption : MonoBehaviour{
         [SerializeField] SettingMenu sm = default;
 

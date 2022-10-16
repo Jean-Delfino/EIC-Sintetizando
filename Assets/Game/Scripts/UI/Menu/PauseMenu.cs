@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Menu{
+namespace Game.Scripts.UI.Menu{
     public class PauseMenu : MonoBehaviour{
         private static bool isPaused = false;
 

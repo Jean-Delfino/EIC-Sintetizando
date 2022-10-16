@@ -1,4 +1,6 @@
-namespace Menu{
+using Menu;
+
+namespace Game.Scripts.UI.Menu{
     public class MenuComponent : Partition{
         public void OnPointerEnter(){
             selection.PositioningBoltByIndex(index);   

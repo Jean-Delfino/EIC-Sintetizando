@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-namespace GameUserInterface.Text{
+namespace Game.Scripts.UI.Menu{
     public class TextShow : MonoBehaviour{
-        [SerializeField] TextMeshProUGUI title = default;
-        [SerializeField] TextMeshProUGUI description = default;
-        bool activeObject = false;
+        [SerializeField] private TextMeshProUGUI title = default;
+        [SerializeField] private TextMeshProUGUI description = default;
+        private bool activeObject = false;
         public void Setup(string title, string description){
             this.title.text = title;
             this.description.text = description;

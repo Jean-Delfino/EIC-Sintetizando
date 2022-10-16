@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Menu.Settings{
+namespace Game.Scripts.UI.Menu{
     public class SettingMenu : MonoBehaviour{
         [SerializeField] AudioMixer mainMixer = default;
         [SerializeField] GameObject pauseMenuRef = default;   

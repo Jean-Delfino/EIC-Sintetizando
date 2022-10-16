@@ -1,11 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
-
-using UnityEngine;
-
 using GameUserInterface.Animation;
+using UnityEngine;
 
 /*
     Used in the first part of the game
@@ -15,7 +11,7 @@ using GameUserInterface.Animation;
     Partition Father 
 */
 
-namespace Menu{
+namespace Game.Scripts.UI.Menu{
     public class SelectionManager : TransitionUser{
         [Space]
         [Header ("  Bolt")]

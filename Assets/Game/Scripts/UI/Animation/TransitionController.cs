@@ -1,12 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Video;
-
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace GameUserInterface.Animation{
     //This object do not await, the other object will await

@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
 using UnityEngine.UI;
-namespace Menu.Settings{
+
+namespace Game.Scripts.UI.Menu{
     public class VolumeSlider : MonoBehaviour{
         [SerializeField] SettingMenu sm = default;
 

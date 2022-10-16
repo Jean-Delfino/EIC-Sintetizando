@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-using System.Threading;
-using System.Threading.Tasks;
 
 /*
     This make the SelectionManager shorter, so it's a good idea

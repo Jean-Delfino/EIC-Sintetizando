@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ProteinPart.InfoProtein{
 [CreateAssetMenu(fileName = "Data", menuName = "ProteinDescription")]

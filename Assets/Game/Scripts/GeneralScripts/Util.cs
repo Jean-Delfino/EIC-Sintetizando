@@ -1,15 +1,10 @@
 using System;
 using System.Linq;
 using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 using System.Reflection;
-using System.Threading.Tasks;
-
 
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 public static class Util{
     //Coroutines for all classes

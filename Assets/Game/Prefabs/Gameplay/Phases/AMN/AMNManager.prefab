@@ -326,6 +326,7 @@ MonoBehaviour:
           - value: Arg
             nexts: []
     table: {fileID: 21300000, guid: 2c3f02ba7c76d454ca45acb19383cf1f, type: 3}
+  tableHolder: {fileID: 0}
   visualAMN: {fileID: 0}
   completedAMNQueue: {fileID: 0}
   amnLetterQueue: {fileID: 8884377971373969348}
@@ -687,7 +688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
+    m_Left: 10
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
